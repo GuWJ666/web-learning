@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 冒泡排序
+    var arr = [3,45,13,5,141,6,2];
+    // for(i=0;i<arr.length-1;i++){
+    //     for(j=0;j<arr.length-1-i;j++){
+    //         if(arr[j] > arr[j+1]){
+    //             var t = arr[j];
+    //             arr[j] = arr[j+1];
+    //             arr[j+1] = t;
+    //         }
+    //     }
+    // }console.log(arr)
+
+    // 选择排序
+    // 1.首先在未排序的数组中找到最小（大）的元素，放在数组的起始位置
+    // 2.再从未排序的数组中继续找到最小（大）的元素，放在已排序元素的后面
+    // 3.重复，知道完成所有的排序
+    function select(arr){
+        for(var i =0;i<arr.length;i++){
+            var minIndex = i;
+            for(var j = i+1;j<arr.length;j++){
+                if(arr[j] < arr[minIndex]){
+                    minIndex = j;
+                }
+            }
+            var t = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = t;
+        }
+        return arr;
+    }console.log(select(arr));
+</script>
+</html> 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+    <div class="echart" style="width: 800px; height: 600px;"></div>
+</body>
+<script>
+    var echart = echarts.init(document.querySelector('.echart'));
+    var option = {
+        title:{
+            text:'蓝鸥班级人数'
+        },
+        tooltip:{},
+        legend:{
+            data:['人数']
+        },
+        // x轴信息
+        xAxis:{
+            data:['xah190401','xah190402','xah190403','xah190404','xah190405','xah190406']
+        },
+        yAxis:{},
+        series:{
+            name:'人数',
+            type:'pie',
+            data:[30,24,19,27,28,20]
+        }
+    }
+    echart.setOption(option);
+</script>
+</html>

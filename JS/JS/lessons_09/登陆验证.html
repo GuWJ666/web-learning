@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/iconfont-1.css">
+    <link rel="stylesheet" href="css/iconfont-2.css">
+    <style>
+        body {
+            background: rgba(0, 0, 0, .2);
+        }
+
+        #wrap {
+            width: 272px;
+            height: 338px;
+            padding: 40px 16px 20px;
+            border-radius: 10px;
+            position: relative;
+            background: #fff;
+            text-align: center;
+            margin: 50px auto;
+        }
+
+        #close {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            font-size: 30px;
+            color: lightgray;
+            cursor: pointer;
+        }
+
+        p:nth-of-type(1) {
+            font-size: 14px;
+            color: #9b9b9b;
+            margin-bottom: 0px;
+            margin-top: 0;
+        }
+
+        p:nth-of-type(2) {
+            font-size: 18px;
+            margin-top: 4px;
+        }
+
+        p:nth-of-type(3) {
+            font-size: 11px;
+            color: #b7bcc1;
+        }
+
+        #scroll {
+            width: 258px;
+            height: 48px;
+            border: 1px solid #ddd;
+            border-radius: 100px;
+            background: #f7f7f7;
+            margin: 0 auto;
+            margin-bottom: 26px;
+            margin-top: 25px;
+            position: relative;
+            text-align:left;
+            line-height:48px;
+        }
+
+        #ball {
+            width: 50px;
+            height: 48px;
+            border-radius: 50%;
+            border-right: 1px solid #ddd;
+            text-align: center;
+            line-height: 50px;
+            background: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #image {
+            width: 152px;
+            height: 152px;
+            border-radius: 50%;
+        }
+
+        .iconfont {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .right{
+            width: 152px;
+            height: 152px;
+            border-radius: 50%;
+            background:rgba(0,0,0,.6);
+            position:absolute;
+            left:75px;
+            top:105px;
+            z-index: 10;
+            font-size:50px;
+            text-align:center;
+            line-height:152px;
+            color:green;
+            display:none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <span id="close">×</span>
+        <p>身份验证</p>
+        <p>拖动滑块，使片角度为正</p>
+        <div  class="iconfont icon-duihao right"></div>
+        <img src="img/u=3467064362,1302365196&fm=26&gp=0.jpg" alt="" id="image">
+        <div id="scroll">
+            <div id="ball">
+                <span class="iconfont icon-icon_paging_right"></span>
+            </div>
+        </div>
+        <p>摄影师：阿正，该作品经[Xuper+IPR]版权存证</p>
+    </div>
+</body>
+<script>
+    var scroEl = document.getElementById('scroll'),//用来限制移动元素范围的元素
+        ball = document.getElementById('ball'),//用来拖拽移动的元素
+        img = document.getElementById('image'),//图片用来旋转
+        right = document.getElementsByClassName('right')[0],
+        close = document.getElementById('close');
+
+    var m, n;
+    var t,o;
+    var v;
+
+    var sp;
+
+    var lock = false;
+
+    var rot = rnRotate();
+    img.draggable = false;
+    img.style.transform = 'rotateZ('+rot+'deg)';//随机图片初始旋转角度
+
+    close.onclick = function(){
+        wrap.remove();
+    }
+
+    // 小球拖拽移动
+    ball.onmousedown = function (event) {
+        lock = true;
+        var e = window.event || event;
+        this.style.background = 'blue';
+        this.style.color = 'white';
+        l = e.clientX;//获取按下时鼠标的横坐标和纵坐标
+        m = l - this.offsetLeft;
+    }
+    scroEl.onmousemove = function (event) {
+        if (lock) {
+            var e = window.event || event;
+            var q = e.clientX;
+            o = q-m;
+
+            if(o >= scroEl.clientWidth-ball.clientWidth){
+                o = scroEl.clientWidth-ball.clientWidth;
+            }
+            if(o <= 0){
+                o = 0;
+            }
+            ball.style.left = o + 'px';
+            t = 360/(scroEl.clientWidth-ball.clientWidth);
+            v = (t*o+rot);
+            img.style.transform = 'rotateZ('+(t*o+rot)+'deg)';
+        } else {
+            return;
+        }
+    }
+
+    ball.onmouseup = function () {
+        lock = false;
+        if(355<=v && v<=365){
+            this.style.backgroundColor = '#ccc';
+            this.style.border = 'none';
+            this.style.color = '#333';
+            right.style.display = 'block';
+            sp?sp.remove():111;
+        }
+        else if(v <= 361+rot && v >=359+rot){
+            sp = document.createElement('span');
+            sp.innerText = '请转动图片使角度为正';
+            sp.style.position = 'absolute';
+            sp.style.left = '10px';
+            sp.style.top = '0px';
+            scroEl.appendChild(sp);
+            console.log(360+rot);
+        }
+        else if(v<355||v>375){
+            sp?sp.remove():111;
+            this.style.backgroundColor = 'red';
+            this.style.left = 0 +'px';
+            right.style.display = 'none';
+        }
+    }
+
+    scroEl.onmouseleave = function () {
+        lock = false;
+    }
+
+    // 随机函数，用来随机图片旋转的角度
+    function rnRotate(){
+        var n = Math.floor(Math.random()*361);
+        return n;
+    }
+
+</script>
+
+</html>

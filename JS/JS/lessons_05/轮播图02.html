@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        @keyframes identifier {
+            from{
+                left:0px;
+            }
+            to{
+                left:-2400px;
+            }
+        }
+        .wrap{
+            width: 800px;
+            height: 450px;
+            overflow: hidden;
+            position: relative;
+            margin:100px auto;
+            border:10px solid;
+        }
+        .box{
+            width: 3200px;
+            font-size:0;
+            overflow: hidden;
+            position: absolute;
+            left:0;
+            top:0;
+            animation: identifier 10s linear 0s infinite backwards;
+        }
+        img{
+            float:left;
+            width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="box">
+            <img src="img01/1.jpg" alt="">
+            <img src="img01/2.jpg" alt="">
+            <img src="img01/3.jpg" alt="">
+            <img src="img01/1.jpg" alt="">
+        </div>
+    </div>
+</body>
+</html>

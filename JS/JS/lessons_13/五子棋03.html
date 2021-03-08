@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../layui-v2.5.5/layui/css/layui.css">
+    <style>
+        *{margin:0;padding:0;}
+        #wrap{
+            width: 550px;
+            height: 550px;
+            background:rgb(228, 191, 123);
+            position:relative;
+            margin:0 auto;
+        }
+        #box{
+            width: 500px;
+            height: 500px;
+            position:absolute;
+            left:25px;
+            top:25px;
+            background:palegoldenrod;
+        }
+        .line{
+            position:absolute;
+            background:#000;
+        }
+        .chess{
+            position:absolute;
+            border-radius:50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="box"></div>
+    </div>
+</body>
+<script src="../lessons_12/jq.js/jquery.js"></script>
+<!-- <script src="../../layui-v2.5.5/layuilayui.js"></script> -->
+<script src="五子棋03.js"></script>
+<script>
+// 创建棋盘对象
+var map = new ChessMap(50);
+// 绘制棋盘
+map.draw();
+// 添加点击
+map.on();
+</script>
+</html>

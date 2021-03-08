@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        input {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" value="">
+    <br>
+    <input type="text" value="">
+    <br>
+    <button>注册</button>
+</body>
+<script>
+    var inps = document.querySelectorAll('input');
+    var btn = document.querySelector('button');
+    // var uname,password;
+    // inps[0].onchange = function(){
+    //     uname = this.value;
+    //     console.log(uname)
+    // }
+    // inps[1].onchange = function(){
+    //     password = this.value;
+    //     console.log(password)
+    // }
+
+    // btn.onclick = function(){
+    //     var u= inps[0].value;
+    //     var p = inps[1].value;
+    //     // localStorage.name = uname;
+    //     // localStorage.word = password;
+    //     location.assign('登录网页.html');
+    //     localStorage.setItem('uname',u);
+    //     localStorage.setItem('password',p);
+    // }
+
+    btn.onclick = function () {
+        var uname = inps[0].value;
+        var password = inps[1].value;
+
+        if(localStorage.getItem(uname)){
+            alert('该账号已存在');
+        }else{
+            localStorage.setItem(uname,password);
+            location.href = '登录网页.html';
+        }
+        // // 先去判断当前账号是否已经被注册
+        // // 1.取出uname作为key下存储的value
+        // var un = localStorage.uname;
+        // var ps = localStorage.password;
+        // if (un) {
+        //     un = un.split(',');//数组
+        //     if (un.indexOf(uname) > -1) {
+        //         alert('该账号已注册');
+        //     } else {
+        //         un.push(uname);
+        //         if (ps) {
+        //             ps = ps.split(',');
+        //             ps.push(password);
+        //         }
+        //         localStorage.uname = un.join(',');
+        //         localStorage.password = ps.join(',');
+        //         alert('注册成功');
+        //         location.href = '登录网页.html';
+        //     }
+        // } else {
+        //     un = [uname];
+        //     ps = [password];
+        //     localStorage.uname = un.join(',');
+        //     localStorage.password = ps.join(',');
+        //     alert('注册成功');
+        //     location.href = '登录网页.html';
+        // }
+    }
+</script>
+
+</html>

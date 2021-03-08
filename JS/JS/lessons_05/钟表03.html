@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 表盘 */
+        #wrap {
+            width: 500px;
+            height: 500px;
+            border: 20px solid green;
+            border-radius: 50%;
+            position: relative;
+            box-shadow:inset 1px 1px 10px 10px gray;
+        }
+
+        /* 表针 */
+        /* 时针 */
+        .needle {
+            position: absolute;
+            transform-origin: center bottom;
+            z-index: 10;
+        }
+
+        #hNeedle {
+            width: 10px;
+            height: 130px;
+            background: #333;
+            left: calc(50% - 5px);
+            top: 120px;
+            border-radius: 50% 50% 0 0;
+        }
+
+        #mNeedle {
+            width: 6px;
+            height: 160px;
+            background: #bbbbbb;
+            left: calc(50% - 3px);
+            top: 90px;
+            border-radius: 50% 50% 0 0;
+        }
+
+        #sNeedle {
+            width: 2px;
+            height: 200px;
+            background: #333;
+            left: calc(50% - 1px);
+            top: 50px;
+            border-radius: 50% 50% 0 0;
+        }
+
+        /* 钉子 */
+        #point {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #333;
+            position: absolute;
+            left: calc(50% - 8px);
+            top: calc(50% - 8px);
+            z-index: 20;
+        }
+
+        /* 刻度 */
+        .scale {
+            width: 4px;
+            height: 8px;
+            background: #000;
+            position: absolute;
+            left: calc(50% - 2px);
+            top: 0;
+            /* 设置旋转参照点 */
+            transform-origin: center 250px;
+        }
+
+        .scale:nth-child(5n+1) {
+            height: 16px;
+        }
+
+        /* .scale:nth-child(5n+1)::after{
+            content:'12';
+        } */
+        /* 装数字容器的容器 */
+        .num_f{
+            width: 60px;
+            height: 30px;
+            position: absolute;
+            left: calc(50% - 30px);
+            top: 25px;
+            /* 设置旋转参照点 */
+            transform-origin: center 225px;
+        }
+        /* 装数字的容器 */
+        .num{
+            /* height:30px; */
+            font-size:30px;
+            line-height: 30px;
+            text-align: center;
+        }
+        .box {
+            position: absolute;
+            top: 280px;
+            left: calc(50% - 83px);
+            z-index: 9;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid;
+            text-align: center;
+            line-height: 50px;
+            background: gray;
+            color: #fff;
+            display: inline-block;
+            /* border-radius: 50%; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <!-- 刻度 -->
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <div class="scale"></div>
+        <!-- 数字 -->
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+       <div class="num_f"><div class="num"></div></div>
+        <!-- 表针 -->
+        <div class="needle" id="hNeedle"></div>
+        <div class="needle" id="mNeedle"></div>
+        <div class="needle" id="sNeedle"></div>
+        <!-- 钉子 -->
+        <div id="point"></div>
+        <div class="box">
+            <h3></h3>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+        </div>
+    </div>
+</body>
+<script>
+    //1. 获取操作元素
+    var wrap = document.getElementById('wrap');
+    var ns = document.getElementsByClassName('needle'),// 表针
+        ss = document.getElementsByClassName('scale'),//刻度
+        nums = document.getElementsByClassName('num'),//数字
+        num_fs =document.getElementsByClassName('num_f');//数字容器
+    // 2.实现刻度的布局
+    for (var i = 1; i < ss.length; i++) {
+        ss[i].style.transform = 'rotate(' + (i * 6) + 'deg)';
+        var r = Math.round(Math.random() * 255),
+            g = Math.round(Math.random() * 255),
+            b = Math.round(Math.random() * 255);
+        ss[i].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+    for(var i = 0;i<num_fs.length;i++){
+        nums[i].innerHTML = i+1;
+        num_fs[i].style.transform = 'rotateZ('+(i+1)*30+'deg)';
+        nums[i].style.transform = 'rotateZ('+(i+1)*-30+'deg)';
+    }
+    // 3.表针移动:10:25:43
+    // var sd = 43*6;//秒
+    // ns[2].style.transform = 'rotate('+sd+'deg)';
+    // var md = 25*6+43/10;//分
+    // ns[1].style.transform = 'rotate('+md+'deg)';
+    // var hd = 10*30+25/2+43/120;//时
+    // ns[0].style.transform = 'rotate('+hd+'deg)';
+    var date = new Date();//获取当前系统时间
+    // var hour = date.getHours()>12?date.getHours()-12:date.getHours();//时
+    var h = date.getHours();
+    h > 12 ? h -= 12 : h;//时
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    // 计算角度
+    var sd = s * 6;
+    var md = m * 6 + s / 10;
+    var hd = h * 30 + m / 2 + s / 120;
+    // 设置样式
+    ns[2].style.transform = 'rotate(' + sd + 'deg)';
+    ns[1].style.transform = 'rotate(' + md + 'deg)';
+    ns[0].style.transform = 'rotate(' + hd + 'deg)';
+    var ces = document.getElementsByClassName('cell');
+    ces[0].innerHTML = h + 12;
+    ces[1].innerHTML = m;
+    ces[2].innerHTML = s;
+    var r = Math.round(Math.random() * 255),
+        g = Math.round(Math.random() * 255),
+        b = Math.round(Math.random() * 255);
+    wrap.style.borderColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+    clock();
+    setInterval(clock, 500);
+    function clock() {
+        var date = new Date();//获取当前系统时间
+        // var hour = date.getHours()>12?date.getHours()-12:date.getHours();//时
+        var h = date.getHours();
+        h > 12 ? h -= 12 : h;//时
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        // 计算角度
+        var sd = s * 6;
+        var md = m * 6 + s / 10;
+        var hd = h * 30 + m / 2 + s / 120;
+        ns[2].style.transform = 'rotate(' + sd + 'deg)';
+        ns[1].style.transform = 'rotate(' + md + 'deg)';
+        ns[0].style.transform = 'rotate(' + hd + 'deg)';
+        var ces = document.getElementsByClassName('cell');
+        ces[0].innerHTML = db(h + 12);
+        ces[1].innerHTML = db(m);
+        ces[2].innerHTML = db(s);
+       
+        var r = Math.round(Math.random() * 255),
+            g = Math.round(Math.random() * 255),
+            b = Math.round(Math.random() * 255);
+        wrap.style.borderColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+        ces[0].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+        ces[1].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+        ces[2].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+        for (var i = 1; i < ss.length; i++) {
+            var r = Math.round(Math.random() * 255),
+                g = Math.round(Math.random() * 255),
+                b = Math.round(Math.random() * 255);
+            ss[i].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+            ns[0].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+            ns[1].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+            ns[2].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+        }
+    }
+    function db(x) {
+        x < 10 ? x = '0' + x : x;
+        return x;
+    }
+</script>
+
+</html>

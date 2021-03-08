@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var str = '11qwe0rt22yuiop33asdfgh44jklzxcvbnm23333';
+    var str1 = '12345678901';
+    var reg1 = /^/
+    // 找出字符串中所有的数字并同一输出
+    var arr = str.split('');
+    console.log(arr);
+    // 利用数字字符*数字 字母字符*数字
+    var num = []; 
+    for (var i = 0; i < arr.length; i++) {
+        // var p = arr[i] * 1;
+        // if (p || p == 0) {
+        //     num.push(p);
+        // }
+        if(str[i]>=0 && str[i]<=9){
+            num.push(str[i]);
+        }
+    }
+    console.log(num);
+
+    // str += 'a';
+    var newstr = '';
+    var newarr = [];
+    for(var i=0;i<=str.length;i++){
+        var p = arr[i];
+        if(p>=0&& p<=9){
+            newstr += p;
+        }else{
+            newstr?newarr.push(newstr):111;
+            newstr = '';
+        }
+    }
+    console.log(newarr);
+    // 正则表达式
+    console.log(str.match(/\d/g));
+    console.log(str.match(/\d+/g));
+</script>
+
+</html>

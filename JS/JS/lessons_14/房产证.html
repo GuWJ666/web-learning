@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text">
+    <input type="button" value="确认">
+    <br>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var inps = document.querySelectorAll('input');
+    var cf = cv.getContext('2d');
+
+    var img = new Image();
+    img.src = 'img/20131109195648t9.jpg';
+    img.onload = function () {
+        cf.drawImage(img, 50, 0, 800, 478, 0, 0, cv.width + 300, cv.height)
+    }
+
+    // function Pen(t) {
+    //     this.t = t;
+    // }
+    // Pen.prototype.write = function () {
+    //     cf.font = '30px 楷体';
+    //     cf.fillText(this.t, 150, 80);
+    // }
+
+    inps[1].onclick = function () {
+        var val = inps[0].value;
+        var img = new Image();
+        img.src = 'img/20131109195648t9.jpg';
+        img.onload = function () {
+            cf.drawImage(img, 50, 0, 800, 478, 0, 0, cv.width + 300, cv.height)
+            cf.font = '18px 楷体';
+            cf.fillStyle = '#333';
+            cf.fillText(val, 160, 78)
+        }
+        // console.log(val);
+        // var pen = new Pen(val);
+        // pen.write();
+    }
+</script>
+
+</html>

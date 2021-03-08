@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件监听</title>
+    <style>
+        div{
+            width: 500px;   
+            height: 500px;
+            background: red;
+            padding:100px;
+        }
+        #r{
+            background: red;
+        }
+        #g{
+            background: green;
+        }
+        #b{
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="r" >
+        <div id="g">
+            <div id="b">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // 为元素添加事件处理程序方式：
+
+    // 1.元素行间绑定：通过元素的onclick属性
+    // 局限性：
+    // 1）不适合代码量较大的事件处理程序
+    // 2) 如果要赋值函数，必须要写函数的调用，导致函数中的关键字this不在指向当前元素，而是window
+
+    // function fn() {
+    //         console.log(this);
+    //         document.body.style.background = 'green';
+    //         alert('234');
+    //     }
+
+
+    // 2.DOM 0 级绑定事件处理程序：el.onclick = function(){},不管行间绑定还是DOM绑定，在各个浏览器上不存在兼容问题
+    // 局限性：
+    // 1）当我们为同一个元素多次绑定同一类型的事件，那么事件的处理程序会发生覆盖现象，以最后一次为准
+    // var d = document.querySelector('div');
+    //     d.onclick = function () {
+    //         console.log(111);
+    //     }
+    //     d.onclick = function () {
+    //         console.log(222);
+    //     }
+
+    // 2）DOM 0 级只支持事件冒泡，不支持事件捕获
+        // 事件流：页面中事件发生后，元素对事件处理的触发顺序
+        // 事件冒泡流：事件触发的顺序，是从最确定的元素，向最不确定的元素传播
+        // 事件捕获：事件触发的顺序，是从最不确定的元素，向最确定的元素传播
+    // var ds = document.querySelectorAll('div');
+    // ds[0].onclick = function(){alert('red')}
+    // ds[1].onclick = function(){alert('green')}
+    // ds[2].onclick = function(){alert('blue')}
+    // document.body.onclick = function(){alert('body')}
+    // document.documentElement.onclick = function(){alert('html')}
+    // 3）事件移除el.onclick = null;
+
+    // 3.DOM2级事件处理程序绑定（事件监听）
+    // addEventListener(type,fn,bool)    添加事件监听
+    // 参数一：string,表示事件类型，例如点击事件-->'click';必须参数
+    // 参数二：function,表示事件触发时要执行的操作，必须参数
+    // 参数三：boolean，表示事件被添加到哪个事件流中，可选参数，默认值为false事件冒泡，默认值为true事件捕获
+
+    // 1)事件捕获的发生要优先于事件冒泡
+    // 2）当为同一个元素多次绑定同一类型事件，不会发生覆盖，会按照绑定顺序依次执行
+    // 3）事件处理程序的移除: removeEvenListener(),参数情况和添加时一样
+    // 注意：如果绑定的事件将来需要移除，那么绑定时处理程序就不能使用匿名函数
+    // 4)addEventListener存在兼容问题，IE8及以下不支持，IE 低版本使用的DOM2级为：attachEvent(),detachEvent();不支持事件捕获
+    // attachEvent('onclick',fn)
+    // detachEvent('onclick',fn)
+    var ds = document.querySelectorAll('div');
+    ds[0].addEventListener('click',red,true)
+    ds[1].addEventListener('click',function(){alert('green')},false)
+    ds[2].addEventListener('click',function(){alert('blue')},true)
+
+    // ds[0].removeEventListener('click',red,false)
+    function red(){
+        alert('red');
+    }
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!--
+ * @Author: guwenjiang
+ * @Date: 2020-12-23 10:57:49
+ * @LastEditors: guwenjiang
+ * @LastEditTime: 2020-12-23 13:58:02
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="10">
+    <title>page_4：图像</title>
+</head>
+<body>
+    <!--img
+        空标签，只有属性，没有闭合标签
+        src属性：source，指的是图像的url地址
+        alt属性：定义一串预备的可替换的文本
+        height：定义图像的高度
+        width：定义图像的宽度
+        usemap: 将图像定义为客户端图像映射
+        ismap：将图像定义为服务器端图像映射
+        crossorigin：设置图像的跨域属性（anonymous、use-credentials）
+                    anonymous会在请求的header中带上origin属性，但不会带上cookie的其他认证信息
+                    use-credentials 会将cookie的其它认证信息都带上
+    -->
+    <img src="../../note/BG/熊猫1.jpg" 
+         alt="熊猫" 
+         width="600" 
+         height="300"
+         usemap="#pandaMap">
+
+    <!--map
+        用于客户端图像映射（有可点击区域的一副图像）
+        name属性：定义map与img对应的标识
+        id属性：xhtml中name属性已经废弃，使用id替换
+    -->
+    <map name="pandaMap">
+        <!--area 
+            定义图像映射内部的区域
+            嵌套在map标签内部
+            shape：规定区域的形状（default、rect、circle、poly）
+            coords：规定区域的坐标,单位px
+                        shape属性值为rect，定义矩形，有四个值，前两个为左上角(x1,y1)坐标，后两个为右下角(x2,y2)坐标
+                        shape属性值为circle，定义圆形，有三个值，前两个为圆心坐标，第三个为半径
+                        shape属性值为poly，定义多边形，x1,y1,x2,y2...
+            href：规定区域的url
+            alt：规定区域的替代文本，如果使用href属性，该属性为必需
+            target：规定在何处打开url（_blank、_parent、_self、_top、frame）
+            hreflang：规定目标url的语言（新属性）
+            media：规定目标url是为何种媒介优化的（新属性）
+            rel：规定当前文档与目标url之间的关系（新属性）
+            type：规定目标url的MIME（多用途互联网邮件拓展类型）类型，如text/css、iamge/png...(新属性)
+         -->
+        <area shape="rect" coords="0,0,50,50" alt="基础" href="./page_1基础.html">
+        <area shape="circle" coords="275,125,25" href="./page_2文本格式化.html" alt="文本格式化" target="_blank" hreflang="en" media="screen and (max-height: 500px)" rel="help(链接到帮助文档)" type="text/html">
+    </map>
+</body>
+</html>

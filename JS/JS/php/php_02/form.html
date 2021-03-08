@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 
+        form标签的属性
+            1.action：表示将表单数据提交的地址
+              服务器上后台文件的地址
+            2.method：表单数据提交到action的方式
+              get/post，不区分大小写
+
+            get和post请求之间的区别
+            1.get请求会将请求提交的参数暴露在url上，不安全；而post请求相对安全
+            2.get请求所发送的数据量要远远小于post请求
+            3.get请求简单粗暴，直接将参数拼接在url后面发送请求，所以get请求请求的速度要比post请求快
+
+            如果单纯的请求数据，并不向服务器发送数据，那么通常选择get请求
+            如果需要向服务器发送大量数据，或者发送的数据中包含敏感信息通常使用post请求
+        input标签的属性
+            name:表单数据提交时，对应的key，是需要前后台进行商定的
+
+     -->
+    <form action="http://localhost/php/php_02/form.php" method="post">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var num;//随机数
+        sum = 0;//总和
+    for(var i = 1;i < 11;i++){//循环10次
+        num = Math.round(Math.random()*99)+1;//10个随机数//num = Math.floor(Math.random()*101);
+        // console.log(num);//输出所有的随机数
+        if(num>50){//其中所有大于50的随机数
+            console.log(num);
+           sum += num;//其中所有大于50的随机数之和
+        }
+    }
+    alert(sum);
+</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <mynav :list="msg"/>
+        <input type="text" v-model="sname">
+        <input type="text" v-model="cname">
+        <input type="submit" @click="send">
+        <h1 v-if="msg.length>0">{{msg}}</h1>
+        <ol v-if="list.length>0">
+            <li v-for="x in newList">{{x}}</li>
+        </ol>
+    </div>
+</body>
+<script src="./vue.min.js"></script>
+<script src="../lessons_12/jq.js/jquery.min.js"></script>
+<script>
+    // 自定义组件
+    Vue.component('mynav',{
+        props:['list'],
+        template:
+        `<nav>
+            <a href="http://www.baidu.com">百度</a>
+            <a href="http://www.taobao.com">淘宝</a>
+            <a href="http://www.jd.com">京东</a>
+            <a href="http://www.baidu.com">百度</a>   
+         </nav>
+        `//模板
+    })
+    let app = new Vue({
+        el: '#app',
+        data: {//数据模型
+            msg: '',
+            sname: "",
+            cname: "",
+            list:[]
+        },
+        components:[{
+
+        }],
+        computed:{
+            newList(){
+                // return this.list.map(function(){
+
+                // })
+                let arr = [];
+                for(let i=0;i<this.list.length;i++){
+                    if(this.list[i] != this.sname){
+                        arr.push(this.list[i]);
+                    }
+                }
+                return arr;
+            }
+        },
+        methods: {
+            send() {
+                var sname = this.sname;
+                var cname = this.cname;
+                var _this = this;
+                $.ajax({
+                    url: 'http://1.xah190604.applinzi.com/test.php',
+                    type: 'post',
+                    async: true,//异步请求
+                    data: {
+                        sname: sname,
+                        cname: cname
+                    },
+                    success: function (res) {
+                        // 请求成功回调存在三个参数，
+                        // 第一个是服务器的返回结果，string
+                        // 第二个是status，string：success/error
+                        // 第三个是xhr对象
+                        // console.log(x, y, z);
+                        console.log(res);
+                        // _this.msg = res;
+                        if(res.length>20){
+                            _this.list = JSON.parse(res);
+                            _this.msg = '';
+                        }else{
+                            _this.msg = res;
+                            _this.list = [];
+                        }
+                    }
+                });
+            }
+        },
+        watch:{
+            
+        }
+    })
+</script>
+
+</html>

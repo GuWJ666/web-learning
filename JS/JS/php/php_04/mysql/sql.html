@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        th,
+        td {
+            text-align: center;
+            border: 1px solid #333;
+            height: 50px;
+        }
+
+        .delete,
+        .revise {
+            cursor: pointer;
+        }
+
+        div {
+            width: 250px;
+            background: #ddd;
+            padding: 70px;
+            padding-right: 0;
+            position: absolute;
+            display: none;
+        }
+
+        input {
+            display: block;
+            height: 30px;
+        }
+
+        #upload {
+            width: 80px;
+            height: 40px;
+            font-size: 20px;
+            color: #fff;
+            border-radius: 5px;
+            background: lightblue;
+            margin: 20px 0 0 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" value="添加" id="btn">
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>age</th>
+                <th>sex</th>
+                <th>tel</th>
+                <th colspan="2">操作</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <!-- <tr>
+            <td>001</td>
+            <td>张辉</td>
+            <td>36</td>
+            <td>nan</td>
+            <td>1454354354353</td>
+            <td class="delete">删除</td>
+            <td class="revise">修改</td>
+        </tr> -->
+    </table>
+    <div>
+        学号：
+        <input type="text">
+        姓名：
+        <input type="text">
+        年龄：
+        <input type="text">
+        性别：
+        <input type="text">
+        电话：
+        <input type="text">
+        <input type="button" value="确认" id="upload">
+    </div>
+</body>
+<script src="../../../jq.js/jquery.js"></script>
+<script>
+    $(function () {
+        
+        $.post('http://localhost/php/php_04/mysql/check.php',function(res){
+            var data = JSON.parse(res);
+            for(var i=0;i<data.length;i++){
+                $('<tr><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].age + '</td><td>' + data[i].sex + '</td><td>' + data[i].tel + '</td><td class="delete">删除</td><td class="revise">修改</td></tr>').appendTo('tbody');
+            }
+        })
+
+        // 添加的点击事件
+        $('#btn').click(function () {
+            $('div').slideDown(500);
+        })
+        // 确认的点击事件
+        $('#upload').click(function () {
+            $('div').slideUp(500);
+            // 获取value值
+            var pnum = $('input').eq(1).val();
+            var pname = $('input').eq(2).val();
+            var page = $('input').eq(3).val();
+            var psex = $('input').eq(4).val();
+            var ptel = $('input').eq(5).val();
+            // 发送请求到服务器
+            $.ajax({
+                url: 'http://localhost/php/php_04/mysql/sql.php',
+                type: 'post',
+                async: true,
+                data: {
+                    id: pnum,
+                    name: pname,
+                    age: page,
+                    sex: psex,
+                    tel: ptel
+                },
+                success: function (x) {
+                    $('tbody').empty();
+                    var data = JSON.parse(x);
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        $('<tr><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].age + '</td><td>' + data[i].sex + '</td><td>' + data[i].tel + '</td><td class="delete">删除</td><td class="revise">修改</td></tr>').appendTo('tbody');
+                    }
+                }
+            })
+        })
+        // 删除的点击事件
+        $.each('.delete',function(x,y){
+            
+        })
+    })
+</script>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 800px;
+            height: 250px;
+            border: 10px solid antiquewhite;
+            padding-top: 250px;
+            margin:0 auto;
+        }
+
+        span{
+            color: #000;
+            font-size: 18px;
+            cursor: pointer;
+            display: inline-block;
+            width: 52px;
+            margin-right: 10px;
+            text-align:center;
+        }
+
+        #btn>span:nth-child(5) {
+            margin-right: 0;
+        }
+
+        #btn {
+            width: 300px;
+            margin: 0 auto;
+            font-size: 0;
+            /* padding:0 10px; */
+            position: relative;
+        }
+
+        #warn {
+            width: 52px;
+            height: 5px;
+            background: gray;
+            position: absolute;
+            left: 0;
+            top: 26px;
+            transition: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="btn">
+            <span>按钮1</span>
+            <span>按钮2</span>
+            <span>按钮3</span>
+            <span>按钮4</span>
+            <span>按钮5</span>
+            <div id="warn"></div>
+        </div>
+
+    </div>
+</body>
+<script>
+    //获取按钮容器用来得到他的宽度
+    var btn = document.getElementById('btn');
+    //获取span来设置点击事件
+    var sps = document.getElementsByTagName('span');
+    // 获取div，点击span来让div移动
+    var warn = document.getElementById('warn');
+    // 给按钮设置点击事件
+    // sps[0].onclick = function(){
+    //     // 移动距离
+    //     var s = 0;
+    //     warn.style.left = s + 'px';
+    // }
+    // sps[1].onclick = function(){
+    //     // 移动距离
+    //     var s = warn.offsetWidth + 10;
+    //     warn.style.left = s + 'px';
+    // }
+    // sps[2].onclick = function(){
+    //     // 移动距离
+    //     var s = warn.offsetWidth * 2 + 10*2;
+    //     warn.style.left = s + 'px';
+    // }
+    // sps[3].onclick = function(){
+    //     // 移动距离
+    //     var s = warn.offsetWidth*3 + 10*3;
+    //     warn.style.left = s + 'px';
+    // }
+    // sps[4].onclick = function(){
+    //     // 移动距离
+    //     var s = warn.offsetWidth*4 + 10*4;
+    //     warn.style.left = s + 'px';
+    // }
+    for (i = 0; i < sps.length; i++) {
+        (function (i) {
+            sps[i].onclick = function () {
+                // 移动距离
+                var s = warn.offsetWidth * i + 10 * i;
+                warn.style.left = s + 'px';
+            }
+        })(i)
+    }
+</script>
+
+</html>

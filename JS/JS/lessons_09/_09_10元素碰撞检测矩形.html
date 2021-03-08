@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            height: 500px;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        #wrap>div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            text-align: center;
+            line-height: 100px;
+            font-size: 30px;
+            color: #fff;
+        }
+
+        #b1 {
+            background: red;
+
+        }
+
+        #b2 {
+            background: yellow;
+            left: 100px
+        }
+
+        #b3 {
+            background: chartreuse;
+            left: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="b1">1</div>
+        <div id="b2">2</div>
+        <div id="b3">3</div>
+    </div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap'),
+        b1 = document.getElementById('b1'),
+        b2 = document.getElementById('b2');
+    var ds = document.getElementsByTagName('div');
+    for (var i = 1; i < ds.length; i++) {
+        ds[i].index = i;
+        ds[i].onmousedown = function (e) {
+            var e = e || window.event;
+            var x = e.clientX - this.offsetLeft;
+            var y = e.clientY - this.offsetTop;
+            var _this = this;
+            wrap.onmousemove = function (e) {
+                var e = e || window.event;
+                var n = e.clientX - x;
+                var m = e.clientY - y;
+                if (n < 0) {
+                    n = 0;
+                }
+                if (m < 0) {
+                    m = 0;
+                }
+                if (n > wrap.clientWidth - _this.clientWidth) {
+                    n = wrap.clientWidth - _this.clientWidth;
+                }
+                if (m > wrap.clientHeight - _this.clientHeight) {
+                    m = wrap.clientHeight - _this.clientHeight;
+                }
+                _this.style.left = n + 'px';
+                _this.style.top = m + 'px';
+
+                // 检测碰撞
+                for (var i = 1; i < ds.length; i++) {
+                    if(_this.index == i){
+                        continue;
+                    }
+                    if(crash(_this,ds[i])){
+                        ds[i].innerHTML = '碰';
+                    }else{
+                        ds[i].innerHTML = ds[i].index;
+                    }
+                    // if (crash(_this, ds[i])) {
+                    //     // 碰撞
+                    //     _this.innerHTML = '碰';
+                    //     break;
+                    // }else{
+                    //     _this.innerHTML = '';
+                    // }
+                }
+                // if(i == ds.length){
+                //     _this.innerHTML = ds[i].index;
+                // }
+            }
+            wrap.onmouseup = function () {
+                wrap.onmousemove = null;
+            }
+            wrap.onmouseleave = function () {
+                wrap.onmousemove = null;
+            }
+        }
+    }
+
+
+    // 用来指定元素是否存在重叠部分（碰撞检测）
+    function crash(el1, el2) {
+        // 1.获取元素的位置信息
+        var l1 = el1.offsetLeft,
+            r1 = l1 + el1.offsetWidth,
+            t1 = el1.offsetTop,
+            b1 = t1 + el1.offsetHeight,
+
+            l2 = el2.offsetLeft,
+            r2 = l2 + el2.offsetWidth,
+            t2 = el2.offsetTop,
+            b2 = t2 + el2.offsetHeight;
+
+        // 条件判断
+        if (b1 < t2 || r1 < l2 || t1 > b2 || l1 > r2) {
+            // 一定不会发生碰撞
+            return false;
+        }
+        // 一定发生了碰撞
+        return true;
+
+        //  // 条件判断
+        // if (b1 > t2 && r1 > l2 && t1 < b2 && l1 < r2) {
+        //     // 一定发生碰撞
+        //     return true;
+        // }
+        // // 一定不会发生碰撞
+        // return false;
+    }
+    
+</script>
+
+</html>

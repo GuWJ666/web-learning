@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 本地存储：window.localStorage
+    // 可以将数据永久的存储在浏览器上，只要没有人删除，将一直存在，存储大小5MB左右，存储的数据类型：string，存储形式：key/value
+    // 存储方法：
+    // 方法1：
+    localStorage.setItem('uname1','校长');
+    // 方法2：
+    localStorage.uname2 = '小王';
+    // 1.会将存储的值自动转化成string类型
+    // 2.为相同的key多次赋值，会发生覆盖，只会存储最后一次所赋值
+
+    // 读取方法：
+    console.log(localStorage.getItem('uname3'));
+    console.log(localStorage.uname3);
+    // 删除方法
+    localStorage.removeItem('uname');
+
+    // 清空方法；
+    localStorage.clear();
+
+    // 会话存储：与本地存储功能，特点，用法一摸一样，区别在于，会话存储所储存的数据是临时性的，当浏览器关闭会被自动删除。
+     
+    sessionStorage.setItem('uname','rose');
+</script>
+</html>

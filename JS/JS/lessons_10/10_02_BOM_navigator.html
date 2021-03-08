@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // window.navigator 属性包含了当前浏览器的相关信息
+    // 通常使用此属性进行浏览器类型以及版本的辨别，称为浏览器嗅探
+    // 浏览器嗅探主要通过navigator对象的userAgent属性包含浏览器名称的相关信息去判断浏览器类型。
+    console.log(navigator.userAgent);
+    var msg = navigator.userAgent;
+    if (msg.indexOf('Firefox') > -1) {
+        alert('火狐');
+    } else if (msg.indexOf('OPR') > -1) {
+        alert('欧鹏');
+    } else if (msg.indexOf('MSIE') > -1) {
+        alert('IE');
+    } else if (msg.indexOf('Chrome') > -1) {
+        alert('谷歌');
+    }
+    // IE:Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; .NET CLR 2.0.50727; .NET CLR 3.0.30729; .NET CLR 3.5.30729; Tablet PC 2.0; rv:11.0) like Gecko
+    // chrome:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36
+    // FF:Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0
+    // OPR:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36 OPR/64.0.3417.73
+</script>
+
+</html>

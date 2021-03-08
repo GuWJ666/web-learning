@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 一桶水，每次到处一半，当桶里的水不足1ms的时候，桶里没水，桶容积5L，问桶到多少次就没水了？
+    // var count = 0,l = 5000;
+    // while(l>=1){
+    //     l /= 2;
+    //     count++;
+    // }console.log(count);
+
+    function cNum (c,l){
+        l /= 2;
+        if(l>=1){
+            c++;
+            return cNum(c,l);
+        }else{
+            return c;
+        }
+    }
+    console.log(cNum(0,5000));
+</script>
+</html>

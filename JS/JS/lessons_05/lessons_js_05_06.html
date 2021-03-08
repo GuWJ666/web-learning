@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* div {
+            width: 300px;
+            height: 300px;
+            text-align: center;
+            line-height: 300px;
+            font-size: 30px;
+            border: 5px solid #333;
+            float: left;
+            margin: 5px;
+        }
+        .active {
+            background: pink;
+            font-size: 50px;
+            color: #000;
+            text-shadow: 2px 3px 4px 5px #000;
+            box-shadow: 1px 1px 5px 5px #000;
+        } */
+        #wrap {
+            width: 800px;
+            height: 500px;
+            border: 5px solid #000;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="active" class="active">click1</div>
+    <div>click2</div> -->
+    <div id="wrap">
+        <div class="ball">1</div>
+    </div>
+</body>
+<script>
+    // var ds = document.getElementsByTagName('div');
+    // ds[0].onclick = function () {
+    //     //通过元素的id属性，读写元素的id属性值
+    //     // this.id = 'active';
+    //     // ds[1].id = '';
+    //     // 通过元素的className属性，读写元素的属性值
+    //     this.className = 'active';
+    //     ds[1].className = '';
+    // }
+    // ds[1].onclick = function () {
+    //     // this.id = 'active';
+    //     // ds[0].id = '';
+    //     this.className = 'active';
+    //     ds[0].className = '';
+    // }
+    var wrap = document.getElementById('wrap');
+    var ball = document.getElementsByClassName('ball')[0];
+    var w = ball.offsetWidth;
+    var p = ball.offsetLeft;
+    var mw = wrap.clientWidth;
+    var timer1 = null;
+    var timer2 = null;
+    var dir = true;
+    var x = 0;
+    var v = 3;
+    // 速度
+    wrap.onclick = function(){
+        if(!timer1){
+            timer1 = setInterval(function(){
+                var n = ball.offsetLeft + v;
+                ball.style.left = n + 'px';
+                   ball.style.transform = 'rotateZ('+n+'deg)'
+                if(n >= mw-w){
+                    n = mw-w;
+                    v *= -1;
+                }
+                if(n <= 0){
+                    n = 0;
+                    v *= -1;
+                }
+            },20)
+        }
+    }
+    // 自加自减
+    // wrap.onclick = function () {
+    //     if (!timer1) {
+    //         timer1 = setInterval(function () {
+    //             if (dir) {
+    //                 x += 3;
+    //             } else {
+    //                 x -= 3;
+    //             }
+    //             if (x >= mw - w) {
+    //                 x = mw - w;
+    //                 dir = false;
+    //             }
+    //             if (x <= 0) {
+    //                 x = 0;
+    //                 dir = true;
+    //             }
+    //             ball.style.left = x + 'px';
+    //         }, 20)
+    //     }
+    // }
+    // 两个定时器
+    //  wrap.onclick = function () {
+    //     var x = 0;
+    //     if (!timer1) {
+    //         timer1 = setInterval(function ss() {
+    //             x += 4;
+    //             if (x >= mw - w) {
+    //                 x = (mw - w);
+    //                 clearInterval(timer1);
+    //                 setInterval(function aa() {
+    //                     x -= 4;
+    //                     if (x <= 0) {
+    //                         x = 0; 
+    //                         clearInterval(timer2);
+    //                     }
+    //                     ball.style.left = x + 'px';
+    //                     ball.style.transform = 'rotateZ(' + x + 'deg)';
+    //                 }, 20)
+    //             }
+    //             ball.style.left = x + 'px';
+    //             ball.style.transform = 'rotateZ(' + x + 'deg)';
+    //         }, 20)
+    //     }
+    // }
+</script>
+
+</html>

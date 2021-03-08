@@ -1,0 +1,313 @@
+<!--
+ * @Author: guwenjiang
+ * @Date: 2020-12-23 15:41:40
+ * @LastEditors: guwenjiang
+ * @LastEditTime: 2020-12-24 17:42:53
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page_6：表单</title>
+    <link rel="stylesheet" href="../CSS/base_form.css">
+    <style>
+        form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 800px;
+            margin: 50px auto;
+        }
+        .formItem {
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .formLabel {
+            width: calc(100% - 200px);
+            text-align: right;
+            padding: 0 10px 0 0;
+        }
+        /* placeholder样式 */
+        ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+            color:    #909;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color:    #909;
+            opacity:  1;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color:    #909;
+            opacity:  1;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color:    #909;
+        }
+    </style>
+</head>
+<body>
+    <!--form
+        创建供用户输入的 HTML 表单
+        accept-charset：规定表单提交时使用的字符编码，UTF-8-Unicode字符编码、ISO-8859-1拉丁字母表的字符编码
+        action：URL，当提交表单时向何处发送数据
+        autocomplete：是否启用表单的自动完成功能（on默认、off）
+        enctype：规定在向服务起发送表单数据之前如何对其进行编码，适用于method=“post”
+                 application/x-www-form-urlencoded,在发送前对所有字符进行编码（将空格转换为 + ，特殊字符转换为ASCLL HEX值键值对）
+                 multipart/form-data，文件上传
+                 text/plain 将空格转换为 + 号，但不编码特殊字符
+
+        method：规定用于发送表单数据的http方法（get、post）
+        name：规定表单的名称
+        novalidate：布尔值，提交表单时不进行验证
+        target：规定在何处打开action URL（_blank、_self、_parent、_top）
+    -->
+    <form action="" autocomplete="on">
+        <!--input
+            在form元素中使用，允许用户输入数据的input控件
+            type：input元素类型，text、password、tel、number、url、search、file、email、checkbox、radio、month、time、week、date、datetime、datetime-local、color、image、range、hidden、reset、button、submit、
+            autocomplete：是否启用自动完成功能
+            autofocus：页面加载时自动获得焦点
+            disabled：禁用
+            form：表单在form标签外边，任然属于form的一部分，通过form标签的id关联
+            formnovalidate：不验证表单
+            max：规定最大值
+            maxlength：最大字符数
+            min：规定最小值
+            name：input元素名称，只有设置了name属性的表单才能传递值
+            pattern：规定验证input元素值的正则表达式
+            placeholder：规定提示信息
+            readonly：规定只读
+            required：规定必填
+            size：以字符数计算的input宽度
+            value：规定元素的值，对于button、submit、reset，定义按钮文本；对于text、password、hidden定义字段的初始值；对于checkbox、radio、image，定义与元素相关的值，是必需的；对于file是无效的
+            list：引用 <datalist> 元素，其中包含 <input> 元素的预定义选项。通过datalist标签的id关联
+        -->
+        <div class="formItem">
+            <label class="formLabel">text</label>
+            <input type="text" list="browsers">
+            <datalist id="browsers">
+                <option value="Internet Explorer">
+                <option value="Firefox">
+                <option value="Google Chrome">
+                <option value="Opera">
+                <option value="Safari">
+            </datalist>
+        </div>
+        <div class="formItem">
+            <!--label
+                为 input 元素定义标注
+                在 label 元素内点击文本，就会触发此控件
+                for：规定label与哪个表单元素关联，通过 input id绑定
+                form：所属一个或多个表单，通过form标签的id关联，多个以空格分隔
+            -->
+            <label for="" class="formLabel">password</label>
+            <input type="password">
+        </div>
+        <div class="formItem">
+            <label for="" class="formLabel">tel</label>
+            <input type="tel">
+        </div>
+        <div class="formItem">
+            <label for="" class="formLabel">number</label>
+            <input type="number">
+        </div>
+        <div class="formItem">
+            <label for="" class="formLabel">url</label>
+            <input type="url">
+        </div>
+        <div class="formItem">
+            <label for="" class="formLabel">email</label>
+            <input type="email">
+        </div>
+        <div class="formItem">
+            <label for="" class="formLabel">search</label>
+            <input type="search">
+        </div>
+        <div class="formItem">
+            <label for="" class="formLabel">file</label>
+            <!--file
+                文件上传
+                accept：规定文件类型（audio/*、video/*、image/*）
+            -->
+            <input type="file">
+        </div>
+        
+        <div class="formItem">
+            <label for="checkbox" class="formLabel">checkbox</label>
+            <!--checkbox
+                多选
+                checked：预先选中
+            -->
+            <input id="checkbox" type="checkbox">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">radio</label>
+            <!--radio
+                单选
+                checked：预先选中
+            -->
+            <input type="radio">
+        </div>
+
+        <!--fieldset
+            对表单相关元素进行分组
+            disabled：禁用组中的表单
+            form：规定组所属的表单
+            name：名称
+          -->
+        <fieldset>
+            <!--legend
+                规定组的标题
+            -->
+            <legend>时间控件</legend>
+            <div class="formItem">
+                <label for="" class="formLabel">month</label>
+                <input type="month">
+            </div>
+            
+            <div class="formItem">
+                <label for="" class="formLabel">time</label>
+                <input type="time">
+            </div>
+            
+            <div class="formItem">
+                <label for="" class="formLabel">week</label>
+                <input type="week">
+            </div>
+            
+            <div class="formItem">
+                <label for="" class="formLabel">date</label>
+                <input type="date">
+            </div>
+    
+            <div class="formItem">
+                <label for="" class="formLabel">datetime</label>
+                <input type="datetime">
+            </div>
+    
+            <div class="formItem">
+                <label for="" class="formLabel">datetime-local</label>
+                <input type="datetime-local">
+            </div>
+        </fieldset>
+
+        <div class="formItem">
+            <label for="" class="formLabel">color</label>
+            <input type="color">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">image</label>
+            <!--image
+                定义图像作为提交按钮
+                formaction：当表单提交时处理控件的文件url
+                formenctype：规定在向服务起发送表单数据之前如何对其进行编码，适用于method=“post”
+                 application/x-www-form-urlencoded,在发送前对所有字符进行编码（将空格转换为 + ，特殊字符转换为ASCLL HEX值键值对）
+                 multipart/form-data，文件上传
+                 text/plain 将空格转换为 + 号，但不编码特殊字符
+                formmethod：规定用于发送表单数据的http方法（get、post）
+                formtarget：规定在何处打开action URL（_blank、_self、_parent、_top）
+                width：规定 <input> 元素的宽度
+                height：规定 <input>元素的高度
+                src：规定显示为提交按钮的图像的 URL
+              -->
+            <input type="image">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">range</label>
+            <input type="range">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">hidden</label>
+            <input type="hidden">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">reset</label>
+            <input type="reset">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">button</label>
+            <input type="button" value="按钮">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">submit</label>
+            <!--submit
+                定义提交按钮
+                formaction：当表单提交时处理控件的文件url
+                formenctype：规定在向服务起发送表单数据之前如何对其进行编码，适用于method=“post”
+                 application/x-www-form-urlencoded,在发送前对所有字符进行编码（将空格转换为 + ，特殊字符转换为ASCLL HEX值键值对）
+                 multipart/form-data，文件上传
+                 text/plain 将空格转换为 + 号，但不编码特殊字符
+                formmethod：规定用于发送表单数据的http方法（get、post）
+                formtarget：规定在何处打开action URL（_blank、_self、_parent、_top）
+              -->
+            <input type="submit" formnovalidate="formnovalidate">
+        </div>
+
+        <div class="formItem">
+            <label for="" class="formLabel">select</label>
+            <!--select
+                定义下拉列表
+                autofocus：自动获取焦点
+                disabled：禁用
+                form：规定所属form表单
+                multiple：为true时，可以多选（ctrl+点击）
+                name：名称
+                required：必填
+                size：可见的下拉数量
+            -->
+            <select name="" id="">
+                <!--optgroup
+                    把相关选项组合在一起
+                    disabled：禁用该组选项
+                    label：该组描述
+                -->
+                <optgroup label="最近节日">
+                    <!--option
+                        定义列表的一个选项
+                        disabled：禁用
+                        label：选项名称
+                        selected：选中状态
+                        value：送往服务器的选项值
+                    -->
+                    <option value="Christmas" label="圣诞">圣诞节</option>
+                    <option value="New Year's Day" selected>元旦</option>
+                </optgroup>
+                <optgroup label="节假日" disabled>
+                    <option value="">春节</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="formItem">
+            <button></button>
+        </div>
+        <div class="formItem">
+            <label for="" class="formLabel">textarea</label>
+            <!--textarea 
+                autofocus：自动获得焦点
+                cols：文本区域可见的宽度
+                rows：文本区域可见的行数
+                disabled：禁用
+                form：所属一个或多个表单，通过form标签的id关联，多个以空格分隔
+                maxlength：最大字符数
+                name：文本区域的名称
+                placeholder：简短的提示
+                readonly：只读
+                required：必填
+                wrap：规定表单提交时文本的换行，默认soft，不会插入换行符，hard会插入换行符
+             -->
+            <textarea name="" id="" cols="25" rows="2"></textarea>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 500px;
+            height: 500px;
+            background: green;
+            display: flex;
+            justify-content: space-around;
+            align-content: space-around;
+            margin: 50px auto;
+            flex-flow: wrap row;
+        }
+
+        .items {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-content: space-around;
+            flex-flow: wrap row;
+        }
+
+        .item {
+            border-radius: 20px;
+        }
+
+        .pink {
+            background: pink;
+        }
+
+        .purple {
+            background: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap"></div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap');
+    var level = 1;
+
+    creat()
+
+    function creat() {
+        var h = wrap.clientWidth / level - 4;
+        for (var i = 0; i < level; i++) {
+            var items = document.createElement('div');
+            items.className = 'items';
+            items.style.height = h + 'px';
+            wrap.appendChild(items);
+            for (var j = 0; j < level; j++) {
+                var item = document.createElement('div');
+                item.className = 'item pink';
+                item.style.width = h + 'px';
+                item.style.height = h + 'px';
+                item.index = j;
+                items.appendChild(item);
+                item.onclick = function () {
+                    color(this);
+                    this.previousElementSibling ? color(this.previousElementSibling) : 111;
+                    this.nextElementSibling ? color(this.nextElementSibling) : 111;
+                    var pre = this.parentNode.previousElementSibling;
+                    pre ? color(pre.children[this.index]) : 111;
+                    var nex = this.parentNode.nextElementSibling;
+                    nex ? color(nex.children[this.index]) : 111;
+                    var pin = document.querySelectorAll('.pink');
+                    if (pin.length == 0) {
+                        setTimeout(function () {
+                            wrap.innerHTML = '';
+                            level++;
+                            creat();
+                        }, 500)
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    function rn(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+    }
+
+    function color(el) {
+        if (el.className.indexOf('pink') != -1) {
+            el.className = el.className.replace('pink', 'purple');
+        } else {
+            el.className = el.className.replace('purple', 'pink');
+        }
+    }
+</script>
+
+</html>

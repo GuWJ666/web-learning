@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="btn1">
+    <input type="text" id="btn2">
+    <input type="text" id="btn3">
+    <input type="button" id="btn4" value="按我">
+    <script>
+        var btn1 = document.getElementById('btn1'),
+            btn2 = document.getElementById('btn2'),
+            btn3 = document.getElementById('btn3'),
+            btn4 = document.getElementById('btn4');
+        btn4.onclick = function(){
+            var a = btn1.value*1,
+                b = btn2.value*1,
+                c = btn3.value*1;
+            if(a*a + b*b == c*c ||a*a + c*c == b*b ||b*b + c*c ==a*a){
+                alert('直角三角形');
+            }else{
+                alert('不是');
+            }
+        }
+    </script>
+</body>
+</html>

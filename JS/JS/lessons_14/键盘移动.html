@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px black;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.getElementById('cv');
+    var cf = cv.getContext('2d');
+
+    function Rect(x, y, w, h, c, s) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.c = c;
+        this.s = s;
+        this.l = false;
+        this.r = false;
+        this.u = false;
+        this.d = false;
+    }
+    Rect.prototype.draw = function (style) {
+        cv.width = cv.width;
+        this.move();
+        cf.beginPath();
+        cf.rect(this.x, this.y, this.w, this.h, this.c);    
+        if (style == 'fill') {
+            cf.fillStyle = this.c;
+        } else {
+            cf.strokeStyle = this.c;
+        }
+        cf[style]();
+    }
+    Rect.prototype.move = function () {
+        if (this.l) { this.x -= this.s };
+        if (this.r) { this.x += this.s };
+        if (this.u) { this.y -= this.s };
+        if (this.d) { this.y += this.s };
+    }
+    var rect = new Rect(100, 100, 10, 10, 'green', 10);
+    rect.draw('fill')
+
+
+    document.onkeydown = function (e) {
+        var e = e || window.event;
+        var type = e.keyCode;
+        switch (type) {
+            case 37:
+                rect.l = true;
+                break;
+            case 38:
+                rect.u = true;
+                break;
+            case 39:
+                rect.r = true;
+                break;
+            case 40:
+                rect.d = true;
+                break;
+        }
+    }
+    document.onkeyup = function (e) {
+        var e = e || window.event;
+        var type = e.keyCode;
+        switch (type) {
+            case 37:
+                rect.l = false;
+                break;
+            case 38:
+                rect.u = false;
+                break;
+            case 39:
+                rect.r = false;
+                break;
+            case 40:
+                rect.d = false;
+                break;
+        }
+    }
+    setInterval(function () {
+        rect.draw('fill');
+    }, 30)
+    // cf.beginPath();
+    // cf.fillRect(300, 150, 100, 100);
+    // var x = 300;
+    // var y = 150;
+    // document.onkeydown = function (e) {
+    //     var e = e || window.event;
+    //     var type = e.keyCode;
+    //     // console.log(type)
+    //     cv.width = cv.width;
+    //     switch (type) {
+    //         // 左
+    //         case 37:
+    //             cf.beginPath();
+    //             x-=5;
+    //             x<=0?x=0:x;
+    //             cf.fillRect(x, y, 100, 100);
+    //         break;
+    //         //上
+    //         case 38:
+    //             cf.beginPath();
+    //             y-=5;
+    //             y<=0?y=0:y;
+    //             cf.fillRect(x, y, 100, 100);
+    //         break;
+    //         //右
+    //         case 39:
+    //             cf.beginPath();
+    //             x+=5;
+    //             x>=700?x=700:x;
+    //             cf.fillRect(x, y, 100, 100);
+    //         break;
+    //         // 下
+    //         case 40:
+    //             cf.beginPath();
+    //             y+=5;
+    //             y>=400?y=400:y;
+    //             cf.fillRect(x, y, 100, 100);
+    //         break;
+    //     }
+    // }
+</script>
+
+</html>

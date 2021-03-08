@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main" style="width: 600;height: 400;"></div>
+</body>
+<script src="../../../jq.js/jquery.js"></script>
+<script>
+
+    // 同步/异步：与生活中的同步/异步相反，
+    // 同步操作需要按顺序执行，在上一次操作未执行完成，后续操作都会暂时挂起，必须等待上次操作完成才能操作
+    // 异步操作无需按顺序执行，所有操作可同一发起，但是执行完成后的顺序就不一定了（img资源的加载）
+
+
+
+
+
+    // ajax的限制：由于浏览器同源策略的限制，ajax存在跨域禁止访问的问题
+    // 同源策略：规定不同源的脚本之间无法数据交互，（同源：协议相同，域名相同，端口相同）；
+    // 1.jsonp;实现原理：利用了script标签src属性不受同源策略限制来实现的跨域访问
+    // （1）动态创建script标签
+    var jsonp = document.createElement('script');
+    // （2）将请求地址赋值给src属性
+    // http://1.xah190604.applinzi.com/across.php?cb=
+    jsonp.src = 'http://1.xah190604.applinzi.com/across.php?cb=cb';
+    // (3)  将动态创建的script标签添加到页面，发起请求
+    document.body.appendChild(jsonp);
+    //前端接受jsonp返回数据的回调函数
+    function cb(res) {
+        console.log(res);
+    }
+    // jsonp解决跨域的特点：
+    // （1）jsonp利用的是script属性不受同源策略限制实现的跨域请求，和ajax没有任何关系
+    // （2）因为src属性需要的是一个url，如果需要向服务器发送数据，数据只能接在url后面，正因为如此，jsonp只能发送get请求
+    // （3）优势在于没有任何的兼容问题
+
+    // 2.CORS协议：需要后台去实现CORS协议，在服务器脚本上添加代码 header('Access Control Allow Orign:*'); IE9以下不支持
+
+    // 3.服务器代理：后台脚本之间不存在同源策略的限制，所以可以使用自家服务器作为代理，向其他服务器上的脚本发送请求。
+
+    // $.get('http://1.xah190604.applinzi.com/test.php',function(res){
+    //     console.log(res);
+    // })
+
+
+
+
+
+
+</script>
+
+</html>

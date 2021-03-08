@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+            background-image:url(img/梁朝伟.jpg);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="450" height="397"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+    var img = new Image();
+    img.src = 'img/梁朝伟.jpg';
+    img.onload = function () {
+        cf.drawImage(img, 0, 0);
+    }
+    cv.onmouseover = function () {
+        this.onmousemove = function (e) {
+            // 1.获取鼠标相对于画布的坐标
+            var x = e.clientX - this.offsetLeft;
+            var y = e.clientY - this.offsetTop;
+
+            // 2.清空画布
+            cv.width = cv.width;
+
+            // 3.重绘图片
+            // cf.drawImage(img,0,0);
+
+            // cf.globalCompositeOperation = 'destination-out';
+
+            cf.drawImage(img,x-100,y-100,200,200,x-150,y-150,300,300);
+
+            cf.globalCompositeOperation = 'destination-in';
+
+            // 4.放大镜添加
+            cf.arc(x,y,100,0,Math.PI*2);
+            cf.fill();
+
+            // cf.globalCompositeOperation = 'destination-over';
+
+            // // 5.图片放大
+            // cf.drawImage(img,x-100,y-100,200,200,x-150,y-150,300,300);
+        }
+        this.onmouseup = function(){
+            this.onmousemove = null;
+            cv.width = cv.width;
+            cf.drawImage(img,0,0);
+        }
+    }
+
+</script>
+
+</html>

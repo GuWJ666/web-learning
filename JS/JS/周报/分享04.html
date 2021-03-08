@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浮动</title>
+    <style>
+        .wrap{
+            width: 400px;
+            border:1px solid #eee;
+            /* height: 400px; */
+            /* overflow: hidden; */
+            /* float:left; */
+            /* display:inline-block; */
+        }
+        /* .wrap::after{
+            clear:both;
+            content:"";
+            display:block;
+        } */
+        .box1{
+            width: 100px;
+            height: 100px;
+            float:left;
+            border:1px solid #ccc;
+        }
+        .box2{
+            width: 100px;
+            height: 100px;
+            float:right;
+            border:1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="box1">1</div>
+        <div class="box2">2</div>
+        <!-- <div style="clear:both"></div> -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        textarea {
+            width: 500px;
+            height: 300px;
+            resize: none;
+            margin-top: 50px;
+            margin-left: 50px;
+            border-color: thistle;
+        }
+
+        .wrap {
+            width: 600px;
+            border: 10px solid #ccc;
+            margin: 100px auto;
+        }
+
+        input {
+            display: block;
+            background: orange;
+            font-size: 18px;
+            color: #fff;
+            /* border:none; */
+            margin-left: 47px;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .content {
+            width: 500px;
+            height: 200px;
+            background: #eee;
+            margin-left: 50px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            font-size: 20px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <textarea name="xx"></textarea>
+        <input type="button" value="发布" name="xx">
+    </div>
+</body>
+<script>
+    var ins = document.getElementsByName('xx');
+    ins[1].onclick = function () {
+        if (ins[0].value != '') {
+            var a = document.createElement('div');
+            a.className = 'content';
+            document.body.firstElementChild.appendChild(a);
+            a.innerHTML = ins[0].value;
+            var b = document.createElement('div');
+            b.className = 'close';
+            b.innerHTML = '×';
+            a.appendChild(b);
+            b.onclick = function(){
+                a.remove();
+            }
+        }
+    }
+</script>
+
+</html>

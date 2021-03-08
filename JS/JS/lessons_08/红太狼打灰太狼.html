@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wall {
+            width: 320px;
+            height: 480px;
+            background: url(images/game_bg.jpg) center no-repeat;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .image {
+            position: absolute;
+            /* left:95px;
+            top:115px; */
+        }
+
+        p {
+            position: absolute;
+            left: 100px;
+            top: 190px;
+            font-size: 30px;
+            color: darkorange;
+            cursor: pointer;
+            text-shadow: 0px 2px 0px red;
+            z-index: 20;
+            user-select: none;
+        }
+
+        #pro {
+            position: absolute;
+            left: 63px;
+            top: 66px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wall">
+        <p>开始游戏</p>
+        <img src="images/progress.png" alt="" id="pro">
+    </div>
+</body>
+<script>
+    var wall = document.querySelector('#wall');
+    var p = document.getElementsByTagName('p')[0];
+    var pro = document.getElementById('pro');
+    var s = 0;
+    var self ;
+    var arr = [['95px', '115px'], ['100px', '192px'], ['15px', '160px'], ['186px', '142px'], ['15px', '220px'], ['30px', '294px'], ['116px', '276px'], ['205px', '296px'], ['198px', '212px']];
+    for (var i = 0; i < 9; i++) {
+        var img = document.createElement('img');
+        img.className = 'image';
+        wall.appendChild(img);
+
+    }
+    for (var i = 2; i < wall.children.length; i++) {
+        wall.children[i].src = 'images/h0.png';
+    }
+    p.onclick = function () {
+        p.remove();
+        var w = pro.offsetWidth;
+        var h = pro.offsetHeight;
+        console.log(w);
+        var timer4 = setInterval(function () {
+            w--;
+            pro.style.width = w + 'px';
+            pro.style.height = h + 'px';
+            time();
+            if (w == 0) {
+                clearInterval(timer4);
+                clearInterval(timer3);
+                clearInterval(timer5);
+            }
+            
+        }, 500)
+    }
+    function time() {
+        var timer3 = setInterval(function () {
+            self= wall.children[ran(2, 10)];
+            var h = ran(0,8);
+            self.style.left = arr[h][0];
+            self.style.top = arr[h][1];
+
+        }, 1000)
+        var timer5 = setInterval(function(){
+            s++;
+            console.log(i);
+            if (s > 5) {
+                // clearInterval(timer3);
+                s = 0;
+                // wall.children[2].remove();
+            }
+            self.src = 'images/h' + s + '.png';
+        },50)
+    }
+
+    function ran(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+    }
+</script>
+
+</html>

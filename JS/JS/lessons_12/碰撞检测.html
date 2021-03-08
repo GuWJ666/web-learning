@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            border: 1px solid #333;
+            width: 800px;
+            height: 500px;
+            position: relative;
+        }
+
+        .wrap>div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            background: green;
+            font-size: 40px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        #box {
+            width: 100px;
+            height: 50px;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div>1</div>
+        <div>2</div>
+    </div>
+    <div id="box"></div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script>
+    var dx, dy;
+    $(function () {
+        $('.wrap>div').on('mousedown mousemove mouseup', function (e) {
+            if (e.type == 'mousedown') {
+                dx = e.clientX - $(this).position().left,
+                    dy = e.clientY - $(this).position().top;
+            }
+            if (e.type == 'mousemove') {
+                var x = e.clientX - dx,
+                    y = e.clientY - dy;
+                x < 0 ? x = 0 : x;
+                y < 0 ? y = 0 : y;
+                x > $('.wrap').width() - $(this).width() ? x = $('.wrap').width() - $(this).width() : x;
+                y > $('.wrap').height() - $(this).height() ? y = $('.wrap').height() - $(this).height() : y;
+                $(this).css({
+                    left: x + 'px',
+                    top: y + 'px'
+                })
+                for (var i = 0; i < $('.wrap>div').length; i++) {
+                    if (i == $(this).index()) {
+                        continue;
+                    }
+                    if (crash($(this), $('.wrap>div'))) {
+                        $('.wrap>div').text('碰');
+                    } else {
+                        $('.wrap>div').text($('.wrap>div').index())
+                    }
+                }
+            }
+            // if(e.type == 'mouseleave'){
+            //     $(this).off('mousemove')
+            // }
+        })
+    })
+
+    // function crash(el1,el2){
+    //     var l1 = el1.position().left,
+    //         r1 = l1 + el1.width(),
+    //         t1 = el1.position().top,
+    //         b1 = t1 + el1.height(),
+
+    //         l2 = el2.position().left,
+    //         r2 = l2 + el2.width(),
+    //         t2 = el2.position().top,
+    //         b2 = t2 + el2.height();
+
+    //     if(l1 > r2 || t1 > b2 || r1 <l2 || b1 < t2){
+    //         return false;
+    //     }
+    //     return true;
+    // }
+
+
+    function crash(el1,el2){
+        var l1 = el1.position().left + el1.outerWidth()/2,
+            t1 = el1.position().top + el1.outerHeight()/2,
+            w1 = el1.outerHeight()/2,
+            l2 = el2.position().left + el2.outerWidth()/2,
+            t2 = el2.position().top + el2.outerHeight()/2,
+            w2 = el2.outerHeight()/2;
+
+        var s = Math.pow((l1 - l2),2) + Math.pow((t1 - t2),2);
+        if(s > Math.pow((w1 + w2),2)){
+            return false;
+        }
+        return true;
+    }
+    var box = document.querySelector('#box');
+    var s = 1;
+    wheelevent(box, function (dir) {
+        if (dir) {
+            if (s <= 3) {
+                s += 0.5;
+            }
+            box.style.transform = 'scale(' + s + ',' + s + ')';
+        } else {
+            if (s > 0.5) {
+                s -= 0.5;
+            }
+            box.style.transform = 'scale(' + s + ',' + s + ')';
+        }
+    })
+
+    // 滚轮兼容函数
+    function wheelevent(el, callback) {
+
+        if (el.onmousewheel === null) {
+            el.onmousewheel = function (e) {
+                var e = e || window.event;
+                var dir;
+                if (e.wheelDelta > 0) {
+                    dir = true;
+                } else {
+                    dir = false;
+                }
+                callback(dir); console.log(dir)
+            }
+        } else {
+            el.addEventListener('DOMMouseScroll', function (e) {
+                var e = e || window.event;
+                var dir;
+                if (e.detail > 0) {
+                    dir = false;
+                } else {
+                    dir = true;
+                }
+                callback(dir);
+            }, false)
+        }
+
+    }
+</script>
+
+</html>

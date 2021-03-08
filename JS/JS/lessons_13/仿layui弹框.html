@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* html,body{
+            height: 100%;
+            margin:0;
+            position:relative;
+        } */
+        /* .wraning{ */
+        /* width: 80px;
+            height: 80px; */
+        /* position:absolute;
+            top:calc(50% - 40px);
+            left:calc(50% - 40px);
+           
+            margin:auto;
+            padding:20px;
+            border:1px solid #ddd; */
+        /* } */
+        /* .title{ */
+
+        /* } */
+    </style>
+</head>
+
+<body>
+    <!-- <div class="wraning"> -->
+    <!-- <div class="title">
+            哈哈哈哈哈哈
+        </div>
+        <div class="content">
+            ohhhhhhhhhhhhhhhhhh
+        </div> -->
+    <!-- </div> -->
+    <input type="button" value="提示窗">
+</body>
+<script src="../lessons_12/jq.js/jquery.js"></script>
+<script src="仿layui弹框.js"></script>
+<script>
+    // 自定义的弹窗组件（仿照layui，简单版）
+    // 1.导入你的文件
+    // 2.layer.open({
+    //         title,//弹窗标题，是要string
+    //         content,//弹窗内容，只要string
+    //         area,//宽高，默认内容撑开
+    //         btn,//弹窗按钮，默认只有一个确定按钮
+    //         yes,//确定回调
+    //         cancel,//取消回调
+    //     })
+    $(function () {
+        $('input').click(function () {
+            promptbox.open({
+                title: 'today is a good day...',
+                content: 'Are you thinking?dsdsadsadd',
+                area:['300px','200px'],
+                btn:['确定','取消'],
+                yes:function(){
+                    $('.shade').remove();
+                },
+                cancel:function(){
+                    alert('321')
+                    $('.shade').remove();
+                }
+            })
+        })
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            border: 2px solid #ccc;
+            padding: 20px 10px;
+        }
+
+        header>span {
+            margin: 0 10px;
+        }
+
+        #del {
+            text-decoration: underline;
+            color: red;
+            cursor: pointer;
+        }
+
+        /* section {
+            padding: 10px;
+        } */
+
+        .item {
+            /* width: 100%; */
+            border: 2px solid #ccc;
+            height: 200px;
+            position: relative;
+        }
+
+        .sel {
+            position: absolute;
+            left: 20px;
+            top: 25px;
+        }
+
+        .img {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            left: 50px;
+            top: 25px;
+        }
+
+        .vname {
+            font-size: 28px;
+            position: absolute;
+            left: 230px;
+            top: 60px;
+        }
+
+        .pri {
+            font-size: 28px;
+            position: absolute;
+            left: 400px;
+            top: 60px;
+        }
+
+        .num {
+            font-size: 28px;
+            position: absolute;
+            left: 600px;
+            top: 60px;
+        }
+
+        .btn {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            background: lightblue;
+            color: #fff;
+            top: 85px;
+            cursor: pointer;
+        }
+
+        .add {
+            left: 700px;
+        }
+
+        .sub {
+            left: 740px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <header>
+            <input type="checkbox" id="all">全选
+            <span id="del">删除选中商品</span>
+            <span>已选中商品<b>0</b>件，总价格为：<b>0</b>￥（不包含邮费）</span>
+        </header>
+        <section>
+            <!-- <div class="item">
+                <input type="checkbox" class="sel">
+                <img src="img/img1.png" class="img">
+                <p class="vname">绿色有机</p>
+                <p class="pri">20</p>
+                <p class="num">1</p>
+                <div class="add btn">+</div>
+                <div class="sub btn">-</div>
+            </div> -->
+        </section>
+    </div>
+</body>
+<script>
+    // 获取要操作的元素
+    var all = document.getElementById('all');//全选按钮
+    var del = document.getElementById('del');//删除按钮
+    var bs = document.getElementsByTagName('b');//用来显示总数量和价格的
+    var sec = document.querySelector('section');//商品容器
+
+    // 初始化数据
+    var data = [['有机菜花', '30'], ['无农药包菜', '5'], ['爱尔兰牛肉', '70'], ['西兰花', '9'], ['中式泡菜', '11'], ['生菜', '2'], ['黄瓜', '8'], ['灯笼椒', '5'], ['香蕉', '10'], ['菠菜', '2']];//循环遍历往标签中添加文本
+    // 初始化商品
+    for (var i = 0; i < data.length; i++) {
+        var di = data[i];//循环遍历取出数组中的元素
+        sec.innerHTML += '<div class="item"><input type="checkbox" class="sel"><img src="img/img' + (i + 1) + '.png" class="img"><p class="vname">' + di[0] + '</p><p class="pri">' + di[1] + '</p><p class="num">1</p><div class="add btn">+</div><div class="sub btn">-</div></div>'//循环往section标签中添加标签
+    }
+    var items = document.getElementsByClassName('item');//商品集合
+
+
+    // 全选
+    all.onclick = function () {
+        var allType = this.checked;//全选框的勾选属性
+        for (var i = 0; i < items.length; i++) {
+            // var selType = allType ? true : false;
+            var selType = items[i].querySelector('.sel').checked;//单选框的勾选属性
+            var allAttr = items[i].getAttribute('all');//得到items【i】的自定义属性
+            if (allType && !selType) {//如果勾选了全选框并且单选框没有勾选
+                items[i].querySelector('.sel').checked = true;//将所有没有勾选的单选框勾选
+                items[i].setAttribute('all', true);//并且给没有勾选的单选框的父级items【i】设置all属性
+            } else if (!allType && allAttr) {//如果取消全选框的勾选并且所有单选框都有all属性
+                items[i].querySelector('.sel').checked = false;//让所有有all属性的单选框取消勾选
+                items[i].removeAttribute('all');//在取消全选框勾选时，清空所有标签的all属性，在下次勾选全选框时重新给标签添加all属性
+            }
+        }
+        // 计算
+        computeSum();
+    }
+
+
+    // 循环为所有商品绑定事件
+    for(var i=0;i<items.length;i++){
+        // 每个商品的选择事件
+        items[i].firstElementChild.onclick  = function(){
+            // 处理全选
+            if(!this.checked){
+                all.checked = false;
+            }
+            for(var i=0;i<items.length;i++){
+                if(!items[i].firstElementChild.checked){
+                    break;
+                }
+            }
+            if(i==items.length){
+                all.checked = true;
+                console.log(222);
+            }
+
+            // 处理单选后的价格和数量
+            computeSum();
+        }
+        // 每个商品的加减事件
+        // 加
+        items[i].children[items[i].children.length-2].onclick = function(){
+            // 字自身基础上加1
+            this.previousElementSibling.innerHTML = ++ this.previousElementSibling.innerHTML;
+            // 计算
+            computeSum();
+        }
+        // 减
+        items[i].children[items[i].children.length-1].onclick = function(){
+            // 字自身基础上加1
+           var n =  --this.previousElementSibling.previousElementSibling.innerHTML<1?1:this.previousElementSibling.previousElementSibling.innerHTML;
+           this.previousElementSibling.previousElementSibling.innerHTML = n;
+            // 计算
+            computeSum();
+        }
+    }
+
+    // 删除事件
+    del.onclick = function(){
+        for(var i=0;i<items.length;i++){
+            if(items[i].firstElementChild.checked){
+                items[i].remove();
+                i--;
+            }
+        }
+        // 处理全选
+        if(items.length == 0){
+            all.checked = false;
+            all.disabled = true;
+        }
+        // 计算
+        computeSum();
+    }
+
+    // 计算总价钱还有数量
+    function computeSum() {
+        // 声明需要使用的全局变量
+        var sumNum = 0,//总数量
+            sumPri = 0;//总价格
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].querySelector('.sel').checked) {
+                var n = items[i].querySelector('.num').innerHTML * 1;
+                // 计算价格
+                sumPri += n * items[i].querySelector('.pri').innerHTML;
+                // 计算数量
+                sumNum += n;
+            }
+        }
+        // 显示
+        bs[0].innerHTML = sumNum;
+        bs[1].innerHTML = sumPri;
+    }
+</script>
+
+</html>

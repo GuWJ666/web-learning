@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        input{
+            outline:none;
+        }
+        .focus{
+            background:darkseagreen;
+        }
+    </style>
+</head>
+<body>
+    <h1></h1>
+    用户名：<input type="text">
+</body>
+<script>
+    var inp = document.querySelector('input');
+    var msg = document.querySelector('h1');
+    //表单事件：大多用于表单验证
+    // onfocus:当表单元素获得焦点时触发
+    // inps[0].onfocus = function(){
+    //     this.className = 'focus';
+    // }
+
+    // onblur:当表单元素失去焦点时触发
+    // inps[0].onblur = function(){
+    //     this.className = '';
+    // }
+
+    // onchange:当表单元素的value值发生改变后触发
+    // inp.onchange = function(){
+    //     var uname = this.value;
+    //     if(uname.length >= 6 && uname.length <= 10){
+    //         this.style.backgroundColor = 'lightgreen';
+    //     }else{
+    //         this.style.backgroundColor = 'red';
+    //     }
+    // }
+
+    // oninput:当表单元素的value值发生变化时触发
+    inp.oninput = function(){
+        var n = this.value;
+        console.log( n);
+    }
+
+
+    // var s1 = '0123456789';
+    // var s2 = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLNMOPQRSTUVWXYZ';
+    // var numArr = [],charArr = [];
+    // for(var i=0;i<s1.length;i++){
+    //     numArr[i] = s1[i];
+    // }
+    // for(var i=0;i<s2.length;i++){
+    //     charArr[i] = s2[i];
+    // }
+    // inp.oninput = function(){
+    //     var val = this.value;
+    //     for(var i=0;i<val.length;i++){
+    //         var char = val[i];
+    //         if(numArr.indexOf(char) == -1){
+                
+    //         }
+    //     }
+    // }
+</script>
+</html>

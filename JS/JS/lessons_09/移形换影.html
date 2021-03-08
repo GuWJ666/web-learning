@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(#000 80%, lightblue 20%);
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-color: plum;
+            left: 0;
+            top: 0;
+            border-radius: 50%;
+            background: linear-gradient(white, black)
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+</body>
+<script src="../lessons_08/tween.js"></script>
+<script>
+    var box = document.querySelector('#box');
+    var x, y;
+    var lock = false;
+    box.onmousedown = function (event) {
+        lock = true;
+        var eDown = window.event || event;
+        x = eDown.clientX - box.offsetLeft;//获取按下时鼠标横坐标
+        y = eDown.clientY - box.offsetTop;//获取按下时鼠标纵坐标
+        console.log(box.offsetLeft, box.offsetTop)
+    }
+    document.body.onmousemove = function (event) {
+        if (lock) {
+            var eMove = window.event || event;
+            var n = eMove.clientX;//获取鼠标移动时鼠标的横坐标
+            var m = eMove.clientY;//获取鼠标移动时鼠标的纵坐标
+            box.style.left = n - x + 'px';
+            box.style.top = m - y + 'px';
+        } else {
+            return;
+        }
+    }
+    box.onmouseup = function () {
+        lock = false;
+        var w = document.documentElement.clientWidth / 2;
+        var l = box.offsetLeft + box.clientWidth / 2;
+        var t = 0, b = box.offsetLeft, c ,d = 20;
+        var timer = setInterval(function () {
+            t++;
+            if (l <= w) {
+                c = -b;
+                box.style.left = Tween.Linear(t, b, c, d) + 'px';
+            } else {
+                c = document.documentElement.clientWidth - b-box.clientWidth;
+                box.style.left =Tween.Linear(t, b, c, d) + 'px';
+            }
+            if(t==d){
+                clearInterval(timer);
+            }
+        })
+    }
+    // box.onmouseover = function(){
+    //     lock = false;
+    // }
+    document.onmouseleave = function () {
+        lock = false;
+    }
+</script>
+
+</html>

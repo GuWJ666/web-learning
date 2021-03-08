@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            text-align:center;
+        }
+        #cv{
+            box-shadow: 5px 5px 10px gray;
+            border:1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <!--    
+        1.什么是canvas？
+          是h5新增标签（双标签），兼容性：IE9以下不支持，标签内容只有在不兼容的情况下显示（不兼容的时候canvas就相当于一个div）。
+          display属性值inline-block，默认大小是300px*150px
+          功能：相当于一块儿画布，自身只有显示图像的功能，并没有绘制的功能，绘制需要js完成
+
+          存在width和height属性，如果要设置画布大小，请通过标签属性设置，不要再层叠样式表中设置（会使画布上设置的内容拉伸）
+     -->
+    <canvas id="cv" width="500" height="500">当前浏览器版本过低</canvas> 
+</body>
+<script>
+    // cancas操作流程(画布中坐标系是以左上角为原点，向右为正，向下为正)
+    // canvas中绘制内容，默认情况下，后绘制的内容会覆盖在先绘制的上面
+    // 1.获取画笔（获取上下文）
+    var cv = document.getElementById('cv');
+    var ctx = cv.getContext('2d');//只有画笔才有往画布上绘制图形的能力
+    // 2.开始绘制
+    ctx.beginPath();//不是必须的
+    // 3.绘制线段
+    // (1)moveTo(x,y):就相当于将画笔放在了画布的指定坐标上，也可以理解为设置了绘制路径的起点
+    // ctx.moveTo(125,250);
+    // （2）lineTo(x,y):指定连线终点的坐标
+    // ctx.lineTo(375,250);
+    // 4.对画笔进行样式设置
+    // ctx.lineWidth = 5;
+    // ctx.strokeStyle = 'lightgreen';
+    // 5.渲染
+    // ctx.stroke();//是以连线（描边）的方式渲染
+
+    // ctx.beginPath();
+    // ctx.moveTo(250,125);
+    // ctx.lineTo(250,375);
+    // ctx.lineWidth = 5;
+    // ctx.strokeStyle = 'yellow';
+    // ctx.stroke();
+
+    // 在画布上绘制一个锐角三角形
+    // ctx.moveTo(250,433);
+    // ctx.lineTo(0,0);
+    // ctx.lineTo(500,0);
+    // ctx.lineTo(250,433);
+    // // ctx.lineTo(0,500)
+    // ctx.lineWidth = 2;
+    // ctx.strokeStyle = 'green';
+    // ctx.stroke();
+
+    // ctx.closePath();//自动形成闭合路径
+    // ctx.beginPath();
+    // ctx.moveTo(120,50);
+    // ctx.lineTo(100,200);
+    // ctx.lineTo(200,200);
+    // ctx.closePath();
+    // ctx.stroke();
+
+    // 在画布上绘制一个矩形
+    // 思路一：计算四个点的坐标，依次连接
+    // ctx.beginPath();
+    // ctx.moveTo(125,125);
+    // ctx.lineTo(125,375);
+    // ctx.lineTo(375,375);
+    // ctx.lineTo(375,125);
+    // ctx.closePath();
+    // ctx.strokeStyle = 'red';
+    // ctx.stroke();
+    // 思路二：矩形起点坐标还有矩形宽高
+    // rect(x,y,w,h);设置一个矩形的闭合路径，并未绘制；
+    // ctx.rect(125,125,250,250);
+    // ctx.strokeStyle = 'blue';
+    // ctx.lineWidth = 20;
+    // ctx.stroke();//描边绘制
+    // fill():渲染绘制路径，会自动闭合路径并对闭合区域填充绘制
+    // ctx.fillStyle = 'red';
+    // ctx.fill();
+    // 先填充，后描边
+
+    // strokeRect(x,y,w,h)
+    // fillRect(x,y,w,h)
+    // ctx.strokeRect(50,50,100,100)
+    // ctx.fillRect(350,350,100,100)
+
+    //在画布的正中心绘制一个五星红旗
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    ctx.fillRect(100,100,300,200);
+    ctx.beginPath();
+    // 大猩猩
+    // ctx.moveTo(130,130);
+    // ctx.lineTo(150,130);
+    // ctx.lineTo(155,110);
+    // ctx.lineTo(160,130);
+    // ctx.lineTo(180,130);
+    // ctx.lineTo(165,142);
+    // ctx.lineTo(170,160);
+    // ctx.lineTo(155,150);
+    // ctx.lineTo(140,160);
+    // ctx.lineTo(145,142);
+    ctx.moveTo(140,140);
+    ctx.lineTo(180,140);
+    ctx.lineTo(150,160);
+    ctx.lineTo(160,120);
+    ctx.lineTo(170,120);
+
+    // 小星星
+    ctx.closePath();
+    ctx.moveTo(190,130);
+    ctx.lineTo(210,130);
+    ctx.lineTo(195,140);
+    ctx.lineTo(200,120);
+    ctx.lineTo(205,140);
+   
+
+    ctx.closePath();
+    ctx.moveTo(195,150);
+    ctx.lineTo(215,150);
+    ctx.lineTo(200,160);
+    ctx.lineTo(205,140);
+    ctx.lineTo(210,160);
+   
+
+    ctx.closePath();
+    ctx.moveTo(195,170);
+    ctx.lineTo(215,170);
+    ctx.lineTo(200,180);
+    ctx.lineTo(205,160);
+    ctx.lineTo(210,180);
+   
+    ctx.closePath();
+    ctx.moveTo(190,190);
+    ctx.lineTo(210,190);
+    ctx.lineTo(195,200);
+    ctx.lineTo(200,180);
+    ctx.lineTo(205,200);
+    ctx.fillStyle = 'yellow';
+    ctx.fill()
+</script>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <span>信息表</span>
+        <input type="text" v-model="check">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th v-for="x,y in list[0]">{{y}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="x in res">
+                    <td v-for="y in x">{{y}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    let data = [
+        {
+            id: '001',
+            name: '小张',
+            age: 29,
+            tel: '13222222222',
+            major: '信息工程',
+            sex: '男',
+            class: '大二'
+        }, {
+            id: '002',
+            name: '小王',
+            age: 29,
+            tel: '13222222222',
+            major: '信息工程',
+            sex: '男',
+            class: '大二'
+        }, {
+            id: '003',
+            name: '小驴',
+            age: 29,
+            tel: '13222222222',
+            major: '信息工程',
+            sex: '男',
+            class: '大二'
+        }, {
+            id: '004',
+            name: '小赵',
+            age: 29,
+            tel: '13222222222',
+            major: '信息工程',
+            sex: '男',
+            class: '大二'
+        }, {
+            id: '005',
+            name: '小孙',
+            age: 29,
+            tel: '13222222222',
+            major: '信息工程',
+            sex: '男',
+            class: '大二'
+        }, {
+            id: '006',
+            name: '小周',
+            age: 29,
+            tel: '13222222222',
+            major: '信息工程',
+            sex: '男',
+            class: '大二'
+        }
+    ]
+    let app = new Vue({
+        el: '#app',
+        data: {
+            list: data,
+            check: ''
+        },
+        methods: {
+            // 获取表头数据
+            getHead() {
+                let head = new Set();
+                for (var x of this.list) {
+                    for (let y in x) {
+                        head.add(y);
+                    }
+                }
+                // console.log([...head]);
+                head = [...head];
+                return head;
+            }
+        },
+        computed:{
+            res(){
+                let arr = [];
+                for(let x of this.list){
+                    if(x.name.includes(this.check)){
+                        arr.push(x);
+                    }
+                }
+                return arr;
+            }
+        }
+    })
+</script>
+
+</html>

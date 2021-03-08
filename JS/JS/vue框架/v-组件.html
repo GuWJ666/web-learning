@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <!-- <script src="./component.js"></script> -->
+    <style>
+        nav>a{
+            font-size:50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <mynav :datas="list" :title="">
+        <!-- <msg> -->
+    </div>
+
+    <div id="web">
+        <!-- <mynav> -->
+        <!-- <msg> -->
+    </div>
+    <mynav>
+</body>
+<script>
+    // 注册全局组件:可使用范围就是vue全局，项目中所有的vue实例控制范围下都可以使用
+    // 导航组件
+    // Vue.component('mynav',{
+    //     template:
+    //     `<nav>
+    //         <a href="http://baidu.com">百度</a>
+    //         <a href="http://JD.com">京东</a>
+    //         <a href="http://mi.com">小米</a>
+    //         <a href="http://taobao.com">淘宝</a>
+    //     </nav>`
+    // })
+
+    // 组件内容如果需要根据根元素下的数据动态改变，那么就需要从父组件向子组件传值，
+    // 传值的方式用props。props传值是单向的，只能从父组件传向子组件吗，不能逆转
+    Vue.component('mynav',{
+        props:['datas','title'],
+        template:`
+            <nav>
+                <h1>{{title}}</h1>
+                <a v-for="x in datas" :href="x.url">{{x.name}}</a>
+            </nav>`
+    })
+    let app = new Vue({
+        el:'#app',
+        data:{
+            list:[
+                {
+                    url:'http://www.suning.com',
+                    name:'苏宁'
+                },{
+                    url:'http://www.JD.com',
+                    name:'京东'
+                },{
+                    url:'http://www.mi.com',
+                    name:'小米'
+                },{
+                    url:'http://www.taobao.com',
+                    name:'淘宝'
+                }
+            ]
+        },
+        // 注册局部组件,局部组件只能在注册的根元素下使用
+        components:{
+            msg:{
+                template:`<h1>这是注册在app下的局部组件'msg'</h1>`
+            }
+        }
+    })
+
+    let web = new Vue({
+        el:'#web',
+    })
+</script>
+</html>

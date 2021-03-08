@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 获取变量
+    var a,b,c;
+    // 循环条件：三位数在100-1000之间
+    for(var i=100;i<1000;i++){
+        c=i%10;//百位与10取余算出个位数字
+        b=(i-c)/10%10;//算出十位数字
+        a=(i-10*b-c*1)/100;//算出百位数字
+        //各位数字与十位数字与百位数字之和等于三位数输出这个三位数
+        if(a*a*a+b*b*b+c*c*c == i){
+            console.log(i);
+        }
+    }
+</script>
+</html>

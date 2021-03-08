@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cell-1 {
+            border: 1px solid lightgray;
+            position: relative;
+        }
+
+        #wrap,
+        #box {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #box {
+            border: 1px solid lightgray;
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+
+        #cell-1>img,
+        #box>img {
+            display: block;
+        }
+
+        #cell-2 {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #block {
+            width: 200px;
+            height: 200px;
+            background: coral;
+            opacity: .3;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+
+        #one {
+            width: 800px;
+            position: absolute;
+        }
+        #two{
+            width: 350px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="cell-1">
+            <div id="block"></div>
+            <img src="img/a2.jpg" alt="" id="two">
+        </div>
+        <div id="cell-2">
+            <span></span>
+            <img src="img/a1.jpg" alt="" class="three">
+            <img src="img/b1.jpg" alt="" class="three">
+            <img src="img/c1.jpg" alt="" class="three">
+            <span></span>
+        </div>
+    </div>
+    <div id="box">
+        <img src="img/a3.jpg" alt="" id="one">
+    </div>
+</body>
+<script>
+    // 盒子
+    var wrap = document.getElementById('wrap'),
+        ce_1 = document.getElementById('cell-1'),
+        ce_2 = document.getElementById('cell-2'),
+        box = document.getElementById('box'),
+        block = document.getElementById('block');
+    // 图片
+    var one = document.getElementById('one'),
+        two = document.getElementById('two'),
+        three = document.getElementsByClassName('three');
+
+    var arr = ['a', 'b', 'c'];
+
+    // ce_1的鼠标移入事件
+    ce_1.onmouseover = function (e) {
+        block.style.display = 'block';
+        box.style.display = 'inline-block'
+    }
+    // ce_1的鼠标移出事件
+    ce_1.onmouseout = function () {
+        block.style.display = 'none';
+        box.style.display = 'none'
+    }
+    // ce_1的鼠标移动事件
+    ce_1.onmousemove = function (e) {
+        var e = e || window.event;
+
+        var w = block.clientWidth / ce_1.clientWidth * one.clientWidth;
+        console.log(w,ce_1.clientWidth);
+        box.style.width = w + 'px';
+        box.style.height = w + 'px';
+
+        var x = e.clientX - ce_1.offsetLeft - 1;
+        var y = e.clientY - ce_1.offsetTop - 1;
+
+        var bw = ce_1.clientWidth - block.offsetWidth;
+        var bh = ce_1.clientHeight - block.offsetHeight;
+        x -= block.offsetWidth / 2;
+        y -= block.offsetHeight / 2;
+
+        if (x < 0) {
+            x = 0;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+        if (x > bw) {
+            x = bw;
+        }
+        if (y > bh) {
+            y = bh;
+        }
+
+        block.style.left = x + 'px';
+        block.style.top = y + 'px';
+
+        // 右边
+        var rw = one.clientWidth - w;
+        var rh = one.clientHeight - w;
+        var scalew = rw / bw;
+        var scaleh = rh / bh;
+        one.style.left = -block.offsetLeft * scalew + 'px';
+        one.style.top = -block.offsetTop * scaleh + 'px';
+    }
+
+    for (var i = 0; i < three.length; i++) {
+        (function (i) {
+            three[i].onmouseover = function () {
+                two.src = 'img/' + arr[i] + '2.jpg';
+                one.src = 'img/' + arr[i] + '3.jpg';
+            }
+        })(i)
+    }
+    // ce_2.onmouseover = function(e){
+    //     var e = e || window.event;
+    //     if(e.target != this){
+    //         two.src = e.target.src;
+    //     }
+    // }
+</script>
+
+</html>

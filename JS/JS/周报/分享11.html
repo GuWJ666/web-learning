@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        span {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<script src="../lessons_08/tween.js"></script>
+<script>
+    var arr = ['☆★♀♂ ', 'O(∩_∩)O~', '(=@__@=)', '(*^__^*)', ' %>_<% ', '└(^o^)┘', '^ˇ^≡', '‘(*>﹏<*)′', '~(@^_^@)~', '（*+﹏+*）~ ', '(^_^)∠※', '（*>.<*）~', ' (¯(∞)¯) ', '(＝^ω^＝)', '--<--<-<@', '●-●', '§ ^_^ §', '≡ (^(OO)^) ≡']
+
+    document.body.onclick = function (e) {
+        var e = e || window.event;
+        var x = e.clientX, y = e.clientY;
+        var span = document.createElement('span');
+        span.innerHTML = arr[rn(0, 17)];
+        span.style.color = color();
+        span.style.left = x + 'px';
+        span.style.top = y + 'px';
+        document.body.appendChild(span);
+        var t = 0,
+            b = span.offsetTop,
+            c = -b,
+            d = 50;
+        span.top = setInterval(function () {
+            t++;
+            span.style.top = Tween.Linear(t, b, c, d) + 'px';
+            if (t == d) {
+                clearInterval(span.top);
+            }
+        }, 20)
+    }
+
+    function dir() {
+        return rn(1, 4);
+    }
+    function rn(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x)
+    }
+    function color() {
+        return 'rgb(' + rn(0, 255) + ',' + rn(0, 255) + ',' + rn(0, 255) + ')';
+    }
+</script>
+
+</html>

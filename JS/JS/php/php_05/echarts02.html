@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <style>
+        #chart{
+            widows: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chart" "></div>
+</body>
+<script>
+    // 初始化echarts实例
+    var chart = echarts.init(document.getElementById('chart'));
+    var option = {
+        // 标题
+        title:{
+            text:'饼状图'
+        },
+        // 提示信息
+        tooltip:{},
+        // 说明
+        legend:{
+            data:['喜欢']
+        },
+        // x轴信息
+        xAxis:{
+            data:['李逍遥','赵灵儿','林月如','刘晋元','唐钰小宝','阿奴']
+        },
+        // y轴信息
+        yAxis:{},
+        // 系列列表
+        series:{
+            name:'喜欢',
+            type:'line',//饼状图
+            data:[206,405,200,325,632,132]
+        }
+    }
+    chart.setOption(option);
+</script>
+</html>

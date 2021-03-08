@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            width: 500px;
+            height: 500px;
+            border: 10px solid coral;
+            margin: 100px auto;
+            position: relative;
+            user-select: none;
+            background: mistyrose;
+            /* overflow: hidden; */
+        }
+
+        #box {
+            width: 700%;
+            height: 400px;
+            position: absolute;
+            left: -500px;
+            top: 0;
+        }
+
+        .photo {
+            width: 500px;
+            height: 100%;
+            float: left;
+            text-align: center;
+            line-height: 400px;
+            font-size: 150px;
+        }
+
+        .button {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100px;
+            background: lightgray;
+        }
+
+        .btn {
+            width: 100px;
+            height: 100px;
+            float: left;
+            text-align: center;
+            line-height: 100px;
+            font-size: 50px;
+            cursor: pointer;
+        }
+
+        #last {
+            width: 100px;
+            height: 100px;
+            font-size: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 100px;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.2);
+            left: 0;
+            top: 180px;
+            cursor: pointer;
+        }
+
+        #next {
+            width: 100px;
+            height: 100px;
+            font-size: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 100px;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.2);
+            right: 0;
+            top: 180px;
+            cursor: pointer;
+        }
+
+        #active {
+            background: snow;
+            color: tomato;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="box">
+            <div class="photo">5</div>
+            <div class="photo">1</div>
+            <div class="photo">2</div>
+            <div class="photo">3</div>
+            <div class="photo">4</div>
+            <div class="photo">5</div>
+            <div class="photo">1</div>
+        </div>
+        <div id="last">←</div>
+        <div id="next">→</div>
+        <div class="button">
+            <div class="btn" id="active">1</div>
+            <div class="btn">2</div>
+            <div class="btn">3</div>
+            <div class="btn">4</div>
+            <div class="btn">5</div>
+        </div>
+    </div>
+</body>
+<script src="tween.js"></script>
+<script>
+    var box = document.getElementById('box'),
+        last = document.getElementById('last'),
+        next = document.getElementById('next'),
+        btn = document.getElementsByClassName('btn');
+    var m = 0;
+    var timer = null,
+        autoTimer = null,
+        lastTimer = null,lock = null;
+    intimer = null;
+    for (var i = 0; i < btn.length; i++) {
+        (function (i) {
+            btn[i].onclick = function () {
+                btn[m].id = '';
+                btn[i].id = 'active';
+                m = i;
+                var t = 0,
+                    b = box.offsetLeft,
+                    c = (i + 1) * (-500) - b,
+                    d = 20;
+                clearInterval(timer);
+                clearInterval(autoTimer);
+                timer = setInterval(function () {
+                    t++;
+                    box.style.left = Tween.Linear(t, b, c, d) + 'px';
+                    if (t == d) {
+                        clearInterval(timer);
+                        autoPlay();
+                    }
+                }, 20)
+            }
+        })(i)
+    }
+    autoPlay();
+    function autoPlay() {
+        autoTimer = setInterval(function () {
+            btn[m].id = '';
+            m++;
+            m = m > 4 ? 0 : m;
+            btn[m].id = 'active';
+            var t = 0,
+                b = box.offsetLeft,
+                c = -500,
+                d = 20;
+            clearInterval(intimer);
+            intimer = setInterval(function () {
+                t++;
+                box.style.left = Tween.Linear(t, b, c, d) + 'px';
+                if (t == d) {
+                    clearInterval(intimer);
+                    if (box.offsetLeft <= -3000) {
+                        box.style.left = -500 + 'px';
+                    }
+                }
+            }, 20)
+        }, 2000)
+    }
+    last.onclick = function () {
+        if (lock) {
+            return;
+        }
+        lock = true;
+        btn[m].id = '';
+        m--;
+        m = m < 0 ? 4 : m;
+        btn[m].id = 'active';
+        var t = 0,
+            b = box.offsetLeft,
+            c = 500,
+            d = 20;
+        clearInterval(lastTimer);
+        clearInterval(autoTimer);
+        lastTimer = setInterval(function(){
+            t++;
+            box.style.left = Tween.Linear(t,b,c,d) + 'px';
+            if(t == d){
+                clearInterval(lastTimer);
+                autoPlay();
+                lock = false;
+                if(box.offsetLeft >= 0){
+                    box.style.left = -2500 + 'px';
+                }
+            }
+        },20)
+    }
+    next.onclick = function () {
+        if (lock) {
+            return;
+        }
+        lock = true;
+        btn[m].id = '';
+        m++;
+        m = m > 4 ? 0 : m;
+        btn[m].id = 'active';
+        var t = 0,
+            b = box.offsetLeft,
+            c = -500,
+            d = 20;
+        clearInterval(lastTimer);
+        clearInterval(autoTimer);
+        lastTimer = setInterval(function(){
+            t++;
+            box.style.left = Tween.Linear(t,b,c,d) + 'px';
+            if(t == d){
+                clearInterval(lastTimer);
+                autoPlay();
+                lock = false;
+                if(box.offsetLeft <= -3000){
+                    box.style.left = -500 + 'px';
+                }
+            }
+        },20)
+    }
+</script>
+
+</html>

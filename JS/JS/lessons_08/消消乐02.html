@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 500px;
+            height: 500px;
+            background: lightgray;
+            margin: 0 auto;
+            display: flex;
+            align-content: space-around;
+            flex-flow: wrap row;
+        }
+
+        .items {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .item {
+            border-radius: 10px;
+            margin: 0 3px;
+        }
+
+        .pink {
+            background: pink;
+        }
+
+        .purple {
+            background: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap"></div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap');
+    var level = 1;//表示关卡数
+    // 游戏初始化
+    creatItem();
+    // 关卡升级函数
+    function promote() {
+        var its = document.querySelectorAll('.item');
+        var purples = document.querySelectorAll('.purple');
+        // for (var i = 0; i < its.length; i++) {
+            if (its.length == purples.length) {
+                // 升级
+                setTimeout(function () {
+                    wrap.innerHTML = '';
+                    level++;
+                    console.log(level)
+                    creatItem();
+                }, 500)
+            }
+        // }
+
+    }
+    function creatItem() {//创建盒子
+        var h = Math.floor(wrap.clientHeight / level) - 6;
+        for (var i = 0; i < level; i++) {
+            // 创建每一行的容器
+            var items = document.createElement('div');
+            items.className = 'items';
+            items.style.height = h + 'px';
+            wrap.appendChild(items);
+            for (var j = 0; j < level; j++) {
+                // 为每一行添加内容
+                var item = document.createElement('div');
+                item.className = 'pink item';
+                item.style.width = h + 'px';
+                item.style.height = h + 'px';
+                item.index = j;
+                items.appendChild(item);
+                item.onclick = function () {
+                    changeBG(this);
+                    // 左边一个
+                    var leftEl = this.previousElementSibling;
+                    leftEl ? changeBG(leftEl) : 11;
+                    // 右边一个
+                    var rightEl = this.nextElementSibling;
+                    rightEl ? changeBG(rightEl) : 11;
+                    // 上边一个
+                    var upEl = this.parentNode.previousElementSibling;
+                    upEl ? changeBG(upEl.children[this.index]) : 11;
+                    // 下边一个
+                    var lowEl = this.parentNode.nextElementSibling;
+                    lowEl ? changeBG(lowEl.children[this.index]) : 11;
+                    // 升级
+                    promote();
+                }
+            }
+        }
+    }
+
+
+    // 改变指定元素背景色的函数
+    function changeBG(el) {
+        if (el.className.indexOf('pink') >= 0) {
+            // 变紫色
+            el.className = el.className.replace('pink', 'purple');
+        } else {
+            // 变粉色
+            el.className = el.className.replace('purple', 'pink');
+        }
+    }
+</script>
+
+</html>

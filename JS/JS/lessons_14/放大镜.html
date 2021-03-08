@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="552" height="279"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+    var img = new Image();
+    img.src = 'img/下载 (3).jpg';
+    img.onload = function () {
+        cf.drawImage(img, 0, 0);
+        cv.onmousemove = function (e) {
+            var e = e || window.event;
+            var x = e.clientX - this.offsetLeft;
+            var y = e.clientY - this.offsetTop;
+            cv.width = cv.width;
+            
+            cf.drawImage(img, x - 50, y - 50, 100, 100, x - 200, y - 200, 400, 400);
+
+            cf.globalCompositeOperation = 'destination-in';
+
+            cf.arc(x, y, 100, 0, Math.PI * 2);
+            cf.fill();
+
+            cf.globalCompositeOperation = 'destination-over'
+            cf.drawImage(img, 0, 0);
+        }
+    }
+    
+    cv.onmouseout = function () {
+        cv.width = cv.width;
+        cf.drawImage(img, 0, 0);
+    }
+
+</script>
+
+</html>

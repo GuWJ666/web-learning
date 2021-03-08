@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="发送信息">
+    <input type="button" value="发送">
+</body>
+<script>
+    var inps = document.getElementsByTagName('input');
+   inps[1].onclick = function(){
+       var i = 10;
+       inps[0].value = '正在发送'+ '倒计时：'+i;
+       inps[1].disabled = true;
+       var time = setInterval(function(){
+        i--;
+        inps[0].value = '正在发送'+ '倒计时：'+i;
+        if(i<1){
+            clearInterval(time);
+            inps[0].value = '重新发送';
+            inps[1].disabled = false;
+        }
+       },1000)
+   }
+</script>
+</html>

@@ -1,0 +1,141 @@
+<!--
+ * @Author: guwenjiang
+ * @Date: 2020-12-23 13:59:36
+ * @LastEditors: guwenjiang
+ * @LastEditTime: 2020-12-23 15:39:30
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page_5：表格</title>
+    <style type="text/css">
+        table,th,td {
+            border: 1px solid #ccc;
+        }
+        table {
+            border-collapse: collapse;/*设置表格的边框折叠成一个单一的边框*/
+            width: 500px;
+            margin: 100px auto 0;
+        }
+        caption {
+            font-size: 20px;
+            line-height: 40px;
+            caption-side: top;/*设置标题的显示位置*/
+        }
+        th {
+            background: #96b97d;
+            color: #fff;
+            height: 30px;
+        }
+        td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!--table
+        表格
+    -->
+    <table>
+        <!--caption
+            标题
+        -->
+        <caption>表格标题</caption>
+        <!--thead
+            表头
+        -->
+        <thead>
+            <!--tr
+                行
+            -->
+            <tr>
+                <!--th
+                    表头
+                    colspan：规定表头单元格可横跨的列数
+                    rowspan：规定表头单元格可横跨的行数
+                    headers：规定与表头单元格相关联的一个或多个表头单元格
+                    scope：规定表头单元格是否是列（col）、行（row）、列祖（colgroup）、行组（rowgroup）的表头
+                -->
+                <th rowspan="2">表头</th>
+                <th id="label" colspan="3">标签</th>
+                <th rowspan="2" scope="col">列表</th>
+            </tr>
+            <tr>
+                <th headers="label">行</th>
+                <th headers="label" colspan="2">块</th>
+            </tr>
+        </thead>
+        <!--tbody
+            主体
+        -->
+        <tbody>
+            <tr>
+                <!--td 
+                    单元格（table data），可以包含文本、图片、列表、段落、表单、表格
+                    colspan：规定单元格可横跨的列数
+                    rowspan：规定单元格可横跨的行数
+                 -->
+                <td rowspan="6">表身</td>
+                <td colspan="1">th</td>
+                <td colspan="2">table</td>
+                <td colspan="1" rowspan="2">
+                    无序列表ul
+                    <ul>
+                        <li>1</li>
+                        <li>2</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>td</td>
+                <td colspan="2">caption</td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td colspan="2">thead</td>
+                <td rowspan="2">
+                    有序列表ol
+                    <ol>
+                        <li>1</li>
+                        <li>2</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td colspan="2">tbody</td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td colspan="2">tfoot</td>
+                <td rowspan="2">
+                    自定义列表dl
+                    <dl>
+                        <dt>项目1</dt>
+                        <dd>描述1</dd>
+                        <dt>项目2</dt>
+                        <dd>描述2</dd>
+                    </dl>
+                </td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td colspan="2">tr</td>
+            </tr>
+        </tbody>
+        <!--tfoot
+            页脚
+        -->
+        <tfoot>
+            <tr>
+                <td>页脚</td>
+                <td>2</td>
+                <td colspan="2">3</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

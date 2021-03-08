@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 创建一个父类
+    // 食物类
+    function Food(from,style,method,mixture,represent){
+        this.form = from;
+        this.style = style;
+        this.method = method;
+        this.mixture = mixture;
+        this.represent = represent;
+    }
+    Food.prototype.gain = '能量';
+    Food.prototype.cooking = function(){
+        console.log(this.method);
+    }
+    // 法国菜
+    function FrenchFood(from,style,method,mixture,represent){
+        Food.apply(this,[from,style,method,mixture,represent]);
+    }
+    var ff = new FrenchFood('法国','新派法国菜','烤、煎、烩、焗、铁扒、焖、蒸','酒类和香料','法式煎鹅肝');
+    console.log(ff);
+    ff.cooking();
+</script>
+</html>

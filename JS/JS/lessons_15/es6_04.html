@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+       // localStorage / sessionStorage / cookie 都是本地数据持久化的手段，区分域，不同域之间是无法访问操作的
+
+    //cookie  document的属性  值需要一个string， 以"name=value"的形式对数据进行存储，只能存储字符串数据，如果放入非字符串会强制转换成字符串再进行存储；
+
+    // cookie必须放在服务器环境下
+
+    // 特点：
+    // 1.存在时效性，如果存储cookie的时候没有指定有效时间，那么存储时长到浏览器关闭自动删除
+    // 2.存储大小，4kb左右，并且不同浏览器之间存在条数限制
+    // 3.读取数据，当前域下cookie中存储的数据，是存放在一个字符中返回的
+    // 4.通过expires = date来进行时效性的设置
+    // 5.删除cookie中的数据，需要将数据的时效性设置成过去时间来达到删除cookie数据的效果
+    var date = new Date();
+    date.setDate(date.getDate()+1);
+    var date1 = new Date();
+    date1.setDate(date1.getDate()+1);
+    document.cookie = "uname=小王八;expires="+date;
+    document.cookie = "pword=123456;expires="+date1;
+    var arr = document.cookie.split('; ');
+    console.log(arr);
+    for(var i=0;i<arr.length;i++){
+        var newArr = arr[i].split('=');
+        console.log(newArr);
+        if('uname' == newArr[0]){
+            var uname = newArr[1];
+        }
+        if('pword' == newArr[0]){
+            var pword = newArr[1];
+        }
+    }
+    console.log(uname,pword);
+</script>
+</html>

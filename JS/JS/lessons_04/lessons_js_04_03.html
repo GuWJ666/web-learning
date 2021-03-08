@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body> 
+    <input type="text" placeholder="请输入姓名">
+    <input type="button" value="查询">
+    <h1 id="msg"></h1>
+</body>
+<script>
+    //二维数组
+    // 例如：对班里的人进行随机的分组，每组四人，到最后剩下的人不足四人这些人一组
+    var people = ['张凯兵', '张辉', '顾文江', '候博洋', '候玉忠', '李泽坤', '马茜', '王娇', '黄玉芮', '段园园',
+        '马锐', '李莹', '李涛', '吴红霞', '王莎莎', '周叶凡', '赵康', '周登华', '李杰', '余学武', '赵璘', '李骞',
+        '杜洁', '马鹏飞', '李锦涛', '汉宁辉'];
+
+
+    //  通过循环对26人进行分组
+    // 开始第一组的分组
+    // var group1 = [];
+    // for (var i = 0; i < 4; i++) {
+    //     // 从26人中随机挑选一人，加入第一组
+    //     var person = people[Math.round(Math.random() * (people.length - 1))];
+    //     group1.push(person);
+    //     // 把随机到的人从名单数组中删除，防止重复。
+    //     // people.splice((people.indexOf(person)),1);
+    //     // 获取随即人在people中的下标
+    //     var index = people.indexOf(person);
+    //     // 把index位置的元素从people中删除
+    //     people.splice(index, 1);
+    // }
+    var groupNum = Math.ceil(people.length / 4);
+    // 用来存储分好的组
+    var groups = [];
+    for (var j = 0; j < groupNum; j++) {
+        var group = [];
+        for (var i = 0; i < 4; i++) {
+            // 从26人中随机挑选一人，加入第一组
+            var person = people[Math.round(Math.random() * (people.length - 1))];
+            group.push(person);
+            // 把随机到的人从名单数组中删除，防止重复。
+            // people.splice((people.indexOf(person)),1);
+            // 获取随机人在people中的下标
+            var index = people.indexOf(person);
+            // 把index位置的元素从people中删除
+            people.splice(index, 1);
+            // 如果people中已经没有名字，那么结束本次分组
+            if (people.length == 0) {
+                break;
+            }
+        }
+        // 把分好的组存储在groups中
+        groups.push(group);
+    }
+    // 所有分组完毕，控制台打印
+    console.log(groups);
+
+    // 获取要操作的元素并绑定点击事件
+    var inps = document.getElementsByTagName('input');
+    msg = document.getElementById('msg');
+    inps[1].onclick = function () {
+        // 1.获取输入内容
+        var pName = inps[0].value;
+        // 2.从分组中找到当前名字所在的组，并把组内成员在h1标签中显示
+
+        // 思路1：将分好组的每一个名字与输入的名字进行比较
+
+
+    //     for(var a=0;a<groups.length;a++){
+    //        var g = groups[a];// 先从group中挨个将组取出来
+    //        for(b=0;b<g.length;b++){
+    //            var nName = g[b]; // 再从组中挨个将名字取出来
+    //            if(pName == nName){//将去除的名字与输入的名字进行比较，如果相等，那么输入的名字在的组就是g
+    //                msg.innerHTML = g;
+    //            }
+    //        }
+    //     }
+            // for(var i=0;i<groups.length;i++){
+            //     for(var j=0;j<groups[i].length;j++){
+            //         if(groups[i][j] == pName){
+            //             msg.innerHTML = groups[i];
+            //         }
+            //     }
+            // }
+
+            // 思路2：通过数组提供的indexOf（）方法来快速判断输入名字是否在组中
+            for(var i=0;i<groups.length;i++){
+               if( groups[i].indexOf(pName) != -1){
+                   msg.innerHTML = groups[i];
+               }
+            }
+    }
+
+
+
+
+    // var group2 = [];
+    // for(var i=0;i<4;i++){
+    //     // 从26人中随机挑选一人，加入第一组
+    //     var person = people[Math.round(Math.random()*(people.length-1))];
+    //     group2.push(person);
+    //     // 把随机到的人从名单数组中删除，防止重复。
+    //     // people.splice((people.indexOf(person)),1);
+    //     // 获取随即人在people中的下标
+    //     var index = people.indexOf(person);
+    //     // 把index位置的元素从people中删除
+    //     people.splice(index,1);
+    // }
+    // console.log(group2);
+</script>
+
+</html>

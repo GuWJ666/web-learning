@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 函数：函数就是一段可以重复执行的代码块，但是这段代码块不会自动随着脚本加载执行，需要通过触发机制或调用才会执行。
+    /*
+        语法：
+
+        声明函数：
+        function 函数名（）{
+            函数体，重复执行的代码块
+        }
+
+        没有名字的函数：匿名函数
+        function(){
+            函数体，重复执行的代码块
+        }
+        注意：
+        1.语法规则上，声明函数要有函数名，所以直接声明匿名函数是会报错的
+        2.但是匿名函数可以作为值赋给其它属性或变量
+        3.先声明后使用没有区别；先使用后声明匿名函数会报错（函数声明的提升）。
+
+        使用函数的行为：调用
+        1.被动调用：将函数绑定给事件
+        2.主动调用：函数名（）
+        一旦执行到函数调用，那么代码的执行立即跳转到对应函数体执行代码，函数体代码执行完才会接着刚才的代码继续向下执行。
+        // 声明一个函数，每次调用输出“hello world”
+        // function hello(){
+        //     console.log('hello world');
+        // }
+        // hello();
+        // hello();
+        // hello();
+
+        函数除了函数名和函数体，还可以拥有参数和返回值
+        var max = Math.max(a,b,c,d);
+        arr.push(a,b,c,d);
+        var newStr = str.substring(0,1);
+        1.无参数，无返回值
+        function sum1(){
+            console.log(10+20);
+        }
+        sum1();
+        2.有参数，无返回值
+        function sum2(x,y){
+          console.log(x+y);
+       }
+       sum2(10,10);
+       sum2(20,20);
+       3.无参数，有返回值
+       function sum3(){
+            return 10+20;//函数体内，通过return关键字来对外返回结果
+        }
+        var a = sum3();
+        console.log(a);
+        console.log(a);
+        4.有参数，有返回值
+        function sum4(x,y){形式参数，形参
+           return x+y;  函数体内的return就相当于循环中的break，会立即函数体代码的执行。
+                        也就是说，return下面的函数体代码是不会执行的。
+       }
+       var s = sum4(1,20);实际参数，实参
+       console.log(s);
+       声明函数时（）里写的都是形式参数，没有具体的值只为了占位用。
+       而调用函数时（）里写的叫实际参数，此时函数体代码的执行，形式参数会被实际参数所替代
+    */
+    //  function sui(){
+    //     alert(Math.round(Math.random()*100));
+    // }
+    // sui();
+    
+    // function sui(x,y){//x表示区间的下限值，y表示区间的上限值包含上限值
+    //     alert(Math.round(Math.random()*(y-x)+x));
+    // }
+    // sui(10,20); 
+
+    // function sui(){//x表示区间的下限值，y表示区间的上限值包含上限值
+    //     return Math.round(Math.random()*100);
+    // }
+    // var a = sui();
+    // alert(sui());
+    // console.log(sui())
+    // document.write(sui())
+    // document.body.innerHTML = sui();
+
+    // function sui(x,y){
+    //     var n = Math.round(Math.random()*(y-x)+x);
+    //     return n;
+    // }
+    // alert(sui(10,20));
+
+    function middle(x,y,z){
+        // if(x>y&&y>z || z>y&&y>x){
+        //     return y;
+        // }else if(y>x&&x>z || z>x&&x>y){
+        //     return x;
+        // }else if(x>z&&z>y || y>z&&z>x){
+        //     return z;
+        // }
+        
+        var max = Math.max(x,y,z);
+        var min = Math.min(x,y,z);
+        return x+y+z-max-min;
+    }
+    console.log(middle(322,4324,232));
+
+    // var arr = [];
+    // function middle(x,y,z){
+    //    arr.push(x,y,z);
+    //    for(j=0;j<arr.length-1;j++){
+    //        for(i=0;i<arr.length-1-j;i++){
+    //            if(arr[i] > arr[i+1]){
+    //                var t = arr[i];
+    //                arr[i] = arr[i+1];
+    //                arr[i+1] = t;
+    //                return arr[Math.ceil((arr.length)/2)];
+    //            }
+    //        }
+    //    }
+    // }
+    // console.log(middle(1,2,3));
+</script>
+
+</html>

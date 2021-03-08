@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 2.原型继承
+    // （1）
+    function Animal() {
+        this.type = '动物';
+    }
+    Animal.prototype.cell = '没有细胞壁';
+    Animal.prototype.call = function () {
+        console.log(this.voice);
+    }
+  
+    function Dog(voice) {
+        this.voice = voice;
+    }
+
+    // 1.引用继承：可以实现对父类原型上属性和方法的访问，但是存在问题，因为直接赋值，
+    // 那么从此Animal的原型就是Dog的原型，Dog的原型就是Animal的原型，对Dog原型的操作会直
+    // 接影响父类Animal的原型，这是不合理的
+    Dog.prototype = Animal.prototype;
+    // Dog.prototype.favorite = '骨头';
+    var dog = new Dog('汪');
+    // dog.call();
+    console.log(dog.type)
+    // var animal =  new Animal();
+    // console.log(animal.favorite);
+
+    // 2.拷贝继承：可以实现父类原型的属性和方法的继承，但是也有一些问题，
+    // 虽然解决了引用继承存在的问题，但是拷贝继承是一次性继承，如果父类的原型又做了拓展，
+    // 子类想要继承就必须再次执行拷贝继承，那么会存在大量的冗余代码执行。
+    // for(var x in Animal.prototype){
+    //     Dog.prototype[x] = Animal.prototype[x];
+    // }
+    // Dog.prototype.favorite = '骨头';
+    // Animal.prototype.sleep = function(){
+    //     console.log('动物都需要睡觉才能更好的成长');
+    // }
+    // for(var x in Animal.prototype){
+    //     Dog.prototype[x] = Animal.prototype[x];
+    // }
+    // var dog = new Dog('汪汪');
+    // dog.call();
+    // dog.sleep();
+    // console.log(dog.favorite);
+
+    // var ani = new Animal();
+    // console.log(ani.favorite);
+    // ani.sleep();
+
+    // 3.真引用继承：既可以实现原型上的继承，也可以实现构造函数上的继承，并且继承完成后，对子类的原型的操作不会影响父类的原型，而对父原型的操作，子类又能动态获取
+    // 实现思路：将子类原型指向父类的实例对象
+    Dog.prototype = new Animal();
+    Dog.prototype.constructor = Dog;
+
+
+    Dog.prototype.love = '肉';
+    Animal.prototype.like = 'sleep';
+    var dog = new Dog('汪汪');
+    // dog.call();
+    // console.log(dog.type);
+    // console.log(dog.like);
+
+    // var ani = new Animal();
+    // console.log(ani.love);
+
+    // 所有的对象都存在一个属性constructor，它指向当前对象的构造函数
+    // console.log(dog.constructor)
+    dog.constructor.prototype.test = '测试';
+    console.log(Animal.prototype.test);
+
+</script>
+
+</html>

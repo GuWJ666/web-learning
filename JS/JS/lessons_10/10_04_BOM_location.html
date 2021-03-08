@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button>跳转</button>
+</body>
+<script>
+    // window.location属性主要存储了当前页面地址栏相关的信息
+    // location对象江地址栏信息进行了切片截取，方便了我们的操作
+
+    // location.href:返回当前地址栏完整的url
+    console.log(location.href);
+
+    // location.host:返回完整的主机地址信息（域名以及端口号）
+    console.log(location.host);
+
+    // location.hostname:返回主机名
+    // location.port:返回端口号
+
+    // location.portocol:返回当前url对应的协议名称
+    console.log(location.protocol);
+
+    // location.pathname:返回当前文件在主机上的地址信息
+    console.log(location.pathname);
+
+    // location.href是一个读写属性，可以为其赋予其他url来实现页面的跳转，也是js中最常用的一种页面跳转方式,跳转方式打开当前窗口加载url
+    // location.href = 'http://www.baidu.com';
+
+    // location.assign()方法也可以实现页面跳转
+    // location.assign('http://www.baidu.com');
+    // 上面两种跳转功能相同，没什么区别
+    // location.replace()将当前url替换成指定的url，与上面两种方式的区别在于不会产生新一条的历史记录
+    // location.replace('http://www.baidu.com');
+
+    document.querySelector('button').onclick = function(){
+        // 1.有新增记录
+        // location.href = 'http://www.baidu.com';
+        // 2.有新增记录
+        // location.assign('http://www.baidu.com');
+        // 3.没有新增记录
+        // location.replace('http://www.baidu.com');
+    }
+
+    // 重载当前url
+    // 可以传入可选参数，如果添加参数true，那么url重载必定将从服务器加载，如果没有填写参数，那么url重载可能从浏览器缓存中重载
+    // location.reload();
+    
+</script>
+</html>

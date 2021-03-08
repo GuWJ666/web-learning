@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* div {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-left:300px;
+        } */
+        .clear::after{
+            content:"";
+            clear:both;
+            display:block;
+        }
+        .box>h1 {
+            width: 100px;
+            height: 100px;
+            border:1px solid;
+        }
+
+        .box {
+            /* width: 100px; */
+            border: 1px solid;
+            text-align: center;
+        }
+
+        .box>h1:nth-child(1) {
+            float: left;
+        }
+
+        .box>h1:nth-child(2) {
+            float: right;
+        }
+        .box>h1:nth-child(3) {
+           /* margin:0 auto; */
+           float:right;
+        }
+    </style>
+    <!-- tween.js 是一个js 动画的缓动效果插件，使用之前先引用 -->
+    <script src="tween.js"></script>
+</head>
+
+<body>
+    <div class="box clear">
+        <h1></h1>
+        <h1></h1>
+        <h1></h1>
+    </div>
+    <div id="wrap"></div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap');
+    var timer = null;
+    wrap.onclick = function () {
+        /*
+            tween.js的工作还是需要依赖于定时器setInterval;
+            核心：t,b,c,c
+            t:表示开始步数
+            b:表示开始位置
+            c:表示改变量
+            d:表示总的步数
+
+            1.t和d共同决定了动画总共要分多少步完成，步数越多动画越连贯细致，一般情况下t初始值都是0；
+            2.b和c相加的结果决定了动画结束时元素所在的位置；
+        */
+        var t = 0,//开始步数
+            b = wrap.offsetLeft,//当前位置
+            c = 1000,//改变量
+            d = 100;//总的步数
+        if (timer == null) {
+            timer = setInterval(function () {
+                t++;//步数累加
+                if (t == d) {//动画播放结束
+                    clearInterval(timer);
+                }
+                wrap.style.left = Tween.Back.easeOut(t, b, c, d) + 'px';
+            }, 20)
+        }
+    }
+
+    // 自己处理加速
+    // var speed = 3;
+    // wrap.onclick = function(){
+    //     if(!timer){
+    //         timer = setInterval(function(){
+    //             speed *= 1.1;
+    //             var s = wrap.offsetLeft + speed;
+    //             if(s >= 1000){
+    //                 s = 1000;
+    //                 clearInterval(timer);
+    //             }
+    //             wrap.style.left = s + 'px';
+    //         },20)
+    //     }
+    // }
+</script>
+
+</html>

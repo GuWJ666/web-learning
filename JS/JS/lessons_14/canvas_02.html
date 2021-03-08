@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            text-align:center;
+        }
+        #cv{
+            box-shadow: 5px 5px 10px black;
+            border:1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cv" width="500" height="500"></canvas>
+</body>
+<script>
+    var cv = document.getElementById('cv');
+    var ctx = cv.getContext('2d');
+
+    // 清除画布上绘制的图形
+    // 1.再绘制一块与画布颜色相同的矩形或原型盖在想要清除的内容上
+    // 2.pen.clearRect(x,y,w,h);
+    // 3.cv.width = cv.width;
+
+    
+    // canvas绘制圆弧
+    // 弧度：Math.PI = 180弧度，一个整圆弧有360弧度
+    // arc(x,y,r,s,e,d)方法绘制圆弧
+    // x,y：表示圆心坐标
+    // r：表示圆弧半径
+    // s：表示圆弧开始的弧度
+    // e：表示圆弧结束的弧度
+    // d：布尔值；表示绘制圆弧的方向，默认为false表示顺时针绘制
+
+    // 注意：canvas画圆中，0弧度的位置不是12点方向，而是3点方向
+    // console.log(Math.PI)
+    // ctx.arc(250,250,250,0,Math.PI,true);
+    // ctx.fill()
+    // ctx.stroke();
+    ctx.moveTo(250,250);
+    ctx.arc(250,250,250,Math.PI*2-Math.PI/4,Math.PI+Math.PI/4,true);
+    ctx.closePath();
+    ctx.stroke();
+</script>
+</html>

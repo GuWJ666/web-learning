@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="900" height="600"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+
+    // for (var i = 0; i < 30; i++) {
+    //     cf.beginPath();
+    //     cf.moveTo(i * 30, 0);
+    //     cf.lineTo(30 * i, 900);
+    //     cf.strokeStyle = 'red';
+    //     cf.stroke();
+    //     cf.beginPath();
+    //     cf.moveTo(0, i * 30);
+    //     cf.lineTo(900, 30 * i);
+    //     cf.stroke();
+    // }
+
+
+    function Snake(x, y, w, h, c) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.c = c;
+        this.dir = 39;
+        this.speed = 30;
+    }
+
+    Snake.prototype.draw = function () {
+        cf.fillStyle = this.c;
+        cf.fillRect(this.x, this.y, this.w, this.h);
+    }
+
+    Snake.prototype.move = function () {
+        switch (this.dir) {
+            case 37:
+                this.x -= this.speed;
+                break;
+            case 38:
+                this.y -= this.speed;
+                break;
+            case 39:
+                this.x += this.speed;
+                break;
+            case 40:
+                this.y += this.speed;
+                break;
+        }
+
+    }
+    var snake1 = new Snake(0, 0, 29, 29, 'green');
+    snake1.draw();
+    var snake2 = new Snake(30, 0, 29, 29, 'green');
+    snake2.draw();
+    var snake3 = new Snake(60, 0, 29, 29, 'green');
+    snake3.draw();
+    document.onkeydown = function (e) {
+        var e = e || window.event;
+        if (e.keyCode > 36 && e.keyCode < 41) {
+            snake3.dir = e.keyCode;
+            // snake2.dir = e.keyCode;
+            // snake3.dir = e.keyCode;
+        }
+    }
+
+    var arr = [];
+    var arr1 = [30, 0];
+    var arr2 = [60, 0];
+    arr.push(arr1, arr2);
+    console.log(arr);
+    var timer = setInterval(function () {
+        cv.width = cv.width;
+        // for (var i = 0; i < 30; i++) {
+        //     cf.beginPath();
+        //     cf.moveTo(i * 30, 0);
+        //     cf.lineTo(30 * i, 900);
+        //     cf.stroke();
+        //     cf.beginPath();
+        //     cf.moveTo(0, i * 30);
+        //     cf.lineTo(900, 30 * i);
+        //     cf.stroke();
+        // }
+
+        snake3.move();
+        snake3.draw();
+
+        var arr3 = [];
+        arr3.push(snake3.x, snake3.y);
+        arr.push(arr3);
+
+        if (arr.length > 3) {
+            arr.shift();
+        }
+
+        var snake4 = new Snake(arr[0][0], arr[0][1], 29, 29, 'green');
+        var snake5 = new Snake(arr[1][0], arr[1][1], 29, 29, 'green');
+        snake4.draw();
+        snake5.draw();
+    }, 500)
+</script>
+
+</html>

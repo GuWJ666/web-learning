@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <tb :ths="ths" :tbs="tbs" @translate="receive">
+    </div>
+</body>
+<script>
+    Vue.component('tb', {
+        props: ['ths', 'tbs'],
+        template: `
+        <div>
+            <input type="text" @input="fn" v-model="m"> 
+            <div>
+                <span v-for="x in ths"><input type="checkbox" :value="x" @click="vl">{{x}}</span>
+            </div>
+            <table border="2">
+                <thead>
+                    <tr>
+                        <th v-for="x in ths">{{x}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="x in tbs">
+                        <td v-for="y in x">{{y}}</td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+                `,
+        data(){
+            return {
+                m:'',
+                x:[]
+            }
+        },
+        methods: {
+            vl(e){
+                // this.x = e.target.value;
+                this.x.push(e.target.value);
+            },
+            fn() {
+                var arr = [this.m,this.x];
+                this.$emit('translate',arr);
+                // this.x = [];
+            }
+        }
+    })
+    let app = new Vue({
+        el: '#app',
+        data: {
+            // type: 'id',//单选框的值
+            types: [],//复选框的值
+            cont: '',//输入框的值
+            list: [
+                { id: '001', name: '李涛', age: '20', sex: '男', major: '计算机' },
+                { id: '002', name: '李莹', age: '21', sex: '女', major: '计算机' },
+                { id: '003', name: '李谦', age: '22', sex: '男', major: '英语' },
+                { id: '004', name: '张辉', age: '23', sex: '男', major: '计算机' },
+                { id: '005', name: '张凯宾', age: '24', sex: '男', major: '太极' },
+                { id: '006', name: '马锐', age: '25', sex: '女', major: '计算机' },
+                { id: '007', name: '马倩', age: '26', sex: '女', major: '演员' }
+            ]
+        },
+        methods: {
+            receive(res){
+                this.cont=res[0];
+                this.types=res[1];
+            }
+        },
+        computed: {
+            // // 单选框
+            // 表头数据
+            // ths() {
+            //     let set = new Set();
+            //     for (let x of this.list) {
+            //         for (let y in x) {
+            //             set.add(y);
+            //         }
+            //     }
+            //     return [...set];
+            // },
+            // // 表格数据
+            // tbs() {
+            //     let res = [];
+            //     for (let x of this.list) {
+            //         if (x[this.types].includes(this.cont)) {
+            //             res.push(x);
+            //         }
+            //     }
+            //     return res;
+            // }
+
+            // // 复选框
+            ths() {
+                let set = new Set();
+                for (let x of this.list) {
+                    for (let y in x) {
+                        set.add(y);
+                    }
+                }
+                console.log([...set])
+                return [...set];
+            },
+            // 表格数据
+            tbs() {
+                let res = [];
+                // console.log(this.types)
+                let cn = this.cont.split(',');//输入框的值[张，20]
+                let ty = this.types;//复选框的值【name，age】
+                for (let x of this.list) {
+                    // console.log(ty);
+                    for (var i = 0; i < ty.length; i++) {
+                        if (!x[ty[i]].includes(cn[i])) {
+                            break;
+                        }
+                    }
+                    if (i == ty.length) {
+                        res.push(x);
+                    }
+                }
+                return res;
+            }
+        }
+    })
+</script>
+
+</html>

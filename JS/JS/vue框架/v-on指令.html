@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            background:red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            v-on指令，用于为DOM绑定事件
+            v-on:click="",对于事件的处理，可以是js表达式，也可以是methods中的方法
+            v-on也存在简写形式：
+            v-on:click -> @click
+         -->
+        <h1 v-on:click="msg='你好'">{{msg}}</h1>
+        <h1 v-on:click="translate">{{msg}}</h1>
+        <h1 @click="boxShow = !boxShow">隐藏/显示</h1>
+        <div class="box" v-show="boxShow"></div>
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el:'#app',
+        data:{
+            msg:'hello',
+            boxShow:true
+        },
+        methods:{
+            translate(e){
+                // 因为methods声明的方法内，this都是指向vue的实例，
+                // 并不指向触发事件的元素，如果需要操作触发事件的元素，那么需要通过事件对象
+                this.msg = '你好';
+                console.log(e.target);//真正被点击的DOM
+                console.log(e.currentTarget)//当前响应事件的DOM
+            }
+        }
+    })
+</script>
+</html>

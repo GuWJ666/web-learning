@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .clear::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .wrap {
+            width: 500px;
+            height: 612px;
+            border: 5px solid lightgray;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1:nth-child(1) {
+            float: left;
+        }
+
+        h1:nth-child(2) {
+            float: right;
+        }
+
+        h1:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            text-align: center;
+            line-height: 400px;
+            font-size: 100px;
+            margin-bottom: 10px;
+            margin: 0 auto;
+        }
+
+        #text {
+            height: 150px;
+            background: lightgray;
+        }
+
+        #text>span {
+            display: inline-block;
+            font-size: 40px;
+            height: 100%;
+            line-height: 150px;
+            margin: 0 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap clear">
+        <h1></h1>
+        <h1></h1>
+        <h1></h1>
+        <h3>根据👆字的颜色选出👇对应文字的描述</h3>
+        <div id="text">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+<script>
+    // 获取h1标签集合
+    var h1 = document.getElementsByTagName('h1');
+    // 获取span标签集合
+    var sps = document.getElementsByTagName('span');
+    // 给第一个h1标签添加文本内容
+    h1[0].innerHTML = '倒计时：20s';
+    // 给第二个标签添加文本内容
+    h1[1].innerHTML = '得分：00';
+
+    // 创建关于颜色的数组，用来在循环中随机span和h1的字体颜色
+    var arrColor = ['black', 'blue', 'yellow', 'red', 'green'];
+    // 创建关于文本的数组，用来在循环中随机span的文本内容
+    var arrText = ['黑', '蓝', '黄', '红', '绿'];
+    var s = 19;
+    var timer = null;
+
+    var z = 0;
+    change();
+    function change() {
+        h1[2].innerHTML = arrText[Math.round(Math.random() * (arrText.length - 1))];
+        h1[2].style.color = arrColor[Math.round(Math.random() * (arrText.length - 1))];
+        for (i = 0; i < sps.length; i++) {
+            sps[i].innerHTML = arrText[Math.floor(Math.random() * arrText.length)];
+            arrText.splice(arrText.indexOf(sps[i].innerHTML), 1);
+            sps[i].style.color = arrColor[Math.floor(Math.random() * arrColor.length)];
+            arrColor.splice(arrColor.indexOf(sps[i].style.color), 1);
+        }
+        arrColor = ['black', 'blue', 'yellow', 'red', 'green'];
+        arrText = ['黑', '蓝', '黄', '红', '绿'];
+    }
+    for (i = 0; i < sps.length; i++) {
+        (function (i) {
+            sps[i].onclick = function () {
+                // clearInterval(timer);
+                var x = Math.round(Math.random() * (arrText.length - 1));
+                var y = Math.round(Math.random() * (arrColor.length - 1));
+                h1[2].innerHTML = arrText[x];
+                h1[2].style.color = arrColor[y];
+                change();
+                if (arrText.indexOf(sps[i].innerHTML) == arrColor.indexOf(arrColor[y])) {
+                    console.log(y,arrColor[y]);
+                    console.log(arrText.indexOf(sps[i].innerHTML),sps[i].innerHTML);
+                    z++;
+                    h1[1].innerHTML = '得分:' + db(z);
+                    if (!timer) {
+                        timer = setInterval(timeOut, 1000);
+                    }
+                }
+
+            }
+        })(i)
+    }
+    function db(c) {
+        c < 10 ? c = '0' + c : c;
+        return c;
+    }
+    function timeOut() {
+        h1[0].innerHTML = '倒计时：' + db(s) + 's';
+        if (s < 1) {
+            s = 20;
+            alert('game over');
+        } s--;
+    }
+</script>
+
+</html>

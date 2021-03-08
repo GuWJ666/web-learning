@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px black;
+            border: 1px solid #ddd;
+        }
+        select{
+            position: absolute;
+            left: 890px;
+        }
+        select:nth-of-type(1) {
+            top: 50px;
+        }
+
+        select:nth-of-type(2) {
+            top: 100px;
+        }
+
+        select:nth-of-type(3) {
+            top: 150px;
+        }
+        span{
+            position:absolute;
+            left:830px;
+            font-size:12px;
+        }
+        span:nth-of-type(1){
+            top:50px;
+        }
+        span:nth-of-type(2){
+            top:100px;
+        }
+        span:nth-of-type(3){
+            top:150px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+    <span>工具:</span>
+    <select name="" id="">
+        <option>笔</option>
+        <option>橡皮擦</option>
+    </select>
+    <span>画笔粗细:</span>
+    <select name="" id="">
+        <option value="1">1</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+    </select>
+    <span>颜色:</span>
+    <select name="" id="">
+        <option>red</option>
+        <option>yellow</option>
+        <option>blue</option>
+        <option>green</option>
+        <option>black</option>
+    </select>
+</body>
+<script>
+    var cv = document.getElementById('cv');
+    var sel = document.querySelectorAll('select');
+    var cf = cv.getContext('2d');
+    // 橡皮
+    cf.beginPath();
+    cf.fillStyle = 'lightgray';
+    cf.fillRect(20, 20, 30, 40);
+    // 画笔
+    cf.beginPath();
+    cf.fillStyle = 'blue';
+    cf.fillRect(60, 20, 10, 40);
+
+    // 点击
+    sel[0].onclick = function () {
+        if (this.value == '橡皮擦') {
+            cf.beginPath();
+            cf.fillStyle = 'blue';
+            cf.fillRect(20, 20, 30, 40);
+            cf.beginPath();
+            cf.fillStyle = 'gray';
+            cf.fillRect(60, 20, 10, 40);
+        } else {
+            cf.beginPath();
+            cf.fillStyle = 'blue';
+            cf.fillRect(60, 20, 10, 40);
+            cf.beginPath();
+            cf.fillStyle = 'lightgray';
+            cf.fillRect(20, 20, 30, 40);
+        }
+    }
+    cv.onmousedown = function (e) {
+        var e = e || window.event;
+        var x = e.clientX - this.offsetLeft;
+        var y = e.clientY - this.offsetTop;
+        cf.beginPath();
+        cf.moveTo(x, y);
+        cv.onmousemove = function (e) {
+            var mx = e.clientX - this.offsetLeft;
+            var my = e.clientY -this.offsetTop;
+            if (sel[0].value == '笔') {
+                cf.lineTo(mx, my);
+                cf.lineWidth = 1;
+                cf.lineWidth = sel[1].value*1;
+                cf.strokeStyle = sel[2].value;
+                cf.stroke();
+            } 
+            else if(sel[0].value == '橡皮擦'){
+                cf.lineTo(mx, my);
+                cf.strokeStyle = '#fff';
+                cf.lineWidth = 10;
+                cf.stroke();
+            }
+        }
+    }
+    cv.onmouseup = function () {
+        this.onmousemove = null;
+    }
+    cv.onmouseout = function () {
+        this.onmousemove = null;
+    }
+
+</script>
+
+</html>

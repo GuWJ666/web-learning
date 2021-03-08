@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 220px;
+            height: 200px;
+            color: #fff;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" value="color" id="color">
+    <input type="button" value="改变" id="change">
+    <div id="box"></div>
+    <script>
+        // 1.引入用户需要操作的标签 获取需要操作的元素
+        var color = document.getElementById('color'),
+            change = document.getElementById('change'),
+            box = document.getElementById('box');
+        // 2.设置操作后的效果：点击切换颜色 为元素绑定事件
+        change.onclick = function () {
+            // 3.获取输入框的内容
+            var a = color.value;//string
+            // 4.对输入内容进行判断，确定div的背景色
+            // 方法一
+            // if (a == 'red') {
+            //     box.style.backgroundColor = a;
+            // } else if (a == 'green') {
+            //     box.style.backgroundColor = a;
+            // } else if (a == 'blue') {
+            //     box.style.backgroundColor = a;
+            // } else {
+            //     box.style.backgroundColor = 'black';
+            // }
+            // 方法二
+            // if (a == 'red' || a =='green' || a == 'blue'){
+            //     box.style.backgroundColor = a;
+            // }else{
+            //     box.style.backgroundColor = 'black';
+            // }
+            // 方法三
+            switch(a){
+                case 'red':
+                    box.style.backgroundColor = 'red';
+                    break;
+                case 'green':
+                    box.style.backgroundColor = 'green';
+                    break;
+                case 'blue':
+                    box.style.backgroundColor = 'blue';
+                    break;
+                default:
+                    box.style.backgroundColor = 'black';
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>

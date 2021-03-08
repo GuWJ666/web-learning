@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jq上传文件</title>
+    <script src="../../../jq.js/jquery.js"></script>
+    <style>
+        img{
+            width: 100px;
+            height: 100px;
+            /* border-radius:50%; */
+            position: relative;;
+            left:10px;
+            top:10px;
+        }
+        input:nth-of-type(1){
+            width: 100px;
+            height: 100px;
+            opacity: 0;
+            position:absolute;
+            left:10px;
+            top:10px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4028577211,1959003630&fm=15&gp=0.jpg" alt="">
+    <input type="file">
+    <input type="button" value="上传">
+</body>
+<script>
+    $(function(){
+        $('input').eq(0).change(function(){
+            var file = this.files[0];
+            var fr = new FileReader();
+            fr.readAsDataURL(file);
+            fr.onload = function(){
+                $('img').attr('src',this.result);
+            }
+
+        })
+        $('input').eq(1).click(function(){
+            // 读取图片数据
+            console.log($(this).prev()[0])
+            var file = $(this).prev()[0].files[0];
+            var fd = new FormData();
+            fd.append('file',file);
+            $.ajax({
+                type:'post',
+                url:'./upload.php',
+                data:fd,
+                // jq发送上传文件的请求，需要向contentType进行设置，因为默认值时‘application/x-www-form-urlencoded’;
+                contentType:false,
+                processData:false,
+                success:function(res){
+                    console.log(res);
+                }
+            })
+        })
+    })
+</script>
+</html>

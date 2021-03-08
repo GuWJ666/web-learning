@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        td{
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="2">
+        <thead>
+            <tr></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+<script src="./lessons_12/jq.js/jquery.js"></script>
+<script>
+
+    // for(var i=0;i<arr.length;i++){
+    //     var min = i;
+    //     for(var j=i+1;j<arr.length;j++){
+    //         if(arr[j] < arr[min]){
+    //             min = j;
+    //         }
+    //     }
+    //     var t = arr[i];
+    //     arr[i] = arr[min];
+    //     arr[min] = t;
+    // }
+
+    // 随机一个不重复的数组
+    // function rn(){
+    //     return Math.round(Math.random()*4);
+    // }
+    // let arr = [];
+    // while(arr.length<5){
+    //     let n = rn();
+    //     // indexof（）方法
+    //     // if(arr.indexOf(n) == -1){
+    //     //     arr.push(n);
+    //     // }
+    //     // includes()方法
+    //     if(!arr.includes(n)){
+    //         arr.push(n);
+    //     }
+    // }
+    // console.log(arr);
+    // let set = new Set();
+    // while(set.size<5){
+    //     let n = rn();
+    //     set.add(n);
+    // }
+    // console.log([...set]);
+
+
+    // 你发送http请求，后台返回的数据是⼀个数组，数组有若⼲个对象，但是对象的键值对的数量并不统⼀且并不知道有多少种可能可以丰富数据，但是键值对数量都不可统⼀，⽽且要注意，键具体有多少个，是什么， 都是未知的，且每次重新请求，这个返回值都在改变，也就是说，我们只能知道返回值的数据类型。 需求:根据这个返回值的数据，在页⾯上创建表格。 表格要求:表头就是这次请求返回值中的所有对象中出现的所有的键。表格内容根据数组中的数据渲染 。优化：当某个单元格，没有信息时，要⽤‘-’填充当前单元格出现的键
+    let data = [
+        {
+            id: '001',
+            name: '小张'
+        }, {
+            id: '002',
+            name: '小王',
+            age: 29
+        }, {
+            id: '003',
+            name: '小李',
+            tel: '13222222222'
+        }, {
+            id: '004',
+            name: '小赵',
+            major: '信息工程'
+        }, {
+            id: '005',
+            name: '小孙',
+            sex: '男',
+            major: '计算机技术'
+        }, {
+            id: '006',
+            name: '小周',
+            class: '大二',
+            sex: '女'
+        }
+    ]
+    // var str = JSON.stringify(data[0]);
+    // console.log(data[0]);
+    // var arr = [];
+    // for (var i = 0; i < data.length; i++) {
+    //     for (var x in data[i]) {
+    //         if (!arr.includes(x)) {
+    //             arr.push(x);
+    //         }
+    //     }
+    // }
+
+    // console.log(arr);
+    // init();
+    // function init() {
+    //     var arr = [];
+    //     for (var i = 0; i < data.length; i++) {
+    //         for (var x in data[i]) {
+    //             if (!arr.includes(x)) {
+    //                 arr.push(x);
+    //             }
+    //         }
+    //     }
+    //     console.log(arr);
+    //     for(var i=0;i<arr.length;i++){
+    //         $('<th>'+arr[i]+'</th>').appendTo('thead>tr');
+    //     }
+    //     for(var i=0;i<data.length;i++){
+    //         $tr = $('<tr></tr>').appendTo('tbody');
+    //         var d = data[i];
+    //         for(var j=0;j<arr.length;j++){
+    //         console.log(d);
+    //             var a = arr[j];
+    //             // console.log(a);
+    //             d.a?d.a:'——';
+    //             // data[i].arr[j]?data[i].arr[j]:'——';
+    //             console.log(data[i].a)
+    //             $('<td>'+d.a+'</td>').appendTo($tr);
+    //         }
+    //     }
+    // }
+    init();
+    function init() {
+        // 1.确定表头信息
+        let hdata = new Set();
+        for (let x of data) {
+            for (let y in x) {
+                hdata.add(y);
+            }
+        }
+        hdata = [...hdata];
+        // console.log(hdata);
+        for (let x of hdata) {
+            // 创建表头
+            $('thead').append($(`<th>${x}</th>`));
+        }
+        // 渲染表数据
+        for(let x of data){
+            console.log(x);
+            let $tr = $('<tr></tr>').appendTo('tbody');
+            for(let y of hdata){
+                $(`<td>${x[y]?x[y]:'-'}</td>`).appendTo($tr);
+            }
+        }
+    }
+</script>
+
+</html>

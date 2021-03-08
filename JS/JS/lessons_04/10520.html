@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .btn{
+            width: 50px;
+            height: 20px;
+            line-height:20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>美女</h1>
+    美女说的：
+    <input type="button" class="btn" value="baby" disabled='false'>
+    美女的手指数：
+    <input type="text" class="btn" value="go" >
+    <h1>帅哥</h1>
+    
+    帅哥说的：
+    <select name="" id="">
+        <option >0</option>
+        <option >5</option>
+        <option >10</option>
+        <option >15</option>
+        <option >20</option>
+    </select>
+    帅哥的手指数：
+    <select name="" id="">
+        <option >0</option>
+        <option >5</option>
+        <option >10</option>
+    </select>
+    <input type="button" id="btn" value="come on">
+    <br>
+    游戏结局：
+    <h1 id="result"></h1>
+</body>
+<script>
+    // 1.要操作的元素
+    var inps = document.getElementsByTagName('input'),
+        sels = document.getElementsByTagName('select'),
+        res = document.getElementById('result');
+    // 准备美女可以喊得和可以出的内容
+    var nums = [0,5,10,15,20];
+    // 2.为游戏开始的按钮绑定点击事件
+    inps[2].onclick = function(){
+        // 1.为美女随机喊得和出的
+        // 喊(全都可以喊下标控制在0-4)
+        var gh = nums[Math.round(Math.random()*4)];
+        inps[0].value = gh;
+        // 出（只能出0，5，10下标在0-2）
+        var gc = nums[Math.round(Math.random()*2)];
+        inps[1].value = gc;
+
+        // 2.确定帅哥出的和喊得
+        // 喊
+        var bh = Number(sels[0].value);
+        // 出
+        var bc = Number(sels[1].value);
+
+        // 3.对游戏结果进行判断
+        if(bh != bc+gc && gh != bc+gc){//没有输赢
+            res.innerHTML = '没有输赢'
+        }else if(bh == bc+gc && gh == bc+gc){
+            res.innerHTML = '平局'
+        }else if(bh == bc+gc){//帅哥赢
+            res.innerHTML = '帅哥赢'
+        }else if(gh == bc+gc){//美女赢
+            res.innerHTML = '美女赢'
+        }
+    }
+</script>
+</html>

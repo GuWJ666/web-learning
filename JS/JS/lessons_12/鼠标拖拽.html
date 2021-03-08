@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jq.js/jquery.js"></script>
+</head>
+
+<body>
+</body>
+<script>
+    $(function () {
+        var div = $('<div></div>').css({
+            width: '100px',
+            height: '100px',
+            background: 'green',
+            'border-radius': '50%',
+            position: 'absolute'
+        }).appendTo('body').mousedown(function (e) {
+            var x = e.clientX - div.offset().left;
+            var y = e.clientY - div.offset().top;
+            console.log(x, y)
+            $(document).mousemove(function (e) {
+                var l = e.clientX;
+                var t = e.clientY;
+                div.css({
+                    left: (l - x) + 'px',
+                    top: (t - y) + 'px'
+                })
+            })
+        }).mouseup(function(){
+                $(document).off('mousemove')
+            })
+
+
+
+    })
+</script>
+
+</html>

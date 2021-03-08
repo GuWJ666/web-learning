@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+            v-show指令，根据数据判断当前元素是否显示
+            v-show的值如果为true标签显示，如果为false隐藏
+            隐藏：通过为标签添加行间样式display:none实现
+            显示：通过删除了标签行间的dispaly：none属性，而不是将display设置为block
+        -->
+        <div class="box" v-show="false"></div>
+
+        <!-- 
+            2.v-if指令，根据数据进行条件判断，决定当前DOM是否需要创建渲染
+
+            v-else-if以及v-else指令，它们需要配合v-if指令使用，不能单独使用，和js代码中的if...esle if...else功能一模一样
+        -->
+        <div>你的成绩是：</div>
+        <div v-if="grade>=90">优秀</div>
+        <div v-else-if="grade>=80">良好</div>
+        <div v-else-if="grade>=60">及格</div>
+        <div v-else>不及格</div>
+
+        <!-- 
+            v-show和v-if都可以做到对标签隐藏显示的切换，区别在于，v-show真的是隐藏（display：none），
+            而v-if是不渲染DOM，所以呢，如果需要频繁的切换DOM的隐藏和显示请使用v-show，
+            如果只有初次判断隐藏显示请使用v-if，来避免先渲染后隐藏的多余操作
+        -->
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            isShow: false,
+            grade: 90
+        }
+    })
+</script>
+
+</html>

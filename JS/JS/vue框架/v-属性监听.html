@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <input type="text" placeholder="m" v-model="m">m
+        <h1>换算后：</h1>
+        <input type="text" placeholder="km" v-model="km">km -->
+        <!-- g/kg/斤/两 -->
+        <input type="text" v-model.number="g">g
+        <br>
+        <input type="text" v-model.number="kg">kg
+        <br>
+        <input type="text" v-model.number="jin">斤
+        <br>
+        <input type="text" v-model.number="liang">两
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el:'#app',
+        data:{
+            num:'',
+            m:'',
+            km:'',
+            g:'',
+            kg:'',
+            jin:'',
+            liang:''
+        },
+        methods:{},
+        computed:{
+            // km(){
+            //     return this.m / 1000;
+            // }
+        },
+        // 属性监听，可以动态监听属性值的变化，一旦属性值发生了变化会立即得知并根据配置进行操作
+        watch:{
+            // 监听变量num值的变化
+            num(){
+                // console.log(`num的值发生了变化:${this.num}`);
+            },
+            m(){
+                this.km = this.m / 1000;
+            },
+            km(){
+                this.m = this.km * 1000;
+            },
+            g(){
+                this.kg = this.g / 1000;
+                this.jin = this.g / 500;
+                this.liang = this.g / 50;
+            },
+            kg(){
+                this.g = this.kg * 1000;
+                this.jin = this.kg * 2;
+                this.liang = this.kg * 20;
+            },
+            jin(){
+                this.g = this.jin * 500;
+                this.kg = this.jin / 2;
+                this.liang = this.jin * 10;
+            },
+            liang(){
+                this.g = this.liang * 50;
+                this.kg = this.liang / 20;
+                this.jin = this.liang / 10;
+            }
+        }
+    })
+</script>
+</html>

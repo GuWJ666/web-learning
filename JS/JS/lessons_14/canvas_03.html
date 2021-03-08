@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px black;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    // canvas上绘制图形的交互
+    var cv = document.getElementById('cv');
+    var cf = cv.getContext('2d');
+    var lock = true;
+    // 画布正中心绘制一个宽高各两百的红色正方形，鼠标点击变成黑色，两次点击变成红色，循环。。。
+
+    // cf.fillStyle = 'red';
+    // cf.fillRect(300, 150, 200, 200);
+
+    // cv.onclick = function (e) {
+    //     var e = e || window.event;
+    //     var x = e.clientX - this.offsetLeft;
+    //     var y = e.clientY - this.offsetTop;
+    //     if (x >= 300 && x <= 500 && y >= 150 && y <= 350) {
+    //         cf.beginPath();
+    //         lock? cf.fillStyle = 'black': cf.fillStyle = 'red';
+    //         lock = !lock;
+    //         cf.fillRect(300, 150, 200, 200);
+    //     }
+    // }
+
+    // 画布正中心绘制一个宽高各两百的红色圆形，鼠标点击变成黑色，两次点击变成红色，循环。。。
+    // cf.fillStyle = 'red';
+    // cf.arc(400, 250, 200, 0, Math.PI * 2);
+    // cf.fill();
+    // cv.onclick = function (e) {
+    //     var e = e || window.event;
+    //     var x = e.clientX - this.offsetLeft;
+    //     var y = e.clientY - this.offsetTop;
+    //     var s = Math.pow((x - 400), 2) + Math.pow((y - 250), 2);
+    //     if (s <= Math.pow(200, 2)) {
+    //         cv.width = cv.width;
+    //         cf.beginPath();
+    //         lock ? cf.fillStyle = 'black' : cf.fillStyle = 'red';
+    //         lock = !lock;
+    //         cf.arc(400, 250, 200, 0, Math.PI * 2);
+    //         cf.fill();
+    //     }
+    // }
+
+    // 画布上绘制了一个蓝色的圆，一个绿色的正方形，点击圆，画布背景变成红色，点击方块，画布背景变成黑色
+    cf.fillStyle = 'blue';
+    cf.arc(100, 100, 50, 0, Math.PI * 2);
+    cf.fill();
+
+    cf.fillStyle = 'green';
+    cf.fillRect(200, 50, 100, 100);
+
+    cv.onclick = function (e) {
+        var e = e || window.event;
+        var x = e.clientX - this.offsetLeft;
+        var y = e.clientY - this.offsetTop;
+
+
+        // 圆
+        var s = Math.pow((x - 100), 2) + Math.pow((y - 100), 2);
+        if (s <= Math.pow(50, 2)) {
+            // cv.style.background = 'red';
+            cv.width = cv.width;
+            cf.fillStyle = 'red';
+            cf.fillRect(0, 0, 800, 500);
+            cf.fillStyle = 'green';
+            cf.fillRect(200, 50, 100, 100);
+            cf.fillStyle = 'blue';
+            cf.arc(100, 100, 50, 0, Math.PI * 2);
+            cf.fill();
+        }
+        // 正方形
+        if (x >= 200 && x <= 300 && y >= 50 && y <= 150) {
+            // cv.style.background = 'black'
+            cv.width = cv.width;
+            cf.fillStyle = 'black';
+            cf.fillRect(0, 0, 800, 500);
+            cf.fillStyle = 'green';
+            cf.fillRect(200, 50, 100, 100);
+            cf.fillStyle = 'blue';
+            cf.arc(100, 100, 50, 0, Math.PI * 2);
+            cf.fill();
+        }
+    }
+
+
+
+
+</script>
+
+</html>

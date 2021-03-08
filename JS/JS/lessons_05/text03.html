@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .wrap{
+            width: 500px;
+            text-align: center;
+            margin:100px auto;
+        }
+        input{
+            width: 50px;
+            height: 50px;
+            border-radius:50%;
+            background: red;
+            color:#fff;
+            font-size:1em;
+            border:none;
+            outline: none;
+            box-shadow: 1px 1px 5px black;
+        }
+        h1{
+            height: 50px;
+            color:violet;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1></h1>
+    <input type="button" value="抽奖">
+    </div>
+    
+</body>
+<script>
+    var h1 = document.getElementsByTagName('h1')[0];
+    var inp = document.getElementsByTagName('input')[0];
+    inp.onclick = function(){
+        var i = 5;
+        var arr = [];
+        var n= Math.floor(Math.random()*99)+1;
+        if(n<10){
+                n = '0'+ n;
+            }
+        h1.innerHTML = n;
+        arr.push(n);
+        inp.disabled = true;
+        var time = setInterval(function(){
+            i--;
+            n= Math.floor(Math.random()*99)+1;
+            n = n<10?'0'+n:n;
+            // if(n<10){
+            //     n = '0'+ n;
+            //     h1.innerHTML = n;
+            // }else{
+            //     h1.innerHTML = n;
+            // }  
+            arr.push(n);
+            h1.innerHTML = n;
+            if(i<1){
+                inp.disabled = false;
+                clearInterval(time);
+                arr.pop();
+                var str = arr.join(' ');
+                h1.innerHTML = '中奖号码:' + str;
+            }
+        },2000)
+    }
+</script>
+</html>

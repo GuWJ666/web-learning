@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        input {
+            margin: 50px 0;
+        }
+
+        input:nth-of-type(2) {
+            width: 100px;
+            height: 50px;
+        }
+
+        span {
+            display: inline-block;
+            width: 200px;
+            height: 20px;
+            background: lightgray;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text">
+    <span></span>
+    <br>
+    <input type="button" value="验证">
+</body>
+<script>
+    var inps = document.querySelectorAll('input');
+    var span = document.querySelector('span');
+    inps[1].onclick = function () {
+        var str = inps[0].value;
+        check(str);
+    }
+
+
+    function check(x) {
+        console.log(111)
+        var reg1 = /^\d+$|^[a-z]+$/i; //低
+        // var reg2 = /^[a-z]+[0-9]+[0-9a-z]*$|^[0-9]+[a-z]+[0-9a-z]*$/i;//中
+        var reg2 = /^[^_]+$|^[^\d]+$|^[^a-z]+$/;//中
+        var reg3 = /^(\d+(_+([a-z]+\d*|\d*[a-z]+)\w*|[a-z]+(_+\d*|\d*_+)\w*))$|^([a-z]+(_+(\d+[a-z]*|[a-z]*\d+)\w*|\d+(_+[a-z]*|[a-z]*_+)\w*))$|^(_+(\d+([a-z]+_*|_*[a-z]+)\w*|[a-z]+([0-9]+_*|_*[0-9])\w*))$/i//高
+        var reg = /^\w+$/;
+        // var reg1 = /[0-9]/;
+        // var reg2 = /[a-z]/;
+        // var reg3 = /[_]/;
+        if (reg.test(x)) {
+            if (x.length >= 6 && x.length <= 16) {
+                if (reg1.test(x)) {
+                    span.innerHTML = '安全等级低';
+                    span.style.color = 'red';
+                } else if (reg2.test(x)) {
+                    span.innerHTML = '安全等级中';
+                    span.style.color = 'yellow';
+                } else if (reg3.test(x)) {
+                    span.innerHTML = '安全等级高';
+                    span.style.color = 'green';
+                }
+            } else {
+                span.innerHTML = '密码只有6-16位数哦';
+                span.style.color = 'red';
+            }
+        } else {
+            span.innerHTML = '密码格式不正确';
+            span.style.color = 'red';
+        }
+    }
+</script>
+
+</html>

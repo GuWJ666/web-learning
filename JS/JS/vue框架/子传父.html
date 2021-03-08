@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{count}}</h1>
+        <btn @cfn="fn"/>
+    </div>
+</body>
+<script>
+    Vue.component('btn', {
+        template: `<button @click="fn">{{count}}</button>`,
+        // 子组件的data声明，必须是一个函数，返回一个对象，对象中是子组件声明的数据变量
+        data() {
+            return {
+                count:0//子组件中的值
+            }
+        },
+        methods:{
+            fn(){
+                this.count++;
+                //通过vue实例的$emit()方法来检测事件的发生，并且允许为事件指定名字
+                //可选的参数二：可以将子组件中的值作为参数传递给父组件指定的方法
+                this.$emit('cfn',this.count);
+            }
+        }
+    })
+    let app = new Vue({
+        el: '#app',
+        data: {
+            count: 0//父组件中的值
+        },
+        methods: {
+            fn(res){
+                this.count = res;
+            }
+        },
+        computed: {}
+    })
+</script>
+
+</html>

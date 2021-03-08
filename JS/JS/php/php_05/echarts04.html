@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+    <div id="cv" style="width: 600px; height: 400px;"></div>
+</body>
+<script>
+    var echarts = echarts.init(document.getElementById('cv'));
+    var option = {
+        // 标题
+        title:{
+            text:'柱状图'
+        },
+        // 提示信息
+        tooltip:{},
+        legend:{
+            data:['伤心']
+        },
+        xAxis:{
+            data:['李逍遥','赵灵儿','拜月','唐宇小宝','阿奴','林月如']
+        },
+        yAxis:{},
+        series:{
+            name:'伤心',
+            type:'bar',
+            data:[24,32,54,8,35,45]
+        }
+    }
+    echarts.setOption(option);
+</script>
+</html>

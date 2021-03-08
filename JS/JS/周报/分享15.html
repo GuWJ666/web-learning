@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap{
+            width: 721px;
+            height: 455px;
+            margin:50px auto;
+            position:relative;
+            overflow: hidden;
+        }
+        .pic{
+            width: 500px;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        img{
+            width: 721px;
+            height: 455px;
+            float:left;
+        }
+        .left,.right{
+            width: 30px;
+            height: 30px;
+            background: #000;
+            opacity: .6;
+            font-size:20px;
+            color:#fff;
+            text-align:center;
+            line-height:30px;
+            cursor: pointer;
+            display:none;
+            position:absolute;
+            top:calc(50% - 15px);
+        }
+        .right{
+            right:0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="pic">
+            <img src="img/timg.jpg" alt="">
+            <img src="img/timg.jpg" alt="">
+            <img src="img/timg.jpg" alt="">
+            <img src="img/timg.jpg" alt="">
+        </div>
+        <div class="left"><</div>
+        <div class="right">></div>
+    </div>
+</body>
+<script>
+    function animate(obj,target,callback){
+        clearInterval(timer);
+        var timer = setInterval(function(){
+            var step = (target - obj.offsetLeft)/10;
+            step = step>0?Math.ceil(step):Math.floor(step);
+            if(obj.offsetLeft == target){
+                clearInterval(timer);
+                callback&&callback();
+            }
+            obj.style.left = obj.offsetLeft+step+'px';
+        },20)
+    }
+
+    var wrap= document.querySelector('.wrap');
+    var pic= document.querySelector('.pic');
+    var left = document.querySelector('.left');
+    var right = document.querySelector('.right');
+    var w = document.querySelectorAll('img')[0].offsetWidth;
+    var lock = true;
+    var num = 0;
+    pic.appendChild(pic.children[0].cloneNode(true));
+
+    wrap.onmouseover = function(){
+        left.style.display = 'block';
+        right.style.display = 'block';
+        clearInterval(timer);
+        timer = null;
+    }
+    wrap.onmouseout = function(){
+        left.style.display = 'none';
+        right.style.display = 'none';   
+        timer = setInterval(function(){
+            nextPage();
+        },500)
+    }
+
+    function nextPage(){
+        if(lock){
+            lock =!lock;
+            if(num == pic.children.length-1){
+                num = 0;
+                pic.style.left = 0;
+            }
+            num++;
+            animate(pic,-num*w,function(){
+                lock = !lock;
+            })
+        }
+    }
+    right.onclick = nextPage;
+    var timer = setInterval(function(){
+        nextPage();
+    },500)
+</script>
+</html>

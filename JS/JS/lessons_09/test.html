@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .block{
+            width: 200px;
+            height: 300px;
+            border: 1px solid indianred;
+        }
+
+    </style>
+</head>
+<body>
+    <input type="text" placeholder="输入">
+    <div class="block"></div>
+</body>
+<script>
+    var str="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";//64
+    var arr=[];
+    for(var i=0;i<4;i++){
+        arr[i]=str[Math.round(Math.random()*63)];
+    }
+    console.log(arr)
+
+</script>
+</html>

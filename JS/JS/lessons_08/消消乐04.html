@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 500px;
+            height: 500px;
+            background: gray;
+            display: flex;
+            justify-content: space-around;
+            align-content: space-around;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            margin: 2px;
+            border-radius: 5px;
+        }
+
+        .pink {
+            background-color: pink;
+        }
+
+        .lime {
+            background-color: lime;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap"></div>
+</body>
+<script>
+    var wrap = document.querySelector('#wrap');//父级元素，用来添加标签
+    var level = 1;//关卡变量，用来控制行列还有四周盒子的样式
+    creat();
+    // 创建元素函数
+    function creat() {
+        var w = Math.floor(wrap.clientWidth / level) - 4;
+        console.log(w)
+        for (var i = 0; i < level * level; i++) {
+            var item = document.createElement('div');
+            item.className = 'item pink';
+            item.style.width = w + 'px';
+            item.style.height = w + 'px';
+            item.n = i + 1;
+            wrap.appendChild(item);
+            item.onclick = function () {
+                cb(this);
+                // 第一关只有自己没有上下左右
+                if(level == 1){
+                    upper();
+                    return;
+                }
+                // 自身编号
+                var sn = this.n*1;
+                // 根据自身编号找到四个方向相邻的元素
+                var leftEl = wrap.children[sn - 2],
+                    rightEl = wrap.children[sn],
+                    upEl = wrap.children[sn - level - 1],
+                    downEl= wrap.children[sn + level - 1];
+                // 位置判断，来确定当前被点击元素有几个相邻元素以及方向
+                if(sn%level == 1 && sn<=level){
+                    // 左上角，只有两个相邻元素，右和下
+                    cb(rightEl,downEl)
+                }else if(sn%level == 0 && sn<=level){
+                    // 右上角（左和下）
+                    cb(leftEl,downEl)
+                }else if(sn % level == 1 && sn>level*level-level){
+                    // 左下角，右和上
+                    cb(rightEl,upEl)
+                }else if(sn % level == 0 && sn>level*(level-1)){
+                    // 右下角，左和上
+                    cb(leftEl,upEl)
+                }else if(sn % level == 1){
+                    // 左边，上，下，you
+                    cb(rightEl,downEl,upEl)
+                }else if(sn <= level){
+                    // 上边，左，右，下
+                    cb(rightEl,downEl,leftEl)
+                }else if(sn % level == 0){
+                    // 右边，上下左
+                    cb(leftEl,downEl,upEl)
+                }else if(sn>level*(level-1)){
+                    // 下边，左上右
+                    cb(rightEl,leftEl,upEl)
+                }else{
+                    // 中间
+                    cb(rightEl,downEl,leftEl,upEl)
+                }
+                // 升级
+                upper();
+            }
+        }
+    }
+
+    // 切换颜色函数
+    function cb() {
+        for(var i=0;i<arguments.length;i++){
+            var el = arguments[i];
+            if (el.className.indexOf('pink') != -1) {
+                el.className = el.className.replace('pink', 'lime');
+            } else {
+                el.className = el.className.replace('lime', 'pink');
+            }
+        }
+        
+    }
+
+    // 
+    function upper() {
+        var items = document.querySelectorAll('.item');
+        var limes = document.querySelectorAll('.lime');
+        if (items.length == limes.length) {
+            setTimeout(function () {
+                wrap.innerHTML = '';
+                level++;
+                creat();
+            }, 500)
+        }
+    }
+</script>
+
+</html>

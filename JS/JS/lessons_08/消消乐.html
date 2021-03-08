@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            #wrap {
+                width: 500px;
+                height: 500px;
+                border: 1px solid #ddd;
+                margin: 50px auto;
+                background-color: lightgray;
+            }
+
+            #box {
+                width: 100%;
+                height: 100%;
+                background-color: pink;
+            }
+
+            .clock {
+                display: inline-block;
+                vertical-align: middle;
+                /* border: 1px solid #eee; */
+                background-color: pink;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <div id="box"></div>
+        </div>
+    </body>
+    <script>
+        var wrap = document.querySelector('#wrap');
+        var box = document.querySelector('#box');
+        var level = 1;
+        var z = 0;//坐标变量
+        box.onclick = function () {
+            this.style.backgroundColor = 'purple';
+            setTimeout(function () {
+                box.remove();
+                add();
+            }, 1000)
+        }
+        // 添加div的函数
+        function add() {
+            wrap.innerHTML = '';
+            level = level < 10 ? ++level : level;
+            var n = level * level;
+            console.log(n);
+            for (var i = 0; i < level; i++) {
+                for (var j = 0; j < level; j++) {
+                    var clock = document.createElement('div');
+                    clock.className = 'clock';
+                    w = parseInt(wrap.clientWidth / level) - 6;
+                    clock.style.width = w + 'px';
+                    clock.style.height = w + 'px';
+                    clock.style.margin = '3px';
+                    clock.setAttribute('col', i);
+                    console.log(clock.getAttribute('col'));
+                    clock.setAttribute('row', j);
+                    console.log(clock.getAttribute('row'));
+                    wrap.appendChild(clock);
+                }
+            }
+            for(var i=0;i<wrap.children.length;i++){
+                wrap.children[i].onclick = function(){
+                    // this.style.backgroundColor = 'purple';
+                   for(var j=0;j<wrap.children.length;j++){
+                       if(this.getAttribute('row') == wrap.children[j].getAttribute('row') && this.getAttribute('col')-1 == wrap.children[j].getAttribute('col')){
+                        wrap.children[j].style.backgroundColor = 'purple';
+                       }
+                    //    if(this.getAttribute('row') == wrap.children[j].getAttribute('row') && this.getAttribute('col')+1 == wrap.children[j].getAttribute('col')){
+                    //     wrap.children[j].style.backgroundColor = 'purple';
+                    //    }
+                    //    if(this.getAttribute('row') == wrap.children[j].getAttribute('row') && this.getAttribute('col')+1 == wrap.children[j].getAttribute('col')){
+                    //     wrap.children[j].style.backgroundColor = 'purple';
+                    //    }
+                    //    if(this.getAttribute('col') == wrap.children[j].getAttribute('col') && this.getAttribute('row')-1 == wrap.children[j].getAttribute('row')){
+                    //     wrap.children[j].style.backgroundColor = 'purple';
+                    //    }
+                    //    if(this.getAttribute('col') == wrap.children[j].getAttribute('col') && this.getAttribute('row')+1 == wrap.children[j].getAttribute('row')){
+                    //     wrap.children[j].style.backgroundColor = 'purple';
+                    //    }
+                   }
+                }
+            }
+        }
+    </script>
+
+    </html>
+</body>
+
+</html>

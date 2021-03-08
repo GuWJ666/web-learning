@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            数据绑定：
+            {{}} -> 单向数据绑定
+            v-text -> 单向数据绑定
+            v-html -> 单向数据绑定，model -> view
+
+            v-model -> 双向数据绑定，model <-> view,主要针对于表单元素
+
+            当表单元素内容发生变化时会改变model
+            当model发生改变时回影响表单视图内容
+
+            vue框架从特点上属于MVVM框架，
+            M -> mocel 数据模型
+            V -> view 视图（元素）
+            VM -> view-model（对视图和数据进行双向操作）
+
+            v-model的修饰词
+            lazy:将v-model的响应从input机制变为change机制
+            number:将表单中的内容转换成number类型，转换机制parsefloat，当遇见非数字字符时，舍去后面的部分，如果全都是非数字字符，使用原本值
+            trim:将表单内容末尾的空格删除
+            
+            这三个修饰符不分先后顺序，可以同时使用
+
+         -->
+        <!-- <h1>{{msg}}</h1>{{changeMsg()}} -->
+
+        <!-- <input type="text" v-model.trim.number.lazy="num1">
+        <input type="text" v-model.trim.number.lazy="num2">
+        <h1>计算结果：{{num1 + num2}}</h1> -->
+        <!-- {{changeMsg()}} -->
+        
+
+        <!-- 
+            v-bind ：用于操作DOM原有的属性
+            例如表单元素的value -> v-blind:value,去让value属性识别vue中的变量
+            v-bind存在简写形式，可以简写成’：‘
+            v-bind:value -> :value
+        -->
+        <ul>
+            <li v-for="x in list">
+                <input type="checkbox" v-model="res" v-bind:value="x">{{x}}
+            </li>
+        </ul>
+        <h2>选择结果:{{res}}</h2>
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el:'#app',
+        data:{//数据模型
+            msg:'hello',
+            num1:0,
+            num2:0,
+            list:['俯卧撑','蹲起','蛙跳','仰卧起坐'],
+            res:[]
+        },
+        methods:{
+            changeMsg(){
+                // 两秒后将div内容切换为其他内容
+                setTimeout(()=>{
+                    // document.querySelector('h1').innerHTML = 'change';
+                    this.msg = 'change';
+                    // console.log(this.msg);
+                    // document.querySelector('h1').innerHTML = 'world';
+                },2000)
+            }
+        }
+    })
+</script>
+</html>

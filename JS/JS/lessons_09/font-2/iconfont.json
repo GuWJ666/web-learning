@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1356143",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    }
+  ]
+}

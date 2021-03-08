@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+
+    var img = new Image();
+    img.src = 'img/u=347072600,1411178598&fm=26&gp=0.jpg';
+    img.onload = function () {
+        cv.onmousemove = function(e){
+            cv.width = cv.width;
+            var e = e || window.event;
+            var x = e.clientX - this.offsetLeft,
+                y = e.clientY - this.offsetTop;
+            
+            // 先画图
+            cf.drawImage(img,0,0,cv.width,cv.height);
+
+            cf.globalCompositeOperation = 'destination-in';
+
+            cf.fillRect(x-125,y-20,250,40);
+            cf.fill();
+
+        }        
+    }
+
+    // cv.onmousemove = function (e) {
+    //     cv.width = cv.width;
+    //     var e = e || window.event;
+    //     var x = e.clientX - this.offsetLeft;
+    //     var y = e.clientY - this.offsetTop;
+
+
+    //     // 图片
+    //     var img = new Image();
+    //     img.src = 'img/下载 (3).jpg';
+    //     img.onload = function () {
+    //         cf.drawImage(img, 0, 0, cv.width, cv.height);
+    //     }
+    //     // 灯
+    //     cf.arc(x, y, 150, 0, Math.PI * 2);
+    //     cf.fill();
+    //     cf.globalCompositeOperation = 'source-in'
+    // }
+
+    cv.onmouseout = function () {
+        cv.width = cv.width;
+    }
+</script>
+
+</html>

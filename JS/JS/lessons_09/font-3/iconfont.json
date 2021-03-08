@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "166177",
+      "name": "小三角up",
+      "font_class": "xiaosanjiaoup",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    }
+  ]
+}

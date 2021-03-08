@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <select id="type">
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option>
+    </select>
+    <input type="text">
+    <input type="button" value="按我">
+</body>
+<script>
+    var inps = document.getElementsByTagName('input'),
+        type = document.getElementById('type');
+    inps[2].onclick = function () {
+        var a = inps[0].value * 1,
+            b = inps[1].value * 1,
+            c = type.value;
+        // if (c == '+') {
+        //     alert(a + b);
+        // }else if(c == '-'){
+        //     alert(a - b);
+        // }else if(c == '*'){
+        //     alert(a * b);
+        // }else{
+        //     if(b == 0){
+        //         alert('别闹！');
+        //     }else{
+        //          alert(a / b);
+        //     }
+        // }
+        switch (true) {
+            case c == '+': alert(a + b);
+                break;
+            case c == '-': alert(a - b);
+                break;
+            case c == '*': alert(a * b);
+                break;
+            case c == '/':
+                if (b == 0) {
+                    alert('哈哈!')
+                } else {
+                    alert(a / b);
+                }
+                break;
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .clear::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .wrap {
+            width: 500px;
+            height: 612px;
+            border: 5px solid lightgray;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1:nth-child(1) {
+            float: left;
+        }
+
+        h1:nth-child(2) {
+            float: right;
+        }
+
+        h1:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            text-align: center;
+            line-height: 400px;
+            font-size: 100px;
+            margin-bottom: 10px;
+            margin: 0 auto;
+        }
+
+        #text {
+            height: 150px;
+            background: lightgray;
+        }
+
+        #text>span {
+            display: inline-block;
+            font-size: 40px;
+            height: 100%;
+            line-height: 150px;
+            margin: 0 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap clear">
+        <h1></h1>
+        <h1></h1>
+        <h1></h1>
+        <h3>根据👆字的颜色选出👇对应文字的描述</h3>
+        <div id="text">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+<script>
+    // 获取h1标签集合
+    var h1 = document.getElementsByTagName('h1');
+    // 获取span标签集合
+    var sps = document.getElementsByTagName('span');
+    // 给第一个h1标签添加文本内容
+    h1[0].innerHTML = '倒计时：20s';
+    // 给第二个标签添加文本内容
+    h1[1].innerHTML = '得分：00';
+
+    // 创建关于颜色的数组，用来在循环中随机span和h1的字体颜色
+    var arrColor = ['black', 'blue', 'yellow', 'red', 'green'];
+    // 创建关于文本的数组，用来在循环中随机span的文本内容
+    var arrText = ['黑', '蓝', '黄', '红', '绿'];
+    // 给第三个标签添加文本内容
+    h1[2].innerHTML = arrText[Math.round(Math.random() * (arrText.length - 1))];
+    h1[2].style.color = arrColor[Math.round(Math.random() * (arrText.length - 1))];
+    var l = 20;
+    var timer = null;
+    var noRepeating = [];
+        var noRepeated = [];
+    for (i = 0; i < arrText.length; i++) {
+        var m = Math.round(Math.random() * (arrText.length - 1));
+        if (noRepeating.indexOf(m) == -1) {
+            noRepeating.push(m);
+            if (m != 0) {
+                noRepeating.push(0);
+            }
+            if (m != 1) {
+                noRepeating.push(1);
+            }
+            if (m != 2) {
+                noRepeating.push(2);
+            }
+            if (m != 3) {
+                noRepeating.push(3);
+            }
+            if (m != 4) {
+                noRepeating.push(4);
+            }
+        }
+        sps[i].innerHTML = arrText[noRepeating[i]];
+    }
+    for (i = 0; i < arrText.length; i++) {
+        var n = Math.round(Math.random() * (arrText.length - 1));
+        if (noRepeated.indexOf(n) == -1) {
+            noRepeated.push(n);
+            if (noRepeated != 0) {
+                noRepeated.push(0);
+            }
+            if (n != 1) {
+                noRepeated.push(1);
+            }
+            if (n != 2) {
+                noRepeated.push(2);
+            }
+            if (n != 3) {
+                noRepeated.push(3);
+            }
+            if (n != 4) {
+                noRepeated.push(4);
+            }
+        }
+        sps[i].style.color = arrColor[noRepeated[i]];
+    }
+    function lastTime() {
+        l--;
+        h1[0].innerHTML = '倒计时：' + l + 's';
+        if (l < 1) {
+            clearInterval(timer);
+        }
+    }
+    sps[0].onclick = function () {
+        var noRepeating = [];
+        var noRepeated = [];
+        var y = Math.round(Math.random() * (arrText.length - 1));
+        var z = Math.round(Math.random() * (arrText.length - 1));
+        h1[2].innerHTML = arrText[y];
+        h1[2].style.color = arrColor[z]; console.log(z);
+        if (timer == null) {
+            timer = setInterval(lastTime, 1000);
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var m = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeating.indexOf(m) == -1) {
+                noRepeating.push(m);
+                if (m != 0) {
+                    noRepeating.push(0);
+                }
+                if (m != 1) {
+                    noRepeating.push(1);
+                }
+                if (m != 2) {
+                    noRepeating.push(2);
+                }
+                if (m != 3) {
+                    noRepeating.push(3);
+                }
+                if (m != 4) {
+                    noRepeating.push(4);
+                }
+            }
+            sps[i].innerHTML = arrText[noRepeating[i]];
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var n = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeated.indexOf(n) == -1) {
+                noRepeated.push(n);
+                if (noRepeated != 0) {
+                    noRepeated.push(0);
+                }
+                if (n != 1) {
+                    noRepeated.push(1);
+                }
+                if (n != 2) {
+                    noRepeated.push(2);
+                }
+                if (n != 3) {
+                    noRepeated.push(3);
+                }
+                if (n != 4) {
+                    noRepeated.push(4);
+                }
+            }
+            sps[i].style.color = arrColor[noRepeated[i]];
+        }
+    }
+    sps[1].onclick = function () {
+        var noRepeating = [];
+        var noRepeated = [];
+        var y = Math.round(Math.random() * (arrText.length - 1));
+        var z = Math.round(Math.random() * (arrText.length - 1));
+        h1[2].innerHTML = arrText[y];
+        h1[2].style.color = arrColor[z]; console.log(z);
+        if (timer == null) {
+            timer = setInterval(lastTime, 1000);
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var m = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeating.indexOf(m) == -1) {
+                noRepeating.push(m);
+                if (m != 0) {
+                    noRepeating.push(0);
+                }
+                if (m != 1) {
+                    noRepeating.push(1);
+                }
+                if (m != 2) {
+                    noRepeating.push(2);
+                }
+                if (m != 3) {
+                    noRepeating.push(3);
+                }
+                if (m != 4) {
+                    noRepeating.push(4);
+                }
+            }
+            sps[i].innerHTML = arrText[noRepeating[i]];
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var n = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeated.indexOf(n) == -1) {
+                noRepeated.push(n);
+                if (noRepeated != 0) {
+                    noRepeated.push(0);
+                }
+                if (n != 1) {
+                    noRepeated.push(1);
+                }
+                if (n != 2) {
+                    noRepeated.push(2);
+                }
+                if (n != 3) {
+                    noRepeated.push(3);
+                }
+                if (n != 4) {
+                    noRepeated.push(4);
+                }
+            }
+            sps[i].style.color = arrColor[noRepeated[i]];
+        }
+    }
+    sps[2].onclick = function () {
+        var noRepeating = [];
+        var noRepeated = [];
+        var y = Math.round(Math.random() * (arrText.length - 1));
+        var z = Math.round(Math.random() * (arrText.length - 1));
+        h1[2].innerHTML = arrText[y];
+        h1[2].style.color = arrColor[z]; console.log(z);
+        if (timer == null) {
+            timer = setInterval(lastTime, 1000);
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var m = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeating.indexOf(m) == -1) {
+                noRepeating.push(m);
+                if (m != 0) {
+                    noRepeating.push(0);
+                }
+                if (m != 1) {
+                    noRepeating.push(1);
+                }
+                if (m != 2) {
+                    noRepeating.push(2);
+                }
+                if (m != 3) {
+                    noRepeating.push(3);
+                }
+                if (m != 4) {
+                    noRepeating.push(4);
+                }
+            }
+            sps[i].innerHTML = arrText[noRepeating[i]];
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var n = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeated.indexOf(n) == -1) {
+                noRepeated.push(n);
+                if (noRepeated != 0) {
+                    noRepeated.push(0);
+                }
+                if (n != 1) {
+                    noRepeated.push(1);
+                }
+                if (n != 2) {
+                    noRepeated.push(2);
+                }
+                if (n != 3) {
+                    noRepeated.push(3);
+                }
+                if (n != 4) {
+                    noRepeated.push(4);
+                }
+            }
+            sps[i].style.color = arrColor[noRepeated[i]];
+        }
+    }
+    sps[3].onclick = function () {
+        var noRepeating = [];
+        var noRepeated = [];
+        var y = Math.round(Math.random() * (arrText.length - 1));
+        var z = Math.round(Math.random() * (arrText.length - 1));
+        h1[2].innerHTML = arrText[y];
+        h1[2].style.color = arrColor[z]; console.log(z);
+        if (timer == null) {
+            timer = setInterval(lastTime, 1000);
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var m = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeating.indexOf(m) == -1) {
+                noRepeating.push(m);
+                if (m != 0) {
+                    noRepeating.push(0);
+                }
+                if (m != 1) {
+                    noRepeating.push(1);
+                }
+                if (m != 2) {
+                    noRepeating.push(2);
+                }
+                if (m != 3) {
+                    noRepeating.push(3);
+                }
+                if (m != 4) {
+                    noRepeating.push(4);
+                }
+            }
+            sps[i].innerHTML = arrText[noRepeating[i]];
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var n = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeated.indexOf(n) == -1) {
+                noRepeated.push(n);
+                if (noRepeated != 0) {
+                    noRepeated.push(0);
+                }
+                if (n != 1) {
+                    noRepeated.push(1);
+                }
+                if (n != 2) {
+                    noRepeated.push(2);
+                }
+                if (n != 3) {
+                    noRepeated.push(3);
+                }
+                if (n != 4) {
+                    noRepeated.push(4);
+                }
+            }
+            sps[i].style.color = arrColor[noRepeated[i]];
+        }
+    }
+    sps[4].onclick = function () {
+        var noRepeating = [];
+        var noRepeated = [];
+        var y = Math.round(Math.random() * (arrText.length - 1));
+        var z = Math.round(Math.random() * (arrText.length - 1));
+        h1[2].innerHTML = arrText[y];
+        h1[2].style.color = arrColor[z]; console.log(z);
+        timer = setInterval(lastTime, 1000);
+        for (i = 0; i < arrText.length; i++) {
+            var m = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeating.indexOf(m) == -1) {
+                noRepeating.push(m);
+                if (m != 0) {
+                    noRepeating.push(0);
+                }
+                if (m != 1) {
+                    noRepeating.push(1);
+                }
+                if (m != 2) {
+                    noRepeating.push(2);
+                }
+                if (m != 3) {
+                    noRepeating.push(3);
+                }
+                if (m != 4) {
+                    noRepeating.push(4);
+                }
+            }
+            sps[i].innerHTML = arrText[noRepeating[i]];
+        }
+        for (i = 0; i < arrText.length; i++) {
+            var n = Math.round(Math.random() * (arrText.length - 1));
+            if (noRepeated.indexOf(n) == -1) {
+                noRepeated.push(n);
+                if (noRepeated != 0) {
+                    noRepeated.push(0);
+                }
+                if (n != 1) {
+                    noRepeated.push(1);
+                }
+                if (n != 2) {
+                    noRepeated.push(2);
+                }
+                if (n != 3) {
+                    noRepeated.push(3);
+                }
+                if (n != 4) {
+                    noRepeated.push(4);
+                }
+            }
+            sps[i].style.color = arrColor[noRepeated[i]];
+        }
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 800px;
+            height: 250px;
+            border: 10px solid antiquewhite;
+            padding-top: 250px;
+            margin: 0 auto;
+        }
+
+        span {
+            color: #000;
+            font-size: 18px;
+            cursor: pointer;
+            display: inline-block;
+            width: 52px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        #btn>span:nth-child(5) {
+            margin-right: 0;
+        }
+
+        #btn {
+            width: 300px;
+            margin: 0 auto;
+            font-size: 0;
+            /* padding:0 10px; */
+            position: relative;
+        }
+
+        #warn {
+            width: 52px;
+            height: 5px;
+            background: gray;
+            position: absolute;
+            left: 0;
+            top: 26px;
+            /* transition: .5s; */
+        }
+    </style>
+    <script src="tween.js"></script>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="btn">
+            <span>按钮1</span>
+            <span>按钮2</span>
+            <span>按钮3</span>
+            <span>按钮4</span>
+            <span>按钮5</span>
+            <div id="warn"></div>
+        </div>
+
+    </div>
+</body>
+<script>
+    var btn = document.getElementById('btn');
+    var sps = document.getElementsByTagName('span');
+    var warn = document.getElementById('warn');
+    var timer = null;
+    // sps[1].onclick = function () {
+    //     var t = 0,
+    //         b = warn.offsetLeft,
+    //         c = sps[1].offsetLeft - warn.offsetLeft;
+    //         d = 30;
+    //     if (!timer) {
+    //        timer = setInterval(function(){
+    //             t++;
+    //             if(t = d){
+    //                 clearInterval(timer);
+    //             }
+    //             warn.style.left = Tween.Back.easeOut(t,b,c,d) + 'px';
+    //         },30)
+    //     }
+    // }
+
+    for (var i = 0; i < sps.length; i++) {
+        (function (i) {
+
+            sps[i].onclick = function () {
+                clearInterval(timer);
+                var t = 0,
+                    b = warn.offsetLeft,
+                    c = this.offsetLeft - b,
+                    d = 60;
+                timer = setInterval(function () {
+                    t++;
+                    if (t == d) {
+                        clearInterval(timer);
+                    }
+                    warn.style.left = Tween.Back.easeOut(t,b,c,d) + 'px';
+                },20)
+            }
+        })(i)
+    }
+</script>
+
+</html>

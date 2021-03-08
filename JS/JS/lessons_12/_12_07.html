@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 50px;
+            height: 50px;
+            background: red;
+            margin: 10px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script>
+    // each().map()
+    // 遍历器：主要功能就是为了遍历集合（元素，数组，对象）
+    // return false可以强制退出循环
+    
+    var arr = [1, 2, 3, 4, 3, 4, 3, 2, 1, 4];
+    var color = ['orange', 'blue', 'green', 'purple', 'pink']
+    var sum = 0;
+
+    // $.each(arr,function(x,y){
+    //     // console.log(x+'->'+y);
+    //    sum += y;// console.log(sum)
+    // })
+    // $('div').each(function(x,y){
+    //     y.onclick = function(){
+    //         $(this).css('background',color[x]);
+    //     }
+    // })
+    // $('div').click(function () {
+    //     $(this).css('background', color[$(this).index()])
+    // })
+
+
+    var ds = document.querySelectorAll('div');
+    ea(ds, function (x, y) {
+        y.onclick = function () {
+           this.style.background =  color[x];
+        }
+    })
+    function ea(els, fn) {
+        for (var i = 0; i < els.length; i++) {
+            fn(i, els[i]);
+        }
+    }
+
+    var newArr = $.map(arr, function (x, y) {
+        // console.log(x+'->'+y);
+        x % 2 == 0 ? x : x *= 2;
+        return x;
+    })
+    console.log(newArr)
+</script>
+
+</html>

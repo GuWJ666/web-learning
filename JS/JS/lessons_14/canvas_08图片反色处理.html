@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+
+    var img = new Image();
+    img.src = 'img/wu.jpg';
+    img.onload = function () {
+        cf.drawImage(this, 0, 0, 800, 500);
+
+        //反色处理
+        // 1.读取图片的像素信息
+        var imgData = cf.getImageData(0, 0, 800, 500);
+        var data = imgData.data;
+        // 2.对图片像素进行反色（255-当前值）
+        // 对图片像素进行灰度处理，（将色值全部设置为平均值）
+        // 对图片像素进行镜像（就是把每一行中的像素颠倒位置）
+        // for(var i=0;i<data.length;i+=4){
+        //     var value = (data[i]+data[i+1]+data[i+2])/3;
+        //     // data[i] = 255 - data[i];
+        //     // data[i+1] = 255 - data[i+1];
+        //     // data[i+2] = 255 - data[i+2];
+        //     data[i] = value;
+        //     data[i+1] = value;
+        //     data[i+2] = value;
+        // } 
+
+        // 先将data转成400*400的二维数组
+        var newData = [];
+        for (var x = 0; x < 400; x++) {
+            var a = [];
+            for (var y = 0; y < 400; y++) {
+                var b = [];
+                for (var z = y; z < 400 * (y + 1); z += 4) {
+                    b.push(data[z], data[z + 1], data[z + 2], data[z + 3]);
+                }
+                a.push(b);
+            }
+            newData.push(a);
+        }
+        console.log(newData);
+
+        // for(var i=0;i<400;i++){//行
+        //     for(var j=i;j<400*(i+1);j++){//列
+        //         var temp = data[j];
+        //         data[j] = data[400*(i+1)-j-1];
+        //     }
+
+        // }
+        console.log(j)
+        // 3.将处理后的像素重新绘制在画布
+        cf.putImageData(imgData, 0, 0)
+
+    }
+</script>

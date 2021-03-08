@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            width: 320px;
+            height: 480px;
+            background: url(../lessons_08/images/game_bg.jpg);
+            position: relative;
+            user-select: none;
+        }
+
+        h1 {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .4);
+            margin: 0;
+            position: absolute;
+            top: 0;
+            text-align: center;
+            line-height: 480px;
+            color: gold;
+            text-shadow: 0 3px 3px red;
+            cursor: pointer;
+        }
+
+        span {
+            position: absolute;
+            left: 60px;
+            top: 10px;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .progress {
+            position: absolute;
+            left: 63px;
+            top: 66px;
+            height: 16px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <span>0</span>
+        <img src="../lessons_08/images/progress.png" alt="" class="progress">
+        <h1>开始游戏</h1>
+    </div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script src="jq.js/jquery.timer.1.2.js"></script>
+<script>
+    // 狼位置
+    var arr = [['117px', '96px'], ['161px', '19px'], ['143px', '191px'], ['193px', '102px'], ['222px', '17px'], ['213px', '200px'], ['295px', '30px'], ['276px', '119px'], ['297px', '209px']];
+    var add = [];
+    var score = 0;
+
+    $(function () {
+        // 开始游戏
+        $('h1').click(function () {
+            $(this).hide();
+            //时间开始走
+            $('img').animate({
+                width: '0px'
+            }, 10000,'linear', function () {
+                $('.wrap').stopTime();
+                alert('Game Over');
+            })
+            creat();
+            // $('.wrap').everyTime(rn(500,2000)+'ms','creattime',creat)
+        })
+
+    })
+
+    function creat(){
+        var wolf  = $('<img/>');
+        wolf.everyTime(rn(50,200)+'ms','up',function(){
+
+        })
+        wolf.on('click',function(){
+            $(this).stopTime().everyTime('100ms','hurt',function(){
+
+            })
+        })
+    }
+
+    function creat() {
+        $('.wrap').everyTime('1s', 'creat', function () {
+            var wolf = $('<img>');
+            var n = repeat();
+            var x = arr[n][0];
+            var y = arr[n][1];
+            var ty = type();
+            wolf.attr('src', '../lessons_08/images/' + ty + '0.png').css({
+                position: 'absolute',
+                left: y,
+                top: x,
+                width: '108px',
+                height: '101px'
+            }).appendTo('.wrap');
+            var i = 0;
+            wolf.everyTime('100ms', 'up', function () {
+                i++;
+                wolf.attr('src', '../lessons_08/images/' + ty + i + '.png');
+                if (i >= 5) {
+                    wolf.stopTime('up');
+                    wolf.everyTime('100ms', 'down', function () {
+                        i--;
+                        if (i <= 0) {
+                            wolf.stopTime('down');
+                            wolf.hide();
+                            add.splice(add.indexOf(n), 1)
+                        }
+                        wolf.attr('src', '../lessons_08/images/' + ty + i + '.png');
+                    })
+                }
+            })
+            wolf.attr('lock',null);
+            wolf.click(function () {
+                if(wolf.attr('lock')){
+                    return;
+                }
+                wolf.attr('lock','1');
+                wolf.stopTime('up');
+                wolf.stopTime('down');
+                i = 5;
+                wolf.everyTime('100ms', 'hurt', function () {
+                    i++;
+                    wolf.attr('src', '../lessons_08/images/' + ty + i + '.png');
+                    if (i >= 9) {
+                        wolf.stopTime('hurt');
+                        wolf.hide();
+                        add.splice(add.indexOf(n), 1)
+                    }
+
+                })
+                if (ty == 'h') {
+                    score += 10;
+                    console.log(111)
+                } else {
+                    score>=10?score-=10:score;
+                }
+                $('span').text(score);
+            })
+
+        })
+    }
+
+    function rn(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+    }
+
+    function type() {
+        if (rn(0, 100) > 30) {
+            return 'h';
+        } else {
+            return 'x';
+        }
+    }
+
+    function repeat() {
+        var index = rn(0, 8);
+        if (add.indexOf(index) > -1) {
+            return repeat();
+        }
+        add.push(index);
+        return index;
+    }
+</script>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 通常vue的初始化需要一个block标签，(通常是div)作为vue的根元素（vue起作用的范围），
+        一定不要用body标签，另外一个页面或一个项目运城 -->
+    <div id="app">
+        <!-- {{}}vue的表达式，可以解析vue对象中的属性（变量），
+            也可以调用vue中声明的方法，或者解析js表达式 -->
+        <h1>{{title}}</h1>
+        <!-- 渲染标签内容，除了{{}}表达式之外，还可以使用v-html或v-text指令 (vue提供的自定义属性)-->
+        <!-- 相当于innerHTML和innerText -->
+        <h1 v-text="link"></h1>
+        <h1 v-html="link"></h1>
+        <h1>{{link}}text</h1>
+        <!-- 表达式{{}}和指令v-text之间的区别 -->
+        <!-- 1.表达式渲染是以内容跟拼接的形式，而指令渲染是直接赋值的形式 -->
+        <!-- 2.当一个元素同时以表达式和指令渲染数据，那么最终生效的是指令渲染的数据 -->
+    </div>
+    <div id="web">
+        <table border="2">
+            <thead>
+                <tr>
+                    <!-- <td>{{getTHData()[0]}}</td>
+                    <td>{{getTHData()[1]}}</td>
+                    <td>{{getTHData()[2]}}</td>
+                    <td>{{getTHData()[3]}}</td>
+                    <td>{{getTHData()[4]}}</td>
+                    <td>{{getTHData()[5]}}</td>
+                    <td>{{getTHData()[6]}}</td> -->
+                    <td v-for="x in getTHData()">{{x}}</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div>{{ message | capitalize }}</div>
+</body>
+<script>
+    let data = [
+        {
+            id: '001',
+            name: '小张'
+        }, {
+            id: '002',
+            name: '小王',
+            age: 29
+        }, {
+            id: '003',
+            name: '小李',
+            tel: '13222222222'
+        }, {
+            id: '004',
+            name: '小赵',
+            major: '信息工程'
+        }, {
+            id: '005',
+            name: '小孙',
+            sex: '男',
+            major: '计算机技术'
+        }, {
+            id: '006',
+            name: '小周',
+            class: '大二',
+            sex: '女'
+        }
+    ]
+    // vue的使用需要先对vue进行初始化
+    let app = new Vue({
+        el: '#app',//表示当前初始化的vue对象的根元素
+        data: {//表示对vue数据的初始化，
+            // 相当于为vue对象添加了属性或者在vue管辖范围内声明了数据变量
+            title: 'hello VUE',
+            link: '<a href="http://www.baidu.com">点我</a>'
+        }
+    })
+    let weg = new Vue({
+        el: '#web',
+        data: {
+            list: data,
+            message:'success'
+        },
+        filters: {
+            capitalize: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            }
+        },
+        methods: {//表示vue上声明的方法
+            // 声明一个获取表头数据的方法
+            getTHData() {
+                // 方法中的this指向都是实例化的vue对象
+                console.log(this.list);
+                // 1.确定表头信息
+                let hdata = new Set();
+                for (let x of this.list) {
+                    for (let y in x) {
+                        hdata.add(y);
+                    }
+                }
+                return [...hdata];
+            }
+        }
+    })
+    console.log(app.title);
+</script>
+
+</html>

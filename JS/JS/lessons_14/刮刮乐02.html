@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            position: relative;
+        }
+
+        #cv {
+            box-shadow: 5px 5px 10px #000;
+            position: absolute;
+            z-index: 20;
+        }
+
+        .prize {
+            position: absolute;
+            left: 205px;
+            top: 330px;
+            font-size: 30px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="300" height="200"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+
+    // 绘制图层
+    cf.fillStyle = '#cacaca';
+    cf.fillRect(0, 0, cv.width, cv.height);
+    // 刮图层
+    cv.onmousedown = function (e) {
+        var dx = e.clientX - this.offsetLeft;
+        var dy = e.clientY - this.offsetTop;
+        cf.beginPath();
+        cf.moveTo(dx, dy);
+        cf.lineWidth = 10;
+        cv.onmousemove = function (e) {
+            var mx = e.clientX - this.offsetLeft;
+            var my = e.clientY - this.offsetTop;
+            cf.globalCompositeOperation = 'destination-out';
+            cf.lineTo(mx, my);
+            cf.stroke();
+
+            cf.globalCompositeOperation = 'destination-over';
+
+            cf.font = '30px 楷体';
+            cf.textAlign = 'center';
+            cf.textBaseLine = 'middle';
+            cf.fillStyle = 'gold';
+            cf.fillText('跌', 150, 100);
+
+            autoPlay();
+        }
+        cv.onmouseup = function () {
+            cv.onmousemove = null;
+        }
+    }
+
+    function autoPlay() {
+        var count = 0;
+        var imgData = cf.getImageData(0, 0, cv.width, cv.height);
+        var data = imgData.data;
+        for (var i = 3; i < data.length; i += 4) {
+            var a = data[i];
+            if (a == 0) {
+                count++;
+            }
+        }
+        if (count > cv.width * cv.height * 0.4) {
+            for (var i = 3; i < data.length; i += 4) {
+                data[i] = 0;
+            }
+            cf.putImageData(imgData,0,0);
+
+            cf.font = '30px 楷体';
+            cf.textAlign = 'center';
+            cf.textBaseLine = 'middle';
+            cf.fillStyle = 'gold';
+            cf.fillText('跌', 150, 100);
+        }
+    }
+
+
+
+    cv.onmouseout = function () {
+        cv.onmousemove = null;
+    }
+</script>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        @keyframes move {
+            0% {
+                top: 150px;
+            }
+
+            50% {
+                top: 100px;
+            }
+
+            100% {
+                top: 150px;
+            }
+        }
+
+        @keyframes walk {
+            from {
+                left: 0;
+            }
+
+            to {
+                left: -343px;
+            }
+        }
+
+        #wrap {
+            user-select: none;
+            width: 343px;
+            height: 480px;
+            background: url(img/bg.jpg);
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #score {
+            position: absolute;
+            left: calc(50% - 28px);
+            top: 30px;
+            z-index: 10;
+        }
+
+        #image {
+            position: absolute;
+            left: 50px;
+            top: 150px;
+            animation: move 2s linear infinite;
+        }
+
+        #bird0 {
+            position: absolute;
+            right: 5px;
+            top: 20px;
+        }
+
+        #start {
+            width: 85px;
+            height: 29px;
+            background: url(img/start.jpg);
+            position: absolute;
+            left: calc(50% - 42.5px);
+            bottom: 180px;
+            cursor: pointer;
+        }
+
+        #glass {
+            font-size: 0;
+            position: absolute;
+            left: 0;
+            bottom: 44px;
+            width: 686px;
+            height: 14px;
+            animation: walk 2s linear forwards infinite;
+        }
+
+        #fly {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .top {
+            background: url(img/up_mod.png) repeat;
+            background-size: 100% 100%;
+            width: 62px;
+            top: 0;
+            right: -62px;
+            position: absolute;
+            z-index: 9;
+        }
+
+        .bottom {
+            background: url(img/down_mod.png) repeat;
+            background-size: 100% 100%;
+            width: 62px;
+            bottom: 58px;
+            right: -62px;
+            position: absolute;
+            z-index: 9;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="score">
+            <img src="img/0.jpg" alt=""><img src="img/0.jpg" alt="">
+        </div>
+        <div id="image">
+            <img src="img/head.jpg" alt="" id="head">
+            <img src="img/bird0.png" alt="" id="bird0">
+        </div>
+        <div id="start"></div>
+        <div id="glass">
+            <img src="img/banner.jpg" alt=""><img src="img/banner.jpg" alt="">
+        </div>
+    </div>
+</body>
+<script src="../lessons_08/tween.js"></script>
+<script>
+    var wrap = document.getElementById('wrap');//父级盒子
+    var image = document.getElementById('image');//上下的图片
+    var bird0 = document.getElementById('bird0');//扇翅膀的小鸟
+    var start = document.getElementById('start');//开始按钮
+
+    // 初始动画 
+    var timer = null;
+    var pipe;//竹子
+    var n;
+    var m;
+    wing();
+    function wing() {
+        timer = setInterval(function () {
+            if (bird0.getAttribute('src') == 'img/bird0.png') {
+                bird0.src = 'img/bird1.png'
+            } else {
+                bird0.src = 'img/bird0.png'
+            }
+        }, 250)
+    }
+    // 开始按钮点击
+    start.onclick = function () {
+        this.remove();
+        image.style.animation = 'none';
+        clearInterval(timer);
+        image.remove();
+        birdFly();
+        // 鼠标右键事件
+
+    }
+
+    function birdFly() {
+        var img = new Image();//创建小鸟
+        img.id = 'fly';
+        img.src = 'img/down_bird0.png';
+        wrap.appendChild(img);
+       
+        img.speed = 0.5;
+        img.down = setInterval(function () {
+            img.speed += 0.5; 
+            var top = img.offsetTop+img.speed;
+            if (top >= glass.offsetTop - 14 - 18) {
+                top = glass.offsetTop - 14 - 18;
+            }
+            img.style.top = top + 'px';
+            
+        }, 20)
+        creatPipe();
+       
+       
+    }
+
+    function creatPipe() {
+        // 上竹子
+        var pipeUp = document.createElement('div');
+        var img = new Image();
+        pipeUp.appendChild(img);
+        img.style.position = 'absolute';
+        img.style.left = '0px';
+        img.style.bottom = '0px';
+        img.src = 'img/up_pipe.png';
+
+        var h1 = rn();
+        pipeUp.className = 'top';
+        pipeUp.style.height = h1 + 'px';
+        wrap.appendChild(pipeUp);
+        pipeUp.left = setInterval(function () {
+            var left = pipeUp.offsetLeft;
+            left--;
+            pipeUp.style.left = left + 'px';
+            if (left < -62) {
+                clearInterval(pipeUp.left);
+                pipeUp.remove();
+            }
+        }, 20);
+        // 下竹子
+        var pipeDown = document.createElement('div');
+        var img = new Image();
+        pipeDown.appendChild(img);
+        img.style.position = 'absolute';
+        img.style.left = '0px';
+        img.style.top = '0px';
+        img.src = 'img/down_pipe.png';
+        var h2 = 343 - 50 - h1;
+        pipeDown.className = 'bottom';
+        pipeDown.style.height = h2 + 'px';
+        wrap.appendChild(pipeDown);
+        pipeDown.left = setInterval(function () {
+            var left = pipeDown.offsetLeft;
+            left--;
+            pipeDown.style.left = left + 'px';
+            if (left < -62) {
+                clearInterval(pipeDown.left);
+                pipeDown.remove();
+                creatPipe();
+            }
+        }, 20);
+    }
+
+
+    // 随机数函数
+    function rn() {
+        return Math.floor(Math.random() * 200) + 60;
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: red;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</body>
+<script>
+    // ES6是JS新的语法标准，得ES5版本进行了一些语法上的拓展和更新
+    // let & const
+    // let 和 const 都是用来声明变量的关键字，功能和var类似
+    // var 声明的变量提点：
+    // 1.存在变量声明提升
+    // 2.允许多次声明同一个变量（覆盖）
+    // 3.作用域区分全局（函数外）以及局部（函数内），同名变量就近原则
+    // var a = 10;
+    // function fn(){
+    //     console.log(a);
+    //     var a = 20;
+    // }
+    // fn();
+    // 4.var声明的全局变量会作为window对象的属性
+    // console.log(window.name);
+
+    // let 声明变量的特点
+    // 1.不允许多次声明同一个变量，否则会报错（
+    // Uncaught SyntaxError: Identifier 'a' has already been declared a已经被声明过了
+    // let a = 10;
+    // let a = 20;
+    // console.log(a);
+    // 2.不存在变量提升的现象，必须先声明后使用，否则会报错
+    // Uncaught ReferenceError: Cannot access 'a' before initializationat es6.html:35 无法在初始化之前访问a
+    // let a = 20;
+    // var a = 10;
+    // function a(){};
+    // console.log(a);
+    // 3.let 声明的全局变量并不会被作为window对象的属性
+    // let a = 10;
+    // console.log(window.a);//undefined
+    // 4.全局作用域和局部作用域，存在就近原则
+    // let a =20;
+    // function fn(){
+    //     console.log(a);
+    //     暂时性死区：（let声明的变量不存在提升）
+    //     let a = 30;
+    // }
+    // console.log(a);//20
+    // fn();//30
+    // console.log(a);//20
+    // 5.块级作用域{}也会产生局部作用域（直接编写的{}、循环、函数、分支）,块级作用域只会对let、const声明的变量进行限制，不会对var或者function声明的变量函数产生影响 
+    // for(let i=0;i<10;i++){console.log(i);}
+    // console.log(i);
+    // let a = 10;
+    // if(a>=10){
+    //     var c = 30;
+    //     let b = 20;
+    // }
+    // console.log(c);
+    // console.log(b);
+    // {
+    //     let d = 5;
+    // }
+    // console.log(d);
+
+    // var ds = document.querySelectorAll('div');
+    // for (var i = 0; i < ds.length; i++) {
+    //     // 1.闭包
+    //     // (function (i) {
+    //     //     ds[i].onclick = function () {
+    //     //         console.log(this);
+    //     //     }
+    //     // })(i)
+    //     // 2.自定义属性
+    //     ds[i].index = i;
+    //     ds[i].onclick = function(){
+    //         console.log(this.index);
+    //     }
+    // }
+    // for (let i = 0; i < ds.length; i++) {
+    //     ds[i].onclick = function(){
+    //         console.log(i);
+    //     }
+    // }
+
+    // const:用来声明常量，用法及特点与let一摸一样，唯一的区别，const声明的变量无法被二次赋值，否则会报错
+    // const a = 20;
+    // a = 30;
+    // console.log(a);
+    // Uncaught TypeError: Assignment to constant variable.分配给常数变量。
+   
+
+//  到目前未知，ES6中已经有四种声明变量的方式。var/function/let/const
+// 注意：尽量不要在分支语句中声明函数
+</script>
+
+</html>

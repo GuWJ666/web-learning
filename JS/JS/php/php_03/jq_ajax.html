@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://localhost/jq.js/jquery.js"></script>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <input type="text">
+    <input type="text">
+    <input type="button" value="提交">
+    <h1 class="className"></h1>
+    <table class="list" border=1></table>
+</body>
+<script>
+    var inp = document.querySelectorAll('input');
+    inp[2].onclick = function(){
+        var uname = inp[0].value;
+        var pword = inp[1].value;
+        // 通过jquery封装的Ajax来进行数据交换
+        // 基础方法：$.ajax(),所有的请求配置都需要写在方法的对象参数中。
+        /*
+            对象参数中的key：
+                url：string，表示请求的地址
+                type：string，表示请求的类型，可选，默认值是get
+                data：string/object，表示请求携带的数据
+                success:function,请求成功后的回调函数
+                error:function,请求失败后的回调函数
+                async：boolean；是否异步请求，默认值是true（异步）；
+                dataType：string，设置期望的服务端响应数据类型，如果不设置，jq会自动推断
+        */ 
+        // $.ajax({
+        //     url:'http://localhost/php/php_03/php_01.php',
+        //     type:'get',
+        //     async:true,//异步请求
+        //     data:{
+        //         uname:uname,
+        //         pword:pword
+        //     },
+        //     success:function(x,y,z){
+        //         // 请求成功回调存在三个参数，
+        //         // 第一个是服务器的返回结果，string
+        //         // 第二个是status，string：success/error
+        //         // 第三个是xhr对象
+        //         console.log(x,y,z);
+        //     }
+        // });
+        // 如果确定要发的是get请求，可以使用$.get();
+        // $.get('http://localhost/php/php_03/php_01.php',{
+        //     uname:uname
+        // },function(res){
+        //     console.log(res);
+        // })
+        // 如果确定要发送异步的post请求，可以使用$.post();
+        // $.post('http://localhost/php/php_03/php_01.php',{
+        //     uname:uname
+        // },function(res){
+        //     console.log(res);
+        // })
+        
+        // $(selector).load()请求,由jquery包装的元素对象调用，会将服务器的返回信息直接作为当前元素对象的内容
+
+        // $('h1').load('http://localhost/php/php_03/header.html');
+
+
+        // ajax除了可以向后台文件：（php，java）发送请求外，还可以向服务器上的数据文件发送请求（txt，json，html，js），会将文件内容作为服务器返回数据
+        $.get('http://localhost/php/php_03/test.json',function(res){
+            // console.log(res);
+            // 添加班号
+            $('h1').html(res.className);
+            // 创建表格
+            // 创建表头
+            var $thead = $('<thead></thead>');
+            var $tr = $('<tr></tr>');
+            for(var x in res.students[0]){
+                $('<th></th>').html(x).appendTo($tr);
+            }
+            // console.log($tr)
+            $tr.appendTo($thead);
+            $thead.appendTo('table');
+            // 创建表身
+            var $tbody = $('<tbody></tbody>');
+            for(var i=0;i<res.students.length;i++){
+                $tr = $('<tr></tr>');
+                var s = res.students[i];
+                for(var x in s){
+                    $('<td></td>').html(s[x]).appendTo($tr);    
+                }
+                $tr.appendTo($tbody);
+            }
+            $tbody.appendTo('table');
+        })
+    }
+</script>
+</html>

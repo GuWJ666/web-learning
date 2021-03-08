@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="wrap" onclick="con1()" style="width:100px;height:100px;background:red;"></div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap');
+    wrap.onclick = function(){
+        console.log(111);
+    }
+    wrap.addEventListener('click',con,false);
+    function con (){
+        return console.log(333);
+    }
+    function con1 (){
+        return console.log(222);
+    }
+</script>
+</html>

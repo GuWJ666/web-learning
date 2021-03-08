@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="text1">
+    <input type="text" id="text2">
+    <input type="text" id="text3">
+    <input type="button" id="d" value="按我">
+    <script>
+        var text1 = document.getElementById('text1'),
+            text2 = document.getElementById('text2'),
+            text3 = document.getElementById('text3');
+        d.onclick = function () {
+            var a = text1.value*1;
+                b = text2.value*1;
+                c = text3.value*1;
+            if(a<=0||b<=0||c<=0){
+                alert('嘛呢？')
+            }
+            else if (a + b > c && a + c > b && b + c > a) {
+                alert('三角形');
+            } else {
+                alert('不是三角形');
+            }
+        }
+
+    </script>
+</body>
+
+</html>

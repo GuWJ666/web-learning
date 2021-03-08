@@ -1,0 +1,31 @@
+1.在nodejs目录下创建了新目录
+node_global   node_cache
+
+命令行：
+npm config set prefix "d:\nodejs\node_global"
+npm config get prefix
+
+npm config set cache "d:\nodejs\node_cache"
+npm config get cache
+
+2.环境变量（用户）
+（1）新建NODE_PATH -> d:\nodejs\node_global\node_modules\
+（2）修改Path -> d:\nodejs\node_global
+
+3.安装vue-cli（脚手架）
+npm install vue-cli -g
+
+vue -V
+
+4.配置淘宝镜像
+npm config set registry "https://registry.npm.taobao.org"
+
+npm config get registry
+
+起步：
+1.命令行cd到你要创建项目的目录
+2.命令行执行命令 vue init webpack project_name
+    enter / n
+3.命令行cd到项目目录 
+    -> npm run dev运行项目
+    -> http://localhost:8080

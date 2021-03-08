@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="" alt="">
+    <ul class="list"></ul>
+</body>
+<script src="../jq.js/jquery.js"></script>
+<script src="ajax.js"></script>
+<script>
+    // debugger
+    $(function () {
+        // $.get('xiyouji.json', function (res) {
+        //     $('img').attr('src', res.src);
+        //     for (var i = 0; i < res.people.length; i++) {
+        //         $('<li>' + res.people[i].name + ':' + res.people[i].des + '</li>').appendTo('ul');
+        //     }
+        // })
+        ajax({
+            url: 'http://localhost/xiyouji.json',
+            success: function (res) {
+                console.log(res);
+                // res = JSON.parse(res);
+                $('img').attr('src', res.src);
+                for (var i = 0; i < res.people.length; i++) {
+                    $('<li>' + res.people[i].name + ':' + res.people[i].des + '</li>').appendTo('.list');
+                }
+            }
+        })
+
+    })
+
+</script>
+
+</html>

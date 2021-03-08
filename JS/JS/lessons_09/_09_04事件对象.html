@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 200px;
+            height: 200px;
+            background:red;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            background:yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="box"></div>
+    </div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap'),
+        box  = document.getElementById('box');
+
+    // event事件对象
+    // 1.type:属性返回string，表示当前事件的类型
+    // wrap.onclick = function(e){
+    //     var e = e || window.event;
+    //     console.log(e.type);
+    // }
+
+    // 2.target属性：返回正真触发当前事件的元素
+    // 存在兼容问题，IE9以下没有target,需要使用srcElement
+    wrap.onclick =function(e){
+        console.log('wrap');
+        console.log(e.target);      
+        var e = e || window.event;
+        // 兼容写法
+        var el = e.target || e.secElement;
+    }
+    box.onclick = function(e){
+        console.log('box');
+        console.log(e.target);
+    }
+</script>
+</html>

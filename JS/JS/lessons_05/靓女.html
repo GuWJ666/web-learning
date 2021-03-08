@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 520px;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            margin: 10px auto;
+        }
+
+        #image {
+            width: calc(520px * 6);
+            font-size: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: .5s;
+        }
+
+        img {
+            width: 520px;
+        }
+
+        .num {
+            width: 400px;
+            height: 70px;
+            margin: 100px auto;
+            font-size: 0;
+            padding: 0 60px 0 60px;
+            margin-bottom: 0;
+            /* background: gray; */
+            border-radius: 5px;
+        }
+
+        .num>span {
+            margin-top: 4px;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid;
+            font-size: 18px;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="num">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>左</span>
+        <span>右</span>
+    </div>
+    <div id="wrap">
+        <div id="image">
+            <img src="img03/11.jpg" alt="">
+            <img src="img03/12.jpg" alt="">
+            <img src="img03/13.jpg" alt="">
+            <img src="img03/14.jpg" alt="">
+            <img src="img03/15.jpg" alt="">
+            <img src="img03/11.jpg" alt="">
+        </div>
+    </div>
+</body>
+<script>
+    var image = document.getElementById('image');
+    var img = document.getElementsByTagName('img')[0];
+    var spans = document.getElementsByTagName('span');
+    var fw = image.clientWidth; console.log(fw)//获取图片容器的宽度
+    var fp = image.offsetLeft;
+    var sw = img.clientWidth; console.log(sw)//获取图片的宽度
+    var rw = sw * 5;
+    var i = 0;
+    var r = Math.round(Math.random() * 255),
+        g = Math.round(Math.random() * 255),
+        b = Math.round(Math.random() * 255);
+    for (var i = 0; i < spans.length; i++) {
+        spans[i].style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+
+    var time = setInterval(next, 2000);
+    for (var i = 0; i < spans.length; i++) {
+        (function (i) {
+            spans[i].onclick = function () {
+                image.style.left = -sw * i + 'px';
+                clearInterval(time);
+                time = setInterval(next, 2000);
+            }
+        }(i))
+
+    }
+    function next() {
+        var fp = image.offsetLeft;
+        image.style.transition = '.5s';
+        var x = fp - sw;
+        if (x < -rw) {
+            x = 0;
+        }
+        image.style.left = x + 'px';
+        setTimeout(function () {
+            if (x == -rw) {
+                image.style.left = 0;
+                image.style.transition = 'none';
+            }
+        }, 1000)
+    }
+
+</script>
+
+</html>

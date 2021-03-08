@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+    <div id="box" style="width: 800px;height: 500px;"></div>
+</body>
+<script>
+var echarts = echarts.init(document.getElementById('box'));
+var option = {
+    // 标题
+    title:{
+        text:'柱状图'
+    },
+    // 提示信息
+    tooltip:{},
+    // 按钮
+    legend:{
+        data:['按钮']
+    },
+    // x轴信息
+    xAxis:{
+        data:['1','2','3','4','5','6']
+    },
+    // y轴信息
+    yAxis:{},
+    // 表的信息
+    series:{
+        name:'数字',
+        type:'line',
+        data:[160,200,3000,40,500,1040]
+    }
+}
+echarts.setOption(option);
+</script>
+</html>

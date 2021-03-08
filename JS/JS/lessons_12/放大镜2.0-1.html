@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+        }
+
+        .show {
+            width: 400px;
+            height: 450px;
+            border: 1px solid #000;
+            position: absolute;
+            display: none;
+        }
+
+        .show>img {
+            width: 400px;
+            height: 400px;
+            border: none;
+            display: block;
+        }
+
+        .show>div {
+            background: #333;
+            color: #fff;
+            height: 50px;
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="img/apple1.jpeg" alt="">
+    <img src="img/apple2.jpeg" alt="">
+    <img src="img/apple3.jpeg" alt="">
+    <img src="img/apple4.jpeg" alt="">
+    <div class="show">
+        <img src="" alt="">
+        <div></div>
+    </div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script>
+
+    var text = ['苹果Match', '苹果Ipad nano', '苹果iphone', '苹果MAC']
+    $(function () {
+        // 鼠标移入移出事件
+        var index;
+        $('img').hover(function (e) {
+            index = $(this).index();
+            console.log(index)
+            $('.show>img').off();
+            $('.show').show();
+        }, function () {
+            $('.show').hide();
+        })
+        $('img').mousemove(function (e) {
+            var x = e.clientX + 10, y = e.clientY + 10;
+            $('.show>img').attr('src', 'img/apple' + (index+1) + '.jpeg');
+            $('.show>div').text(text[index]);
+            $('.show').css({
+                left: x + 'px',
+                top: y + 'px'
+            })
+        })
+    })
+</script>
+
+</html>

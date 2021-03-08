@@ -1,0 +1,67 @@
+<!--
+ * @Author: guwenjiang
+ * @Date: 2021-03-08 10:26:15
+ * @LastEditors: guwenjiang
+ * @LastEditTime: 2021-03-08 15:38:27
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 200px;
+            height: 20px;
+            border:1px solid #ddd;
+        }
+        #progress{
+            height: 100%;
+            width: 0px;
+            background: coral;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="num">加载进度：0%</h1>
+    <div id="wrap">
+        <div id="progress"></div>
+    </div>
+</body>
+<script src="tween.js"></script>
+<script>
+   var imgSrc = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888405&di=6f062a7a9cdfbac441004d4dac475493&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201512%2F01%2F20151201130652_ULhVt.jpeg','https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888402&di=da384226096769121772607b8607156f&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201703%2F23%2F20170323172631_GduR4.jpeg','https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888401&di=8a3603f6b6ba27dfb9eb4d139e2489ed&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201709%2F14%2F20170914120533_2CAMH.jpeg','https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888371&di=46cd01929f8f80a24e5c5d68a2aeb75f&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201307%2F04%2F20130704174743_t2Nij.jpeg','https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133989413&di=a54f038d73cad0b8c7d4748c1ed4c67f&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201606%2F28%2F20160628200108_JaQYu.jpeg'];
+
+    var num = document.querySelector('#num');
+    var pro = document.querySelector('#progress');
+    var count = 0;//已经加载完成的数量
+    var result = imgSrc.length;//表示需要加载的数量
+    var imgs = [];//用来存放图片元素
+    for(var i=0;i<result;i++){
+        var img = new Image();
+        imgs.push(img);
+        img.onload = function(){
+            // 有一张图片加载完成
+            count++;
+            // 计算百分比
+            var str = count / result * 100 + '%';
+            // 计算进度条进度
+            var w = count / result * 200;
+            num.innerHTML = '加载进度：'+str;
+            pro.style.width = w +'px';
+            if(count == result){//所有图片已经加载完成
+                // setTimeout(function(){
+                    for(var i=0;i<imgs.length;i++){
+                        document.body.appendChild(imgs[i]);
+                    }
+                // },1000)
+            }
+        }
+        img.src = imgSrc[i];
+    }
+
+    // 图片预加载：页面的用户体验优化手段，多用于移动端，目的是提升页面浏览的流畅性
+</script>
+</html>

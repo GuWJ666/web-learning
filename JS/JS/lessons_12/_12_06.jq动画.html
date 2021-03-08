@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            background: red;
+            /* margin:100px auto; */
+            position: absolute;
+            left: 300px;
+            top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+<script src="jq.js/jquery.min.js"></script>
+<script>
+    // jq提供的一些简单动画特效，（主要用于控制元素的隐藏有显示）；
+
+    // show()：使隐藏的元素显示
+    // hide()：使显示的元素隐藏
+
+    // fadeIn():淡入
+    // fadeOut():淡出
+
+    // slideDown:滑入
+    // slideUp:滑出
+    $(function () {
+        var isShow = true;
+        var d = $('div');
+        $(document).click(function () {
+            // isShow?d.hide(5000):d.show(5000);
+            // d.toggle(1000)
+
+            // isShow?d.fadeOut(1000):d.fadeIn(1000);
+            // d.fadeToggle(1000);
+            d.fadeTo(500,0.5);
+
+            // isShow?d.slideUp():d.slideDown();
+            // d.slideToggle();
+            // isShow = !isShow;
+
+            // jq提供：animate()
+            // 调用一次aniamte只能播放一回单过程动画，如果动画存在多个过程，
+            // 那么需要将多个动画过程按顺序添加到元素的动画队列中
+            // d.animate({
+            //     left: '50px',
+            //     top: '50px',
+            //     width: '100px',
+            //     height: '100px',
+            //     'border-radius': '50%'
+            // },2000,function(){
+            //     // 当动画完成后自动调用
+            //     console.log('动画播放完成');
+            // }).animate({
+            //     left: '300px',
+            //     top: '100px',
+            //     width: '300px',
+            //     height: '300px',
+            //     'border-radius': '0'
+            // },2000)
+
+            // stop():用于控制动画队列中动画的播放
+            // 存在两个参数：bool,bool
+            // false,false:立即停止当前动画，执行队列中的下一动画
+            // true，true：立即结束当前动画，并且停止动画队列
+            // false，true：立即结束当前动画，并且执行队列中的下一动画
+            // true，false:立即停止当前动画，并且停止动画队列
+
+            // 第一个参数用来控制动画队列中的剩余动画是否播放，false表示播放，true表示不播放
+            // 第二个参数用来控制当前动画是否立即停止播放，false表示立即停止，true表示立即结束
+
+            // delay（延迟时间）：延迟播放
+        })
+    })
+</script>
+
+</html>

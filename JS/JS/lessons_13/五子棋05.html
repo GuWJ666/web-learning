@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            width: 600px;
+            height: 600px;
+            background: rgb(206, 170, 109);
+            margin: 0 auto;
+            padding: 25px;
+        }
+
+        .board {
+            width: 100%;
+            height: 100%;
+            background: rgb(209, 166, 86);
+            position: relative;
+        }
+
+        .line {
+            position: absolute;
+            background: brown;
+        }
+
+        .cell {
+            position: absolute;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="board"></div>
+    </div>
+</body>
+<script src="../lessons_12/jq.js/jquery.js"></script>
+<script>
+
+    //棋盘类
+    function Board() {
+        // 传入一个棋盘格子的size
+        this.size = 50;
+        this.type = 1;
+        this.group = [];
+    }
+    // 棋子类
+    function Chess(s, x, y, c) {
+        this.s = s,//尺寸
+            this.x = x,//横坐标
+            this.y = y,//纵坐标
+            this.c = c//颜色
+    }
+    Chess.prototype.show = function () {
+        $('<div class="cell"></div>').css({
+            width: this.s,
+            height: this.s,
+            left: this.x * 50 - 25,
+            top: this.y * 50 - 25,
+            background: this.c > 1 ? '-webkit-radial-gradient(15px 0,#fff 0%,gray 90%)' : '-webkit-radial-gradient(39px 9px,#eee 0%,rgb(55, 55, 55) 25%)'
+        }).appendTo('.board')
+    }
+
+    // 创建棋盘
+    Board.prototype.draw = function () {
+        for (var i = 0; i <= 600 / this.size; i++) {
+            // 横线
+            $('<div class="line"></div>').css({
+                width: '600px',
+                height: '1px',
+                top: i * this.size + 'px',
+                left: '0px'
+            }).appendTo('.board')
+            // 竖线
+            $('<div class="line"></div>').css({
+                width: '1px',
+                height: '600px',
+                left: i * this.size + 'px',
+                top: '0px'
+            }).appendTo('.board')
+        }
+    }
+    // 落子
+    Board.prototype.on = function () {
+        var _this = this;
+        $('.board').on('click', function (e) {
+            var x = Math.round((e.clientX - $(this).offset().left) / _this.size), y = Math.round((e.clientY - $(this).offset().top) / _this.size);
+            for (var i = 0; i < _this.group.length; i++) {
+                if (_this.group[i].x == x && _this.group[i].y == y) {
+                    return;
+                }
+            }
+            var chess = new Chess(_this.size, x, y, _this.type);
+            chess.show();
+            _this.type = _this.type > 1 ? 1 : 2;
+            _this.group.push(chess);
+            _this.judge();
+        })
+    }
+    // 取消点击事件
+    Board.prototype.off = function () {
+        $('.board').off();
+    }
+    // 判断输赢
+    Board.prototype.judge = function () {
+        var count = 0;
+        for (var i = 0; i < this.group.length; i++) {
+            var _x = this.group[i].x,
+                _y = this.group[i].y,
+                _c = this.group[i].c;
+            // 水平方向
+            for (var j = 0; j < this.group.length; j++) {
+                var $x = this.group[j].x,
+                    $y = this.group[j].y,
+                    $c = this.group[j].c;
+                if (_y == $y && _c == $c && $x >= _x - 2 && $x <= _x + 2) {
+                    count++;
+                }
+            }
+            if (this.msg(count, _c)) { return; }
+            count = 0;
+            //竖直
+            for (var j = 0; j < this.group.length; j++) {
+                var $x = this.group[j].x,
+                    $y = this.group[j].y,
+                    $c = this.group[j].c;
+                if (_c == $c && _x == $x && $y >= _y - 2 && $y <= _y + 2) {
+                    count++;
+                }
+            }
+            if (this.msg(count, _c)) { return; }
+            count = 0;
+            // 左倾
+            for (var j = 0; j < this.group.length; j++) {
+                var $x = this.group[j].x,
+                    $y = this.group[j].y,
+                    $c = this.group[j].c;
+                if (_c == $c) {
+                    if (_x == $x && _y == $y || _x == $x + 1 && _y == $y + 1 || _x == $x + 2 && _y == $y + 2 || _x == $x - 1 && _y == $y - 1 || _x == $x - 2 && _y == $y - 2) {
+                        count++;
+                    }
+                }
+            }
+            if (this.msg(count, _c)) { return; }
+            count = 0;
+            // 右倾
+            for (var j = 0; j < this.group.length; j++) {
+                var $x = this.group[j].x,
+                    $y = this.group[j].y,
+                    $c = this.group[j].c;
+                if (_c == $c) {
+                    if (_x == $x && _y == $y || _x == $x + 1 && _y == $y - 1 || _x == $x + 2 && _y == $y - 2 || _x == $x - 1 && _y == $y + 1 || _x == $x - 2 && _y == $y + 2) {
+                        count++;
+                    }
+                }
+            }
+            if (this.msg(count, _c)) { return; }
+            count = 0;
+        }
+    }
+    // 显示获胜信息的方法
+    Board.prototype.msg = function (count, type) {
+        var _this = this;
+        if (count == 5) {
+            setTimeout(function () {
+                var winner = type > 1 ? '白方' : '黑方';
+                var res = confirm(winner + '胜，是否再来一局？');
+                if (res) {
+                    _this.group = [];
+                    $('.board').empty();
+                    _this.draw();
+                    _this.type = 1;
+                } else {
+                    _this.off();
+                }
+                return true;
+            }, 20)
+        }
+        return false;
+    }
+
+
+
+
+    var board = new Board();
+    board.draw();
+    board.on();
+</script>
+
+</html>

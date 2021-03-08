@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ddd;
+            margin: 50px auto;
+            background-color: lightgray;
+        }
+        #box{
+            width: 100%;
+            height: 100%;
+            background-color: pink;
+        }
+        .clock {
+            display: inline-block;
+            vertical-align: middle;
+            /* border: 1px solid #eee; */
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="box"></div>
+    </div>
+</body>
+<script>
+    var wrap = document.querySelector('#wrap');
+    var box = document.querySelector('#box');
+    var level = 1;
+    var lock = true;
+    var x = 0;
+    var w;
+    // 点击
+  var cs = window.getComputedStyle(box);
+  console.log(cs.backgroundColor);
+    wrap.onclick = function () {
+        if (cs.backgroundColor == 'rgb(255, 192, 203)') {
+           box.style.backgroundColor = 'purple';
+            setTimeout(function () {
+                add();
+            }, 200)
+        } else {
+            for (var i = 0; i < wrap.children.length; i++) {
+                (function(i){
+                    wrap.children[i].onclick = function () {
+                        this.style.backgroundColor = 'purple';
+                        console.log(this.offsetLeft)
+                        console.log(w);
+                        var l = this.offsetLeft + w + 6;
+                        var m = wrap.children[i].offsetLeft;
+                        console.log(l,m)
+                        if ( l == m) {
+                            wrap.children[i].style.backgroundColor = 'purple';console.log(22)
+                        }
+                        if (x == wrap.children.length) {
+                            add();
+                        }
+                    }
+                })(i)
+            }
+        }
+    }
+
+
+    // 添加div的函数
+    function add() {
+        wrap.innerHTML = '';
+        level = level < 10 ? ++level : level;
+        var n = level * level;
+        console.log(n);
+        for (var i = 0; i < n; i++) {
+            var clock = document.createElement('div');
+            clock.className = 'clock';
+            w = wrap.clientWidth / level-6;
+            clock.style.width = w + 'px';
+            clock.style.height = w + 'px';
+            clock.style.margin = '3px';
+            wrap.appendChild(clock);
+        }
+    }
+</script>
+
+</html>

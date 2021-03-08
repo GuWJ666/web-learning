@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+    cf.beginPath();
+    cf.moveTo(400, 0);
+    cf.lineTo(400, 500);
+    cf.stroke();
+    cf.beginPath();
+    cf.moveTo(0, 250);
+    cf.lineTo(800, 250);
+    cf.stroke();
+
+    // canvas绘制文本
+    var text = '顾文江';
+    cf.font = '100px 楷体';//注意字号和字体必须同时设置，否则不生效
+    //  和标签中的文本类似，存在文字基线，默认文本的底与基线对齐，文本的最左边与基线的起点对齐
+    // 水平对齐方式
+    cf.textAlign = 'center';//left,right,center
+    cf.textBaseline = 'middle';//top,bottom,middle,hanging
+    cf.fillStyle = 'blue';
+    cf.fillText(text, cv.width / 2, cv.height / 2);
+    cf.strokeStyle = 'red';
+    cf.strokeText(text, cv.width / 2, cv.height / 2);
+
+
+    // canvas绘制图片
+    // cf.drawImage();绘制图片需要提供绘制图片素材对应的图片对象
+    // 1.创建img对象
+    var img = new Image();
+    img.src = './img/下载 (3).jpg';
+    // 注意：canvas绘制图片必须要在图片资源加载完成后才能绘制
+    // img.onload = function () {
+    //     console.log(img.width)
+    // 1.三参数：img,x,y
+    // cf.drawImage(img, 0, 0);
+    // 2.五参数:img,x,y,w,h,尽量再设置w和h的时候保证它们的宽高比例不变
+    // cf.drawImage(img,100,100,550,250);
+    // 3.九参数：img,x1,y1,w1,h1,x2,y2,w2,h2
+    // cf.drawImage(img,0,0,img.width/2,img.height,0,0,cv.width,cv.height);
+    // }
+
+    // cf.fillRect(200,100,200,200);
+    // 图形组合:globalCompositeOperation
+    // 目标图像：已经绘制在画布上的图形
+    // 源图像：即将绘制在画布上的图形
+    // 主要用于设置canvas上绘制图形的组合方式，默认情况下，源图像会覆盖在目标图像的上面
+    // source
+    // 1.source-over:源图像显示在目标图像上
+    // 2.source-atop:源图像显示在目标图像上，目标图像外的源图像透明
+    // 3.source-in: 
+    // 4.source-out:源图像显示目标图像外，目标图像透明
+    // cf.beginPath();
+    // cf.fillStyle = 'red';
+    // cf.globalCompositeOperation = 'source-out';
+    // cf.arc(400,250,200,0,Math.PI*2);
+    // cf.fill();
+
+
+    // destination
+    // 1.destination-over:目标图像显示在源图像上;
+    // 2.destination-atop:目标图像显示在源图像上，源图像外的目标图像透明
+    // 3.destination-in：目标图像显示在源图像上，源图像透明，源图像外的目标图像透明
+    // 4.destination-out：目标图像显示源图像外，源图像透明
+    // cf.beginPath();
+    // cf.fillStyle = 'red';
+    // cf.globalCompositeOperation = 'destination-out';
+    // cf.fillRect(300,200,200,200);
+
+    // img.onload = function () {
+    //     // cf.arc(400, 250, 250, 0, Math.PI * 2);
+    //     // cf.fill();
+    //     // cf.globalCompositeOperation = 'source-in';
+        // cf.drawImage(img, 0, 0, img.width / 2, img.height, 0, 0, cv.width, cv.height);
+
+    // } 
+
+
+    // cf.beginPath();
+    // cf.arc(400, 250, 250, 0, Math.PI * 2);
+    // cf.fill();
+    // cf.globalCompositeOperation = 'destination-out';
+
+    // cf.beginPath();
+    // cf.rect(100,100,100,100);
+    // cf.fillStyle = 'red';
+    // cf.fill();
+</script>
+
+</html>

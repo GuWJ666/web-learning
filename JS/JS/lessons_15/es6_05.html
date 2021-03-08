@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>测试</div>
+</body>
+<script>
+    // 函数拓展
+    // 1.允许为函数参数设置默认值
+    {
+        function sum(z,x=0,y=1){//为函数的参数设置默认值
+            console.log(x+y+z);
+        }
+        sum(1,2);
+        // 注意：默认参数一定要放在参数列表的最后，否则函数调用结果异常
+    }
+    // 2. rest参数，在函数体内部得到参数列表，功能上和arguments相似
+    {
+        // function sum(){
+        //     var s = 0;
+        //     // 之前的写法，使用arguments参数来获取参数列表
+        //     for(var i=0;i<arguments.length;i++){
+        //         s += arguments[i];
+        //     }
+        //     console.log(s);
+        // }
+
+        // es6新语法，rest参数获取参数列表
+        function sum(...rest){
+            var s = 0;
+            for(var i=0;i<rest.length;i++){
+                s += rest[i];
+            }
+            console.log(s);
+        }
+        sum(1,2,3,4,5,6);
+
+        // 声明：rest参数功能上和arguments参数一样都是函数内获取参数列表，但是底层实现上，rest参数的工作效率要远远高于arguments参数，所以，今后尽量使用rest参数
+    }
+    // 3.箭头函数
+    {
+        // 箭头函数对函数的声明方式进行了改变
+        document.querySelector('div').onclick = function(){
+
+            // 传统写法，使用匿名函数，就需要考虑this的指向问题
+            // let _this = this;
+            // setTimeout(function () {
+            //     _this.innerHTML = '陈公公';
+            // },2000)
+
+            // 新语法，箭头函数,箭头函数不会改变函数体内的this指向，this永远指向箭头函数声明时所在作用域的this
+           
+            setTimeout(()=>{
+                this.innerHTML = '成功';
+            },2000)
+        } 
+        
+        // 注意：
+        // 1.一定不要将箭头函数写成元素的事件处理函数
+        // 2.不要写成构造函数，无法通过new得到对象
+        // 3.箭头函数内没有arguments对象，需要使用rest
+        
+        // document.querySelector('div').onclick = ()=>{
+            // 事件内this的指向不是DOM对象，而是window
+        // }
+
+        // 在不涉及this指向的问题上，箭头函数能一定程度上简化函数声明的代码
+        // function print(x){
+        //    return x;
+        // }
+        // let print = x => x;
+        // console.log(print(123));
+        // 箭头函数可省略的部分：
+        // 0.声明，箭头函数声明不需要function关键字
+        // 1.参数列表，当参数只有一个的时候，（）时可以省略的，没有参数或者参数大于1个，那么（）必须存在
+        // 2.函数体，当函数体内容只有一个表达式或一行代码时{}可以省略
+        // 3.返回值，返回值包含形式参数，那么return可以省略
+        
+        // 计数器
+        // function add(){
+        //     var count = 0;
+        //     return function(){
+        //         count++;
+        //         return count;
+        //     }
+        // }
+        // 新计数器
+        let add = ()=>{
+            var count = 0;
+            return () => {return ++count};
+        }
+        let a = add();
+        console.log(a());
+        console.log(a());
+        console.log(a());
+    }
+    // 4.函数也存在length属性,表示函数的参数列表长度（不包含带有默认值的参数，函数的length在参数存在默认值的时候失真）
+    {
+        // function fn(){}
+        // console.log(fn.length);//0
+
+        // function fn(a,g){}
+        // console.log(fn.length);//2
+
+        // function fn(a,g,c=0){}
+        // console.log(fn.length);//2
+
+        // 函数name属性
+        function rn(){
+            console.log(rn.name);
+        }
+        window[rn.name]();
+    }
+
+
+</script>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 95%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin:0 auto;
+        }
+
+        .col {
+            width: 18%;
+        }
+
+        .img {
+            width: 100%;
+            margin: 10px 0;
+            font-size: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+</body>
+<script>
+    // 当页面滚动偏移到距离当前所加载图片最矮的一列底部400px时，再次加载图片40张
+    var cols = document.getElementsByClassName('col');
+
+    // 循环添加图片函数
+    function onload() {
+        for (var i = 0; i < 40; i++) {
+            var img = document.createElement('div');
+            img.className = 'img';
+            img.innerHTML = i + 1;
+            img.style.backgroundColor = 'rgb(' + ran(50, 255) + ',' + ran(50, 255) + ',' + ran(50, 255) + ')';//随机颜色
+            var h = ran(200, 400);//随机高度
+            img.style.height = h + 'px';
+            img.style.lineHeight = h + 'px';
+            cols[min()[0]].appendChild(img);
+        }
+    }
+    onload();
+    document.onscroll = function () {
+        if (document.documentElement.scrollTop + document.documentElement.clientHeight >= min()[1] - 400) {
+            onload();
+            console.log(1111);
+        }
+    }
+    // 随机函数
+    function ran(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+    }
+    // 最低高度函数
+    function min() {
+        var arr = [], minH = cols[0].offsetHeight, minIndex = 0;
+        for (var i = 0; i < cols.length; i++) {
+            arr.push(cols[i].offsetHeight);
+            if (minH > arr[i]) {
+                minH = arr[i];
+                minIndex = i;
+            }
+        }
+        return [minIndex,minH];
+    }
+    // function minfn() {
+    //     var arr = [], minHeight = cols[0].offsetHeight;
+    //     for (var i = 0; i < cols.length; i++) {
+    //         arr.push(cols[i].offsetHeight);
+    //         if (minHeight > arr[i]) {
+    //             minHeight = arr[i];
+    //         }
+    //     }
+    //     return minHeight;
+    // }
+</script>
+
+</html>

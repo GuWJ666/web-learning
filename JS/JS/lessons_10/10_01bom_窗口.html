@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        span {
+            color: #ff009d;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="http://www.baidu.com" target="_blank">百度</a>
+    <span href="http://www.baidu.com" >百度</span>
+    <xx id="btn">关闭</xx>
+</body>
+<script>
+    // 通过BOM提供的属性和方法来操作浏览器
+    // BOM 操作的核心是window对象
+    // window.open()方法:用于打开窗口加载指定URL
+    // 参数可以有三个，都是可选参数
+    // 参数1：string类型，表示要加载的URL，可以是本地路径，也可以是网络地址
+    // 参数2：string类型，表示打开窗口的方式，'_self'表示在当前窗口加载url；''_blank'表示在新窗口加载url；默认值''_blank';
+    // 参数3：string类型，表示打开新窗口的大小以及位置信息.以key=value的形式去设置，多个属性间用，‘，’隔开，不允许出现空格；
+    // window.open('http://www.baidu.com','_blank','width= 300,height = 500,top=100,left=400');
+
+    // window.close（）：用于关闭开启的窗口
+    var btn = document.getElementById('btn');
+    var myWindow;
+    btn.onclick = function(){
+        myWindow.close();
+    }   
+
+    var sps = document.getElementsByTagName('span');
+    // var h = sps[0].getAttribute('href');
+    // var t = sps[0].getAttribute('target');
+    // sps[0].onclick = function () {
+    //     window.open(h,t);
+    // }
+
+    for(var i=0;i<sps.length;i++){
+        sps[i].onclick = function(){
+            // 获取行间herf属性的值
+            var url = this.getAttribute('href');
+            // 获取行间target属性的值，确定跳转方式是新窗口还是当前窗口
+            var type = this.getAttribute('target');
+            // 默认值处理'_self'
+            type = type?type:'_blank';
+            // 进行页面跳转
+           myWindow = window.open(url,type,'width= 300,height = 500,top=100,left=400');
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="500" height="500"></canvas>
+</body>
+<script>
+    var cv = document.getElementById('cv');
+    var pen = cv.getContext('2d');
+    var deg = Math.PI / 180;
+   
+    var i = 1;
+    var lock = true;
+    var timer = setInterval(function () {
+        lock?i++:i--;
+        cv.width = cv.width;
+
+        pen.beginPath();
+        pen.moveTo(250, 250);
+
+        pen.arc(250, 250, 250, (30-i) * deg,(330+i) * deg);
+        pen.closePath();
+        pen.fillStyle = 'yellow';
+        pen.fill();
+        pen.stroke();
+
+        pen.beginPath();
+        pen.arc(300, 100, 20, 0, Math.PI * 2);
+        pen.fillStyle = 'black';
+        pen.fill();
+        if(i==30){
+            lock = false;
+        }else if(i==1){
+            lock = true;
+        }
+       
+    }, 20)
+</script>
+
+</html>

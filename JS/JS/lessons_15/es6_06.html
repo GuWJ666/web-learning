@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 数组拓展
+    // 1.拓展运算符...
+    {
+        // let arr = [1,2,3,4,5];
+        // console.log(...arr);
+
+        // let str ='abcdefg';
+        // console.log(...str);
+
+        // let arr1 = [...str];
+        // console.log(arr1);
+
+        // function fn(a,b,c,d,e){
+        //     console.log(a,b,c,d,e);
+        // }
+        // fn(1,2,3,4,5);
+        // fn(...arr);
+
+        // 应用场景
+        // 1.拷贝数组（深拷贝）
+        // let a = [1,2,3];
+        // let b = [...a];
+        // let c = a; 
+        // console.log(a==b,a==c);
+        // 2.合并数组
+        // let a = [1,2,3];
+        // let b = [4,5,6];
+        // let c = [7,8,9];
+        // // let d = a.concat(b,c);
+        // let d = [...a,...b,...c];
+        // console.log(d);
+
+        // 新增方法
+        {
+           let a = [...'abcdefg'];
+           console.log(...a.values());
+           console.log(...a.keys());
+           console.log(...a.entries());
+        }
+        // includes()
+        {
+            let a = [...'abc'];
+            console.log(a.includes('c'));//true
+
+            console.log([NaN].indexOf(NaN));
+            console.log([NaN].includes(NaN));
+            // indexOf方法有两个缺点，一是不够语义化，它的含义是找到参数值的第一个出现位置，所以要去比较是否不等于-1，表达起来不够直观。二是，它内部使用严格相等运算符（===）进行判断，这会导致对NaN的误判。
+        }
+
+        // flat()
+        {
+            let a = [0,[1,[2,3,[4,5]]]];
+            let b = a.flat();
+            console.log(b);
+
+            Array.prototype.myflat = function(level=1){
+                let arr = [];
+                for(let i=0;i<this.length;i++){
+                    console.log(this[i].constructor);
+                    if(this[i].constructor == Array){
+                        arr.push(...this[i]);
+                    }else{
+                        arr.push(this[i]);
+                    }
+                }
+                return arr;
+            }
+            let arr = [1,2,[3,4],[5,6,[7,8]]];
+            console.log(arr.myflat());
+            
+            let arr1 = new Array(10);
+            console.log(arr1);
+        }
+    }
+
+
+
+</script>
+</html>

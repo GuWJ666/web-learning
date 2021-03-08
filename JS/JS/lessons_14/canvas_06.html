@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv{
+            box-shadow:3px 3px 10px gray;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+    // cv.width = window.innerWidth;
+    // cv.height = window.innerHeight;
+    // cf.fillStyle = 'red';
+    // // cf.fillRect(0,0,100,100);
+    // cf.rect(0,0,100,100);
+    // cf.fill();
+
+    // canvas的变换效果:canvas中的所有类型变换都是对画布坐标系产生了影响
+    // 存在平移变换，旋转变换，缩放变换
+    // translate:平移变换
+    // cf.translate(100,100);//将画布坐标系原点向右平移了100，向下平移了100
+    // cf.fillRect(0,0,100,100)；
+
+    // save() & restore()
+
+    // cf.save();//保存当前的画布状态  
+    // cf.fillStyle = 'yellow';
+    // // cf.fillRect(100,100,100,100);
+    // cf.translate(200,200)
+    // cf.rect(100,100,100,100);
+    // cf.fill();
+    // cf.restore();//读取保存的画布状态                          
+
+    // cf.rect(200,200,100,100);
+    // cf.fill();
+    
+
+    // var x = 0,y = 0;//记录初始坐标系原点的坐标
+    // var timer;
+    // var a = 10;
+    // function animate(){
+    //     x += a; 
+    //     if(x >= 500 || x<=0){
+    //         a *= -1;
+    //         //关闭动画
+    //         window.cancelAnimationFrame(timer);
+    //     }
+    //     cv.width = cv.width;
+    //     cf.translate(x,y)
+    //     cf.fillRect(0,0,100,100);
+
+    //     // 动画执行
+    //     timer = window.requestAnimationFrame(animate);
+    // }
+    // // 播放动画
+    // animate();
+    // 定时器播放动画
+    // setInterval(aniamte,10);
+    // requestAnimationFrame():以递归的方式重复执行动画的函数，自动确定动画的帧频
+    
+    // 旋转变换:rotate
+    // 缩放变换：scale(x,y)
+    // cf.rotate(-Math.PI/18)
+    // for(var i=0;i<20;i++){
+    //     cf.fillRect(10,10,10,10);
+    //     cf.scale(1.3,1.3);
+    //     cf.rotate(Math.PI/18);
+    // }
+    // var d = Math.PI /180;
+    // cf.fillRect(300,100,200,100);
+    // cf.rotate(20*d);
+    // cf.fillRect(300,100,200,100);
+    // cf.translate(cv.width/2,cv.height/2);
+    // for(var i=0;i<50;i++){
+    //     cf.fillRect(0,0,30,20);
+    //     cf.scale(1.1,1.1)
+    //     cf.translate(40,5)
+    //     cf.rotate(40*d);
+    // }
+
+    // cf.beginPath();
+    // cf.arc(150,150,100,0,Math.PI*2);
+    // cf.lineWidth = 10;
+    // cf.stroke();
+    // cf.save();
+    // cf.translate(150,0)
+    // cf.beginPath();
+    // cf.arc(150,150,100,0,Math.PI*2);
+    // cf.lineWidth = 10;
+    // cf.stroke();
+    // cf.translate(150,0)
+    // cf.beginPath();
+    // cf.arc(150,150,100,0,Math.PI*2);
+    // cf.lineWidth = 10;
+    // cf.stroke();
+    // cf.restore();
+
+    // cf.translate(80,90);
+    // cf.beginPath();
+    // cf.arc(150,150,100,0,Math.PI*2);
+    // cf.lineWidth = 10;
+    // cf.stroke();
+    // cf.translate(150,0);
+    // cf.beginPath();
+    // cf.arc(150,150,100,0,Math.PI*2);
+    // cf.lineWidth = 10;
+    // cf.stroke();
+
+</script>
+</html>

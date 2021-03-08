@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>变量解构赋值</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 解构赋值：还是赋值的表达式，只不过对‘=’的左右两侧格式上有些许要求，通过解析‘=’右边的数据解构来为左侧声明的变量赋值，js支持的数据类型基本都可以解构赋值，但通常只使用数组和对象的解构赋值
+    // 1.数组的解构赋值
+    // 形式上：var/let/const [name1,name2,name3...] = [value1,value2,value3...]
+    // 例如，声明三个变量a,b,c分别赋值为10，20，30
+    {
+        // let a = 10;
+        // let b = 20;
+        // let c = 30;
+        let [a,[b,c]] = [10,[20]];
+        console.log(a,b,c);
+    }
+    //2.对象的解构赋值
+    // 形式：let{a,b} = {a:10,b:20};
+    // 对象的解构赋值，无序，根据对应的key与变量名为变量赋值，当变量名不存在于对象的key中，那么解构失败，不会为声明的变量赋值
+    {
+        // let {a,b} = {a:10,b:20};
+        // console.log(a,b);
+
+        // 另外一种写法，可以使变量名与object中的key不相同
+        let {key1:a,key2:b} = {key1:20,key2:30};
+        console.log(a,b)
+
+        // 用途：
+        // 1.从json数据中取值
+        let data = {
+            classID: 'XAH190406',
+            students: [{
+                id: '001',
+                name: '汉宁辉'
+            },
+            {
+                id: '002',
+                name: '李涛'
+            }]
+        }
+        for(let i=0;i<data.students.length;i++){
+            // var student = data.students[i];
+            // console.log("学号:"+student.id+'->名字:'+student.name);
+            let {id,name} = data.students[i];
+            console.log("学号:"+id+' -> 名字:'+name)
+        }
+
+        // 2.交换变量的值
+        // let [a,b] = [10,20];
+        // console.log(a,b);
+        // [a,b] = [b,a];
+        // console.log(a,b);
+
+        let arr = [10,3,43,6,76,4];
+        for(let i=0;i<arr.length;i++){
+            for(let j=0;j<arr.length-1-i;j++){
+                if(arr[j] < arr[j+1]){
+                    [arr[j],arr[j+1]] = [arr[j+1],arr[j]];
+                }
+            }
+        }
+        console.log(arr);
+    }
+
+</script>
+
+</html>

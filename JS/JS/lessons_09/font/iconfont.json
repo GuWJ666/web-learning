@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6447212",
+      "name": "分页向右",
+      "font_class": "icon_paging_right",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    }
+  ]
+}

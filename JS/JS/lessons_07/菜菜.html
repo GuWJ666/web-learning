@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        header {
+            width: 760px;
+            border: 2px solid #ccc;
+            margin: 50px auto;
+            margin-bottom: 0;
+            padding: 10px 20px;
+        }
+
+        .item {
+            width: 760px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            padding: 20px;
+        }
+
+        .item>input {
+            vertical-align: top;
+        }
+
+        img {
+            width: 130px;
+            height: 130px;
+            vertical-align: middle;
+            margin-right: 30px;
+        }
+
+        .item>span {
+            display: inline-block;
+            vertical-align: middle;
+            width: 160px;
+            font-size: 18px;
+        }
+
+        .item>.btn {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: deepskyblue;
+            text-align: center;
+            line-height: 30px;
+            margin: 0;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        #del {
+            color: firebrick;
+            cursor: pointer;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <input type="checkbox" id="all">全选
+        <span id="del">删除选中商品</span>
+        <span>已选中商品<b>0</b>件，总共价格为<b>0</b>￥</span>
+    </header>
+    <section>
+        <!-- <div class="item">
+            <input type="checkbox" class="ins">
+            <img src="img/img1.png" alt="" class="img">
+            <span>有机菜花</span>
+            <span class="pri">20</span>
+            <span class="num">1</span>
+            <span class="add btn">+</span>
+            <span class="sub btn">-</span>
+        </div> -->
+    </section>
+</body>
+<script>
+    var section = document.querySelector('section');
+    var bs = document.getElementsByTagName('b');
+    var del = document.getElementById('del');
+    var all = document.getElementById('all');
+    var items = document.getElementsByClassName('item');
+    var data = [['有机菜花', '30'], ['有机包菜', '5'], ['爱尔兰牛肉', '50'], ['西兰花', '9'], ['中式泡菜', '11'], ['生菜', '2'], ['黄瓜', '8'], ['灯笼椒', '5'], ['香蕉', '10'], ['菠菜', '2']];
+    for (var i = 0; i < data.length; i++) {
+        var des = data[i]; console.log(des)
+        section.innerHTML += '<div class="item"><input type="checkbox" class="ins"><img src="img/img' + (i + 1) + '.png"class="img"><span>' + des[0] + '</span><span class="pri">' + des[1] + '</span><span class="num">' + 1 + '</span><span class="add btn">+</span><span class="sub btn">-</span></div>'
+    }
+    all.onclick = function () {
+        for (var i = 0; i < items.length; i++) {
+            var type = items[i].firstElementChild.checked;
+            var typeAll = this.checked;
+            var arr = items[i].getAttribute('choose');
+            if (typeAll && !type) {
+                items[i].firstElementChild.checked = true;
+                items[i].setAttribute('choose', true);
+            } else if (!typeAll && arr) {
+                items[i].firstElementChild.checked = false;
+                items[i].removeAttribute('choose');
+            }
+        }
+        count();
+    }
+    function count() {
+        var price = 0;
+        var num = 0;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].firstElementChild.checked) {
+                var n = items[i].children[items[i].children.length - 3].innerHTML * 1;
+                price += n * items[i].children[items[i].children.length - 4].innerHTML;
+                num += n;
+            }
+        }
+        bs[0].innerHTML = num;
+        bs[1].innerHTML = price;
+    }
+    del.onclick = function () {
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].firstElementChild.checked) {
+                items[i].remove();
+                i--;
+            }
+            if (items.length == 0) {
+                all.checked = false;
+                all.disabled = true;
+            }
+            count();
+
+        }
+    }
+    for (var i = 0; i < items.length; i++) {
+        items[i].firstElementChild.onclick = function () {
+            if (!this.checked) {
+                all.checked = false;
+            }
+            for (var j = 0; j < items.length; j++) {
+                if (!items[j].firstElementChild.checked) {
+                    break;
+                }
+            }
+            if (j == items.length) {
+                all.checked = false;
+            }
+            count();
+        }
+        console.log(items[i].children[items[i].children.length - 2]);
+        items[i].children[items[i].children.length - 2].onclick = function () {
+            this.previousElementSibling.innerHTML = ++this.previousElementSibling.innerHTML;
+            count();
+        }
+        items[i].children[items[i].children.length - 1].onclick = function () {
+            var n = this.previousElementSibling.previousElementSibling.innerHTML;
+            n = --n > 1 ? n : 1;
+            this.previousElementSibling.previousElementSibling.innerHTML = n;
+            count();
+        }
+    }
+    del.onclick = function () {
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].firstElementChild.checked) {
+                items[i].remove();
+                i--;
+            }
+            if (items.length == 0) {
+                all.checked = false;
+                all.disabled = true;
+            }
+        }
+        count();
+    }
+</script>
+
+</html>

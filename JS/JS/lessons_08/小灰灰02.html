@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        p,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #wrap {
+            width: 320px;
+            height: 480px;
+            background: url(images/game_bg.jpg);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #pro {
+            position: absolute;
+            left: 63px;
+            top: 66px;
+            height: 16px;
+            border-radius: 10px;
+        }
+
+        #score {
+            position: absolute;
+            left: 60px;
+            top: 10px;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        p {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-align: center;
+            line-height: 400px;
+            font-size: 30px;
+            text-shadow: 0 1px 3px red;
+            color: orange;
+            background: rgba(0, 0, 0, .4);
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .wolf {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <p>开始游戏</p>
+        <div id="score"">0</div>
+        <img src=" images/progress.png" alt="" id="pro">
+        </div>
+</body>
+<script src="tween.js"></script>
+<script>
+    var wrap = document.getElementById('wrap'),
+        scoreEl = document.getElementById('score'),
+        p = document.getElementsByTagName('p')[0],
+        pro = document.getElementById('pro');
+
+    var score = 0;
+
+    var lock = false;
+
+    var position = [['117px', '96px'], ['161px', '19px'], ['143px', '191px'], ['193px', '102px'], ['222px', '17px'], ['213px', '200px'], ['295px', '30px'], ['276px', '119px'], ['297px', '209px']];
+
+    var wolfs = [];
+
+    p.onclick = function () {
+        p.remove();
+        var t = 0, b = 180, c = -180, d = 1200;
+        var timer = setInterval(function () {
+            t++;
+            pro.style.width = Tween.Linear(t, b, c, d) + 'px';
+            if (t >= d) {
+                lock = true;
+                clearInterval(timer);
+                // clearInterval(creatTimer);
+                setTimeout(function () {
+                    alert('Game Over');
+                })
+            }
+        }, 50)
+        creatWolf()
+    }
+
+    function creatWolf() {
+        var creatTimer = setInterval(function () {
+            if(lock){
+                return;
+            }
+            var wolf = new Image();
+            wolf.className = 'wolf';
+            wolf.type = type();
+            wolf.src = 'images/'+wolf.type+'0.png';
+            var index = num();
+            wolf.style.top = position[index][0];
+            wolf.style.left = position[index][1];
+            wrap.appendChild(wolf);
+            var i = 0;
+            wolf.timeUp = setInterval(function(){
+                i++;
+                wolf.src = 'images/'+wolf.type+i+'.png';
+                if(i>=5){
+                    clearInterval(wolf.timeUp);
+                    wolf.timeLow = setInterval(function(){
+                        i--;
+                        wolf.src = 'images/'+wolf.type+i+'.png';
+                        if(i<=0){
+                            clearInterval(wolf.timeLow);
+                            wolf.remove();
+                            wolfs.splice(wolfs.indexOf(index),1);
+                        }
+                    },100)
+                }
+            },100)
+            wolf.onclick = function(){
+                i = 6;
+                wolf.src = 'images/'+wolf.type+i+'.png';
+                clearInterval(wolf.timeUp);
+                clearInterval(wolf.timeLow);
+                wolf.timeOver = setInterval(function(){
+                    i++;
+                    wolf.src = 'images/'+wolf.type+i+'.png';
+                    if(i >= 9){  
+                        wolf.remove();
+                        clearInterval(wolf.timeOver);
+                        wolfs.splice(wolfs.indexOf(index),1);
+                    }
+                },100)
+                if(wolf.type == 'h'){
+                    score+=10;
+                    scoreEl.innerHTML = score;
+                }else{
+                    score-=10;
+                    score = score<0?0:score;
+                    scoreEl.innerHTML = score;
+                }
+            }
+        }, 500)
+    }
+
+    function rn(x,y){
+        return Math.floor(Math.random()*(y-x+1)+x);
+    }
+    function type(){
+        if(rn(1,100) > 20){
+            return 'h';
+        }else{
+            return 'x';
+        }
+    }
+
+    function num(){
+        var n = rn(0,8);
+        if(wolfs.indexOf(n) > -1){
+            return num();
+        }
+        wolfs.push(n);
+        return n;
+    }
+</script>
+
+</html>

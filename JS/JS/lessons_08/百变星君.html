@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 300px;
+            height: 400px;
+            border: 10px solid #ddd;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        p {
+            width: 50px;
+            height: 30px;
+            background: darkorange;
+            margin: 0 auto;
+            line-height: 30px;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .img {
+            /* width: 127px; */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <p>开始</p>
+        <!-- <img src="img/1.jpg" alt="" class="img"> -->
+        <img src="img/2.jpg" alt="" class="img" style="width:80%">
+        <!-- <img src="img/2.jpg" alt="" class="img">
+        <img src="img/2.jpg" alt="" class="img"> -->
+    </div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap');
+    var imgs = document.getElementsByClassName('img');
+    var p = document.getElementsByTagName('p')[0];
+    function add(x) {
+        for (var i = 0; i < x; i++) {
+            var img = document.createElement('img');
+            img.className = 'img';
+            img.src = 'img/2.jpg';
+            wrap.appendChild(img);
+            // console.log(img.offsetWidth)
+            // img.style.width = img.offsetWidth / 2;
+        } 
+        wrap.children[random(0,x)].src = 'img/1.jpg';
+    }
+    // add(9);
+    
+    p.onclick = function(){
+        wrap.removeChild(imgs[0]);
+        add(4);
+        for(var i=0;i<imgs.length;i++){
+        imgs[i].onclick = function(){
+            if(this.getAttribute('src') == 'img/1.jpg'){
+                console.log(111);
+                wrap.innerHTML = '';
+                add((i+3)*(i+3));
+            }
+        }
+    }
+    }
+    // console.log(imgs);
+    
+    function random(x,y){
+        return Math.floor(Math.random()*(y-x+1)+x);
+    }
+    console.log(imgs)
+</script>
+
+</html>

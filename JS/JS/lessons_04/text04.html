@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li{
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <input type="button" value="按钮" id="btn">
+</body>
+<script>
+    var li = document.getElementsByTagName('li');
+        btn = document.getElementById('btn');
+    //     for(i=0;i<li.length;i++){
+    //         var r = Math.round(Math.random()*255),
+    //             g = Math.round(Math.random()*255),
+    //             b = Math.round(Math.random()*255);
+    //     li[i].style.background = 'rgb('+r+','+g+','+b+')'; ;
+    //     }  
+    btn.onclick = function(){
+        for(i=0;i<li.length;i++){
+            var r = Math.round(Math.random()*255),
+                g = Math.round(Math.random()*255),
+                b = Math.round(Math.random()*255);
+        li[i].style.background = 'rgb('+r+','+g+','+b+')';
+        li[i].innerHTML = i+1;
+        }
+    }
+</script>
+</html>

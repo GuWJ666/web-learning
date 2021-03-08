@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script src="jq.js/jquery.min.js"></script>
+<script>
+    // jq就是jQuery的简称，jQuery是一套轻量级的代码库，优势在于极大的简化了DOM操作。
+    // 另外jQuery的源码是开源的，可使用的插件更多。
+    // jq的初衷：write less do more;
+    // 想要在项目中使用jq，必须先引入jq文件。
+    // 1X,2X,3X版本
+    // 1X版本实现的对IE6,7,8的兼容
+    // 2X，3X版本就已经放弃了对IE678的兼容处理
+    // 文件版本的更新，是向下兼容的，老版本的方法可以在新版本文件下使用，但是新版本文件的方法不能在老版本中使用
+    // 废弃、舍弃；
+    // 1.CDN引入：	<script src="https://libs.baidu.com/jquery/1.9.1/jquery.min.js">
+    // 2.下载到本地，通过相对或绝对路径移入
+    // 整个jq核心就是一个jQuery对象 --> $
+    window.onload = function (){console.log('window load')}
+    jQuery(document).ready(function(){
+        console.log('jQuery load');
+    })
+    // 简写形式
+    $(document).ready(function(){console.log('$ load')})
+    $(function(){console.log('$ load2')})
+
+    // window.onload与jQuery.ready 的区别
+    // 1.关于加载内容，window.onload需要与DOM以及媒体资源都加载完成才会触发，而jQuery.ready只需要等待DOM加载完成即可
+    // 2.window.onload多次绑定会覆盖，只有最后一个可以执行；而jQuery.ready允许多次绑定，会按照绑定的先后顺序依次执行
+
+    // 对后面的要求，只要使用了jQuery，不管代码写在文档的哪个位置，必须要写加载函数
+    $(function(){})
+</script>
+</html>

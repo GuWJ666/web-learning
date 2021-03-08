@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组</title>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            float:left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <!-- <div id="box1"></div>
+    <div id="box2"></div>
+    <div id="box3"></div>
+    <div id="box4"></div>
+    <div id="box5"></div> -->
+</body>
+<script>
+    // 数组:是一种数据结构，可以存储多个值，可以理解为一个大的容器。
+    // 特点：存储数据的空间连续且有序
+    // 数组的元素：在数组中存放的值称为数组的元素。
+    // 数组元素的索引（下标）：是对数组元素的顺序标记，索引从0开始递增+1
+    // 数组的长度：就是数组中元素的个数
+    // JS中数组的特点：数组元素的数据类型没有要求，存什么类型都可以。
+
+
+    //1.如何创建数组：
+    // (1)字面量创建
+    var arr = ['张辉','张凯宾']; //创建了一个名为arr的空数组
+    // 从数组中取出元素的值：通过取索引的方式
+    var s1 = arr[1];
+    // console.log(s1);
+    s1 = "马锐";
+    console.log(s1);
+    console.log(arr);
+    // 对数组的操作要注意：防止数组越界（通过索引访问数组元素时，索引不要超过最大值：索引最大值就是数组长度-1）
+    // 如果越界了，js中的数组越界虽然不会报错，但是会得到undefined
+
+    // 想数组中添加元素
+    arr[3] = '王辉';
+    arr[5] = '古天乐';
+    console.log(arr);
+    // 注意：通过索引向数组中添加元素，一定要按顺序添加，不要跳跃添加，不然中间会出现多个undefined占位
+
+    // 例如：
+
+    // 创建一个空数组，用来存储循环过程中生成的随机数
+    var nums = [];
+    for (var i = 0; i < 10; i++) {
+        var n = Math.round(Math.random() * 99 + 1);
+        nums[i] = n;
+    } console.log(nums);
+
+
+    // for (i = 0; i < 5; i++) {
+    //     var r = Math.round(Math.random() * 255),
+    //         g = Math.round(Math.random() * 255),
+    //         b = Math.round(Math.random() * 255);
+    //     var box = document.getElementById('box' + (i + 1));
+    //     box.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+    // }
+
+    // 通过class或者标签名tag来获取元素（得到的时元素集合）
+    // var divs = document.getElementsByClassName('box');
+    // 依次访问数组中元素的行为称为数组遍历
+    var divs = document.getElementsByTagName('div');
+    console.log(divs);
+    for(i=0;i<divs.length;i++){
+         var r = Math.round(Math.random() * 255),
+            g = Math.round(Math.random() * 255),
+            b = Math.round(Math.random() * 255);
+        divs[i].style.background = 'rgb('+r+','+g+','+b+')';
+    }
+
+    // .后如果名字追加了（）就是方法，没有（）就是属性。
+    // 获取数组长度：length
+    console.log(divs.length);
+</script>
+
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            background: url(img/bg.jpg);
+            width: 343px;
+            height: 480px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #score {
+            font-size: 0;
+            position: absolute;
+            left: calc(50% - 29px);
+            top: 50px;
+        }
+
+        #flash {
+            position: absolute;
+            left: calc(50% - 118px);
+            top: 150px;
+            animation: tt 1.5s linear infinite alternate;
+        }
+
+        #over {
+            position: absolute;
+            left: calc(50% - 118px);
+            top: 150px;
+            animation: tt 1.5s linear infinite alternate;
+        }
+
+        #nbird {
+            position: absolute;
+            right: 0;
+            top: 30px;
+        }
+
+        @keyframes tt {
+            0% {
+                top: 150px;
+            }
+
+            100% {
+                top: 100px;
+            }
+        }
+
+        #start {
+            position: absolute;
+            left: calc(50% - 42px);
+            top: 300px;
+            cursor: pointer;
+        }
+
+        #glass {
+            width: 200%;
+            font-size: 0;
+            position: absolute;
+            left: 0;
+            bottom: 43px;
+            animation: mm 1.5s linear infinite;
+        }
+
+        @keyframes mm {
+            from {
+                left: 0;
+            }
+
+            to {
+                left: -100%;
+            }
+        }
+
+        #box {
+            width: 100%;
+            height: 380px;
+            text-align: center;
+            background: rgba(0, 0, 0, .5);
+            z-index: 10;
+            position: absolute;
+            margin: 0;
+            padding-top: 100px;
+            /* display: none; */
+        }
+
+        #text,
+        #pass {
+            width: 200px;
+            height: 30px;
+            margin: 30px 0;
+        }
+
+        #pass {
+            margin-top: 0;
+        }
+
+        #login,
+        #logon {
+            width: 50px;
+            height: 30px;
+        }
+
+        #warn {
+            width: 200px;
+            height: 30px;
+            margin-left: 98px;
+            text-align: center;
+        }
+
+        #bird {
+            position: absolute;
+            left: 20px;
+            top: 0;
+        }
+
+        .pipe {
+            width: 62px;
+            height: 423px;
+            position: absolute;
+            right: -62px;
+            top: 0;
+        }
+
+        .pipetop {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 0;
+        }
+
+        .pipedown {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            font-size: 0;
+        }
+
+        .upmod {
+            background: url(img/up_mod.png);
+        }
+
+        .downmod {
+            background: url(img/down_mod.png);
+        }
+
+        .record {
+            position: absolute;
+            left: calc(50% - 135px);
+            top: 230px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="score">
+            <img src="img/0.jpg" alt="" id="ten">
+            <img src="img/0.jpg" alt="" id="one">
+        </div>
+        <div id="flash">
+            <img src="img/head.jpg" alt="">
+            <img src="img/bird0.png" alt="" id="nbird">
+        </div>
+        <img src="img/start.jpg" alt="" id="start">
+        <div id="glass">
+            <img src="img/banner.jpg" alt="">
+            <img src="img/banner.jpg" alt="">
+        </div>
+        <div id="box">
+            账号：
+            <input type="text" id="text">
+            <br>
+            <div id="warn"></div>
+            密码：
+            <input type="password" id="pass">
+            <br>
+            <input type="button" value="登录" id="login">
+            <input type="button" value="注册" id="logon">
+        </div>
+    </div>
+</body>
+<script>
+    // 登录注册相关元素
+    var warn = document.getElementById('warn');//密码安全等级提示;
+    var inps = document.querySelectorAll('input');//账号密码登录注册
+    // 动画消失元素
+    var glass = document.getElementById('glass');//草地
+    var flash = document.getElementById('flash');//开始动画
+    // 开始按钮
+    var start = document.getElementById('start');
+    // 动态元素
+    var ten = document.getElementById('ten');//十位图片
+    var one = document.getElementById('one');//个位图片
+    var wrap = document.getElementById('wrap');//父级盒子
+
+    // 变量
+    var pipetimer;
+    var score = 0;
+    var lock = true;
+
+
+    // 密码检测
+    inps[1].oninput = function () {
+        var str = inps[1].value;
+        test(str);
+    }
+
+    function test(x) {
+        var reg = /^\w{6,16}$/;
+        if (reg.test(x)) {
+            var reg1 = /\d+/;
+            var reg2 = /[a-z]+/;
+            var reg3 = /_+/;
+            if (reg1.test(x) && reg2.test(x) && reg3.test(x)) {
+                warn.innerHTML = '安全等级高';
+                warn.style.color = 'yellowgreen';
+            } else if (reg1.test(x) && reg2.test(x) || reg1.test(x) && reg3.test(x) || reg3.test(x) && reg2.test(x)) {
+                warn.innerHTML = '安全等级中';
+                warn.style.color = 'orange';
+            } else {
+                warn.innerHTML = '安全等级低';
+                warn.style.color = 'red';
+            }
+
+        } else {
+            warn.innerHTML = '密码格式有误';
+        }
+    }
+    // 登陆注册事件
+    // 登录
+    inps[2].onclick = function () {
+        var name = inps[0].value;
+        var word = inps[1].value;
+        var pass = localStorage.getItem(name);
+        if (pass) {
+            if (pass == word) {
+                document.querySelector('#box').remove();
+            } else {
+                alert('密码不正确');
+            }
+        } else {
+            alert('账号不存在');
+        }
+    }
+    // 注册
+    inps[3].onclick = function () {
+        var zname = inps[0].value;
+        var zword = inps[1].value;
+        if (zname == '' || zword == '') {
+            alert('请输入');
+        }
+        if (localStorage.getItem(zname)) {
+            alert('账号已存在');
+        } else {
+            localStorage.setItem(zname, zword);
+            alert('注册成功');
+        }
+    }
+    // 开始按钮事件
+    start.onclick = function () {
+        this.style.display = 'none';
+        flash.style.display = 'none';
+        creatbird();
+        creatpipe();
+    }
+
+
+    // 创建小鸟
+    function creatbird() {
+        var bird = new Image();
+        bird.id = 'bird';
+        bird.getscore = getscore;
+        bird.src = 'img/down_bird0.png';
+        wrap.appendChild(bird);
+        // 小鸟下落
+        bird.speed = 0.5;
+        bird.down = setInterval(function () {
+            var t = bird.offsetTop + bird.speed;
+            var bh = glass.offsetTop - bird.offsetHeight;
+            if (t < 0) {
+                t = 0;
+            }
+            if (t > bh) {
+                close();
+                over();
+                recode();
+                t = bh;
+                clearInterval(bird.down);
+                glass.style.animation = 'none';
+            }
+            // 碰撞检测
+            var pipes = document.querySelectorAll('.pipetop,.pipedown');
+            for (var i = 0; i < pipes.length; i++) {
+                if (crash(bird, pipes[i])) {
+                    close();
+                    over();
+                    recode();
+                    glass.style.animation = 'none';
+                    t = bh;
+                    bird.style.transition = '2s';
+                    bird.speed = 0;
+                }
+            }
+
+            if (bird.speed >= 0) {
+                bird.src = 'img/down_bird0.png';
+            } else {
+                bird.src = 'img/up_bird0.png';
+            }
+            if (bird.speed > 8) {
+                bird.speed = 8;
+            }
+            bird.style.top = t + 'px';
+            bird.speed += 0.5;
+            bird.getscore();
+        }, 20)
+        wrap.onclick = function () {
+            bird.speed = -7;
+        }
+    }
+
+    // 创建管道
+    function creatpipe() {
+        pipetimer = setInterval(function () {
+            // 长管道
+            var pipe = document.createElement('div');
+            pipe.className = 'pipe';
+            pipe.lock = false;
+            wrap.appendChild(pipe);
+            pipe.left = setInterval(function () {
+                var l = pipe.offsetLeft - 5;
+                pipe.style.left = l + 'px';
+                if (l < -70) {
+                    clearInterval(pipe.left);
+                    pipe.remove();
+                }
+            }, 20)
+            // 上半部分
+            var pipetop = document.createElement('div');
+            var imgtop = new Image();
+            var modup = document.createElement('div');
+            modup.className = 'upmod';
+            var h = rn(0, 153);
+            modup.style.height = h + 'px';
+            imgtop.src = 'img/up_pipe.png';
+            pipetop.appendChild(modup);
+            pipetop.appendChild(imgtop);
+            pipetop.className = 'pipetop';
+            pipe.appendChild(pipetop);
+            // 下半部分
+            var pipedown = document.createElement('div');
+            var imgdown = new Image();
+            var moddown = document.createElement('div');
+            moddown.className = 'downmod';
+            moddown.style.height = (430 - 80 - 60 - 60 - 80 - h) + 'px';
+            imgdown.src = 'img/down_pipe.png';
+            pipedown.appendChild(imgdown);
+            pipedown.appendChild(moddown);
+            pipedown.className = 'pipedown';
+            pipe.appendChild(pipedown);
+        }, 1000)
+    }
+
+    function rn(x, y) {
+        return Math.round(Math.random() * (y - x) + x);
+    }
+
+    // 碰撞检测函数
+    function crash(el1, el2) {
+        var t1 = el1.offsetTop,
+            b1 = el1.offsetHeight + t1,
+            l1 = el1.offsetLeft,
+            r1 = el1.offsetWidth + l1;
+        var t2 = el2.offsetTop,
+            b2 = el2.offsetHeight + t2,
+            l2 = el2.parentNode.offsetLeft,
+            r2 = el2.offsetWidth + l2;
+        if (r1 < l2 || l1 > r2 || t1 > b2 || b1 < t2) {
+            return false;
+        }
+        return true;
+    }
+
+    // 关闭定时器
+    function close() {
+        var timer = setInterval(function () { })
+        for (var i = 0; i <= timer; i++) {
+            clearInterval(i);
+        }
+    }
+
+    // 游戏结束
+    function over() {
+        var img = new Image();
+        img.src = 'img/game_over.jpg';
+        img.id = 'over';
+        wrap.appendChild(img);
+    }
+
+    // 小鸟扇翅膀
+    wing();
+    var nbird = document.getElementById('nbird');
+    function wing() {
+        timer = setInterval(function () {
+            if (nbird.getAttribute('src') == 'img/bird0.png') {
+                nbird.src = 'img/bird1.png'
+            } else {
+                nbird.src = 'img/bird0.png'
+            }
+        }, 250)
+    }
+
+    // 得分函数
+    function getscore() {
+        var left = this.offsetLeft;
+        var pipes = document.querySelectorAll('.pipe');
+        for (var i = 0; i < pipes.length; i++) {
+            var p = pipes[i];
+            var right = p.offsetLeft + p.offsetWidth;
+            if (p.lock) { continue };
+            if (left > right) {
+                score++;
+                change(score);
+                p.lock = true;
+            }
+        }
+    }
+
+    // 切换图片
+    function change(n) {
+        var x = parseInt(n / 10);
+        var y = n % 10;
+        ten.src = 'img/' + x + '.jpg';
+        one.src = 'img/' + y + '.jpg';
+    }
+
+    // 计分板
+    function recode() {
+        var img = new Image();
+        img.src = 'img/message.jpg';
+        img.className = 'record';
+        wrap.appendChild(img);
+    }
+</script>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+        }
+        #wrap{
+            width: 320px;
+            height: 480px;
+            position:relative;
+            background: url(images/game_bg.jpg);
+        }
+        #score {
+            position: absolute;
+            left:56px;
+            top:10px;
+            font-size:20px;
+            color:#fff;
+        }
+        #pro{
+            position:absolute;
+            left:63px;
+            top:66px;
+            height: 16px;
+        }
+        p{
+            width: 100%;
+            height: 100%;
+            position:absolute;
+            background:rgba(0,0,0,.4);
+            text-align:center;
+            line-height:400px;
+            font-size:50px;
+            color:orange;
+            text-shadow:0 2px 1px red;
+            z-index: 10;
+            cursor: pointer;
+        }
+        .wolf{
+            position:absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <span id="score">0</span>
+        <p>开始游戏</p>
+        <img src="images/progress.png" alt="" id="pro">
+    </div>
+</body>
+<script src="tween.js"></script>
+<script>
+    var scoreEl = document.getElementById('score'),
+        p = document.getElementsByTagName('p')[0],
+        gress = document.getElementById('pro'),
+        wrap = document.getElementById('wrap');
+    
+    var positions = [['117px', '96px'], ['161px', '19px'], ['143px', '191px'], ['193px', '102px'], ['222px', '17px'], ['213px', '200px'], ['295px', '30px'], ['276px', '119px'], ['297px', '209px']];
+    var wolfs = [];
+
+    var creatTimer;
+
+    var score = 0;
+
+    p.onclick = function(){
+        this.remove();
+        var t=0,b=180,c=-180,d=3000;
+        var timer = setInterval(function(){
+            t++;
+            gress.style.width = Tween.Linear(t,b,c,d) + 'px';
+            if(t ==d ){
+                clearInterval(timer);
+            }
+        },20)
+        creat();
+    }
+
+    function creat(){
+       creatTimer = setInterval(function(){
+            var wolf = new Image();
+            wolf.className = 'wolf';
+            wolf.type = type();
+            wolf.index = noRepeat();
+            wolf.style.left = positions[wolf.index][1];
+            wolf.style.top = positions[wolf.index][0];
+            wolf.src = 'images/' + wolf.type + '0.png';
+            wrap.appendChild(wolf);
+            var i = 0;
+            wolf.up = setInterval(function () {
+                i++;
+                console.log(i);
+                wolf.src = 'images/' + wolf.type + i + '.png';
+                if (i >= 5) {
+                clearInterval(wolf.up);
+                    wolf.down = setInterval(function () {
+                    i--;
+                        wolf.src = 'images/' + wolf.type + i + '.png';
+                        if (i <= 0) {
+                            wolf.remove();
+                            clearInterval(wolf.down);
+                            wolfs.splice(wolfs.indexOf(wolf.index),1);
+                        }
+                    }, 100)
+                }
+            }, 100)
+            wolf.onclick = function(){
+                clearInterval(wolf.up);
+                clearInterval(wolf.down);
+                i=6;
+                wolf.src = 'images/' + wolf.type + i + '.png';
+                wolf.over = setInterval(function(){
+                    i++;
+                    wolf.src = 'images/' + wolf.type + i + '.png';
+                    if(i>=9){
+                        setTimeout(function(){
+                        clearInterval(wolf.over);
+                        wolf.remove();
+                        wolfs.splice(wolfs.indexOf(wolf.index),1);
+                        },50)
+                    }
+                },100)
+                if(wolf.type == 'h'){
+                    score +=10;
+                    scoreEl.innerHTML = score;
+                }else{
+                    score-=10;
+                    score<0?0:score;
+                    scoreEl.innerHTML = score;
+                }
+            }
+        },500)
+        
+    }
+
+    function rn(x,y){
+        return Math.floor(Math.random()*(y-x+1)+x);
+    }
+
+    function type(){
+        if(rn(1,100)  > 20){
+            return 'h';
+        }else{
+            return 'x';
+        }
+    }
+
+    function noRepeat(){
+        var n = rn(0,8);
+        if(wolfs.indexOf(n) != -1){
+            return noRepeat();
+        }else{
+            wolfs.push(n);
+            return n;
+        }
+    }
+</script>
+</html>

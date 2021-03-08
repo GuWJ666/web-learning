@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+   <div id="box" style="width:200px;height: 200px;background: aqua;"></div>
+</body>
+<script>
+    // 获取元素
+    var box = document.getElementById('box');
+    box.onclick = function(){
+        var x = box.style.width,
+            y = box.style.height;
+        // if(x == '200px'){
+        //     box.style.width = '400px',
+        //     box.style.height = '400px';
+        // }else if(x == '400px'){
+        //     box.style.width = '100px',
+        //     box.style.height = '100px';
+        // }else{
+        //     box.style.width = '400px',
+        //     box.style.height = '400px';
+        // }
+        x == '200px'?(box.style.width = '400px'&& (box.style.height = '400px')):(box.style.width = '100px'&&(box.style.height = '100px'))
+    }
+</script>
+
+</html>

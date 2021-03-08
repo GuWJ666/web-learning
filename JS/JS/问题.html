@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		pre{
+			font-size: 30px;
+		}
+	</style>
+</head>
+<body>
+<h1 id="p"></h1>
+<pre>
+HTML+CSS部分：
+	1.如何理解标签语义化？
+	2.HTML5新增标签及使用？
+	3.如何创建锚点？
+	4.标签分类，以及各自特点？
+	5.三种定位的使用？
+	6.display和visibility属性的作用与区别？
+	7.简述盒模型？怪异盒模型？
+	8.如何设置一个div水平居中？如何设置一个浮动元素水平居中？
+	9.简述精灵图（雪碧图、css sprites）？
+	10.过渡与动画的使用和区别？
+	11.说说浮动？
+	12.兼容css3新属性各个浏览器前缀？
+	13.margin和padding的使用？
+	14.媒体查询？移动端viewport？
+
+JS部分：
+	15.为所有字符串添加一个去处首尾空格的方法？
+	16.JS中的数据类型
+	17.JS中的作用域？
+	18.简述JS中声明函数的几种方式？
+	19.排序算法（冒泡、选择、插入）？
+	20.闭包？
+	21.简述JS中创建对象的几种方式？
+	22.this关键字？
+	23.原型、原型链？
+	24.简述JS中的继承？
+	25.简述DOM操作中获取元素的方法？（直接获取以及DOM遍历）
+	26.为一个div元素绑定一个点击事件的方法？（行间、0级、2级）
+	27.浏览器嗅探？
+	28.什么是事件冒泡？什么是事件捕获？
+	29.如何阻止事件冒泡、默认事件？
+	30.页面跳转的方式有哪些？
+	31.cookie、本地存储、会话存储的区别？
+	32.JQ中的ready方法和window对象的load方法有何区别？
+	33.简述你对ajax的理解？原生ajax的流程
+	34.数组和字符串操作方法？（10起步）
+	35.同步和异步？
+	36.跨域？
+	37.如何实现拖拽元素移动？
+	38.如何实现活动倒计时倒？
+	39.说出至少10个数学方法并说明参数和用法？
+	40.post和get请求的区别？如何选择？
+	41.移动端事件？
+	42.mouseover和mouseenter的区别？
+	43.变量提升？
+	44.常做的代码及页面优化？
+	45.列举一些常做的兼容处理？
+	46.上传文件到服务器？
+</pre>
+</body>
+<script>
+	randomArr(10);
+	function randomArr(num){
+		var arr=[];
+		while(arr.length<num){
+			var n=randomNum(1,46);
+			if(arr.indexOf(n)<0){
+				arr.push(n);
+			}
+		}
+		p.innerHTML = JSON.stringify(arr);
+	}
+	function randomNum(min,max){
+		return Math.round(Math.random()*(max-min)+min);
+	}
+</script>
+</html>

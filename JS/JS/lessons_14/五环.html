@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="500" height="500"></canvas>
+</body>
+<script>
+    var cv = document.getElementById('cv');
+    var pen = cv.getContext('2d');
+    // 蓝环
+    pen.beginPath();
+    pen.arc(150, 150, 50, 0, Math.PI * 2);
+    pen.strokeStyle = 'blue';
+    pen.lineWidth = 5;
+    pen.stroke();
+    
+
+    // 黑环
+    pen.beginPath();
+    pen.arc(260, 150, 50, 0, Math.PI * 2);
+    pen.strokeStyle = 'black';
+    pen.lineWidth = 5;
+    pen.stroke();
+
+    // 红环
+    pen.beginPath();
+    pen.arc(370, 150, 50, 0, Math.PI * 2);
+    pen.strokeStyle = 'red';
+    pen.lineWidth = 5;
+    pen.stroke();
+
+    // 黄环
+    pen.beginPath();
+    pen.arc(210, 200, 50, 0, Math.PI * 2);
+    pen.strokeStyle = 'yellow';
+    pen.lineWidth = 5;
+    pen.stroke();
+
+    // 绿环
+    pen.beginPath();
+    pen.arc(320, 200, 50, 0, Math.PI * 2);
+    pen.strokeStyle = 'green';
+    pen.lineWidth = 5;
+    pen.stroke();
+
+    // 缺口
+    // 蓝
+    var deg = Math.PI/180;
+    pen.beginPath();
+    pen.arc(150,150,50,-2*deg,5*deg);
+    pen.strokeStyle = 'blue';
+    pen.lineWidth = 5;
+    pen.stroke();
+    // 黑
+    pen.beginPath();
+    pen.arc(260,150,50,85*deg,100*deg);
+    pen.strokeStyle = 'black';
+    pen.lineWidth = 5;
+    pen.stroke();
+    pen.beginPath();
+    pen.arc(260,150,50,-2*deg,10*deg);
+    pen.strokeStyle = 'black';
+    pen.lineWidth = 5;
+    pen.stroke();
+    // 黄
+    pen.beginPath();
+    pen.arc(210,200,50,265*deg,280*deg);
+    pen.strokeStyle = 'yellow';
+    pen.lineWidth = 5;
+    pen.stroke();
+    
+    // 红
+    pen.beginPath();
+    pen.arc(370,150,50,85*deg,100*deg);
+    pen.strokeStyle = 'red';
+    pen.lineWidth = 5;
+    pen.stroke();
+
+    // pen.font = "48px serif";
+    // pen.fillText("Hello world", 10, 50);
+    //空心文本
+    pen.font = "30px 微软雅黑";
+    pen.strokeStyle = 'lightgreen'; //设置笔触的颜色
+    pen.strokeText("welcome come to Beijing", 80, 360);
+</script>
+
+</html>

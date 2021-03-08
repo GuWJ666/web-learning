@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    function ajax(type = 'get', url, data = '') {
+        return new Promise((rev, rej) => {
+            let xhr = new XMLHttpRequest();
+            // get请求
+            if (type == 'get') {
+                if (data) {
+                    if (typeof data == 'string') {
+                        url += `?${data}`;
+                    } else {
+                        data = Object.entries(data);
+                        for (let x in data) {
+                            data[x] = `${data[x][0]}=${data[x][1]}`;
+                        }
+                        url += `?${data.join('&')}`;
+                    }
+                }
+                xhr.open('get', url, true);
+                xhr.send();
+            }
+            // post请求
+            if (type == 'post') {
+                xhr.open('post', url, true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                if (data) {
+                    if (typeof data == 'string') {
+                        xhr.send(data);
+                    } else {
+                        data = Object.entries(data);
+                        for (let x in data) {
+                            data[x] = `${data[x][0]}=${data[x][1]}`;
+                        }
+                        let str = `${data.join('&')}`;
+                        xhr.send(str);
+                    }
+                }
+            }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        rev(xhr.responseText);
+                    } else {
+                        rej(xhr.status);
+                    }
+                }
+            }
+        })
+    }
+    function ajax(type='get',url,data){
+        return new Promise((rev,rej)=>{
+            let xhr = new XML
+        })
+    }
+</script>
+
+</html>

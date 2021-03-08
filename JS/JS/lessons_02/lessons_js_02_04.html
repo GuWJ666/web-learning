@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="text">
+    <input type="button" id="btn" value="按我"
+</body>
+<script>
+    // 三目运算符（三元运算符），本质上就是对if。。。else。。语句的改写形式
+    /*
+        语法：
+        表达式1？表达式2：表达式3；
+
+        当表达式为true，执行表达式2，否则执行表达式3
+    */
+    var text = document.getElementById('text'),
+        btn = document.getElementById('btn');
+    btn.onclick = function(){
+        a = text.value;
+        // a % 2 == 0? alert('偶数'):alert('奇数');
+        a != 0 ?(a % 2 == 0? alert('偶数'):alert('奇数')):alert('非奇非偶函数');
+    }
+</script>
+</html>

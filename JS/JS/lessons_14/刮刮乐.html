@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            position:relative;
+        }
+        #cv {
+            box-shadow: 5px 5px 10px #000;
+            position: absolute;
+            z-index:20;
+        }
+        .prize{
+            position: absolute;
+            left:205px;
+            top:330px   ;
+            font-size:30px;
+            color:gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="500" height="600"></canvas>
+    <div class="prize">一等奖</div>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+        // cf.fillStyle = '#fff';
+        // cf.fillRect(50, 240, 400, 200);
+        // cf.font = '30px 楷体';
+        // cf.fillStyle = 'gray';
+        // cf.fillText('一等奖', 205, 360);
+    var img = new Image();
+    img.src = 'img/彩票.jpg';
+    img.onload = function () {
+        cf.drawImage(img, 0, 0);
+        // cf.fillStyle = '#eee';
+        // cf.fillRect(50, 240, 400, 200);
+        cv.onmousedown = function (e) {
+            var e = e || window.event;
+            var x = e.clientX - this.offsetLeft;
+            var y = e.clientY - this.offsetTop;
+            if (x >= 50 && x <= 450 && y >= 240 && y <= 440) {
+                cv.onmousemove = function (e) {
+                    var e = e || window.event;
+                    var mx = e.clientX - this.offsetLeft;
+                    var my = e.clientY - this.offsetTop;
+                    if (mx < 40 || mx > 440 || my < 230 || my > 430) {
+                        return;
+                    }
+                    // cf.arc(mx,my,10,0,Math.PI*2);
+                    // cf.fillStyle = '#fff';
+                    // cf.fill();
+
+                    var imgData = cf.getImageData(mx, my, 30, 30);
+                    // console.log(imgData);
+                    var data = imgData.data;
+                    for (var i = 0; i < data.length; i += 3) {
+                        data[i] = 0;
+                        data[i + 1] = 0;
+                        data[i + 2] = 0;
+                        data[i + 3] = 0;
+                    }
+                    cf.putImageData(imgData, mx, my);
+                    // cf.font = '40px 楷体';
+                    // cf.fillStyle = 'gray';
+                    // cf.fillText('一等奖', 180, 350);
+                }
+            }
+        }
+    }
+
+
+    
+    cv.onmouseout = function () {
+        cv.onmousemove = null;
+    }
+</script>
+
+</html>

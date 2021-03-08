@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="list">
+        <li>1</li>
+    </ul>
+</body>
+<script>
+    var list = document.getElementById('list');
+    list.onclick = function(){
+        list.innerHTML += list.innerHTML;//'<li>1</li>'
+    }
+    // var b = document.getElementById('box');
+    //innerHTML和innerText属性用于获取或设置元素的内容
+    // document.body获取body元素
+    // console.log(document.body.innerText);
+    // console.log(document.body.innerHTML);
+    // 获取内容时候的区别
+    // innerText只能获取文本内容，而innerHTML除了文本内容还可以获取子元素及其内容
+    // 设置内容时的区别
+    // innerText只能设置为普通字符串，而innerHTML可以设置标签字符串（将标签字符串解析为标签处理）
+    // document.body.innerText = '<h1>innerText</h1>';
+    // document.body.innerHTML = '<h1>innerHTML</h1>';
+
+    //题目：一共有1000个，第一天吃一个，第二天吃两个。。。问一共吃多少天?
+    // var day = 0;//用来记录已经吃了多少天
+    // var sum = 0;//用来记录已经吃了多少个
+    // for( var i=1;sum<=1000;i++){
+    //     day++;//天数+1
+    //     sum += i;
+    //     // if(sum>1000){
+    //     //     break;
+    //     // }
+
+    // }console.log(sum,day-1);
+    // for(i=1;true;i++){
+    //     if(sum>1000){//此时还未吃瓜
+    //         break;//遇到break立即结束循环，break后的循环体代码也不会执行；遇到continue语句立即结束而不能此循环的执行，继续执行下次循环
+    //     }
+    //     sum += i;
+    //     day++; console.log(sum,day);
+    // }
+
+    // 循环嵌套
+    // for (var j = 1; j < 10; j++) {
+    //     for (var i = 1; i <= j; i++) {
+
+    //         document.write(i + '*'+j+'='+i*j+' ');
+    //     }
+    //     document.write('<br>');
+    // }
+
+</script>
+
+</html>

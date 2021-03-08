@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!-- 假设div初始大小 -->
+    <div id="box" style="width: 100px;height: 100px;background-color:aqua;"></div>
+    <script>
+        // 获取元素
+        var box = document.getElementById('box');
+        // 绑定事件
+        // box.onclick = function(){
+        //     var a = box.style.width,
+        //         b = box.style.height;
+        //     if(a == '100px' || a == '50px'){
+        //         box.style.width = '200px',
+        //         box.style.height = '200px';
+        //     }else{
+        //         box.style.width = '50px',
+        //         box.style.height = '50px';
+        //     }
+        // } 
+        box.onclick = function () {
+            var a = box.style.width;
+            switch (true) {
+                case a == '100px': box.style.width = '200px', box.style.height = '200px';
+                break;
+                case a == '200px':box.style.width = '50px',box.style.height = '50px';
+                break;
+                case a == '50px':box.style.width = '200px',box.style.height = '200px';
+                break;
+            }
+        }
+
+    </script>
+</body>
+
+</html>

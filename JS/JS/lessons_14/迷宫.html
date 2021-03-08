@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+
+    //迷宫
+    function Maze(x, y, w, h, c, s) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.c = c;
+        this.s = s;
+        this.l = false;
+        this.r = false;
+        this.u = false;
+        this.d = false;
+    }
+    Maze.prototype.build = function (style) {
+        cf.beginPath();
+        this.move();
+        cf.rect(this.x, this.y, this.w, this.h)
+        if (style == 'fill') {
+            cf.fillStyle = this.c;
+        } else {
+            cf.strokeStyle = this.c;
+        }
+        cf[style]();
+    }
+    Maze.prototype.move = function () {
+        this.x <= 0 ? this.x = 0 : this.x;
+        this.y <= 0 ? this.y = 0 : this.y;
+        this.x >= cv.width - this.w ? this.x = cv.width - this.w : this.x;
+        this.y >= cv.height - this.h ? this.y = cv.height - this.h : this.y;
+        if (this.l) { this.x -= this.s }
+        if (this.r) { this.x += this.s }
+        if (this.u) { this.y -= this.s }
+        if (this.d) { this.y += this.s }
+    }
+    var box1 = new Maze(100, 100, 100, 100, 'red');
+    var box2 = new Maze(300, 0, 100, 100, 'blue');
+    var box3 = new Maze(100, 300, 100, 100, 'yellow');
+    var box4 = new Maze(300, 400, 100, 100, 'green');
+    var box5 = new Maze(300, 200, 100, 100, 'orange');
+    var box6 = new Maze(500, 100, 100, 100, 'pink');
+    var box7 = new Maze(500, 300, 100, 100, 'purple');
+    var arr = [];
+    arr.push(box1, box2, box3, box4, box5, box6, box7);
+    box1.build('fill');
+    box2.build('fill');
+    box3.build('fill');
+    box4.build('fill');
+    box5.build('fill');
+    box6.build('fill');
+    box7.build('fill');
+
+    var i = 10;
+    var box8;
+    var timer = setInterval(function () {
+        i+=2;
+        cv.width = cv.width;
+        box1.build('fill');
+        box2.build('fill');
+        box3.build('fill');
+        box4.build('fill');
+        box5.build('fill');
+        box6.build('fill');
+        box7.build('fill');
+        box8 = new Maze(i, 10, 40, 40, 'black', 3);
+        if (i == cv.width || i + 40 >= box2.x) {
+            box8.c = 'red';
+            clearInterval(timer);
+        }
+        box8.build('fill');
+    }, 20)
+
+    // var time = setInterval(function () {
+    //     cv.width = cv.width;
+    //     box1.build('fill');
+    //     box2.build('fill');
+    //     box3.build('fill');
+    //     box4.build('fill');
+    //     box5.build('fill');
+    //     box6.build('fill');
+    //     box7.build('fill');
+    //     box8.build('fill');
+    // },20)
+
+    var lock = false;
+    document.onkeydown = function (e) {
+        var e = e || window.event;
+        switch (e.keyCode) {
+            case 37:
+                box8.l = true;
+                clearInterval(timer);
+                break;
+            case 38:
+                box8.u = true;
+                clearInterval(timer);
+                break;
+            case 39:
+                box8.r = true;
+                clearInterval(timer);
+                break;
+            case 40:
+                box8.d = true;
+                clearInterval(timer);
+                break;
+        }
+        if (lock) {
+            return;
+        }
+        lock = true;
+        var time = setInterval(function () {
+            cv.width = cv.width;
+            box1.build('fill');
+            box2.build('fill');
+            box3.build('fill');
+            box4.build('fill');
+            box5.build('fill');
+            box6.build('fill');
+            box7.build('fill');
+            if (box8.x <= 0 || box8.x >= cv.width - box8.width || box8.y <= 0 || box8.y >= cv.height - box8.h) {
+                clearInterval(time);
+            }
+            for (var i = 0; i < arr.length; i++) {
+                if (crash(box8, arr[i])) {
+                    clearInterval(time);
+                    box8.c = 'red';
+                    break;
+                }
+            }
+            if (i == arr.length) {
+                box8.c = 'black';
+            }
+            box8.build('fill');
+        }, 20)
+    }
+    document.onkeyup = function (e) {
+        var e = e || window.event;
+        switch (e.keyCode) {
+            case 37:
+                box8.l = false;
+                break;
+            case 38:
+                box8.u = false;
+                break;
+            case 39:
+                box8.r = false;
+                break;
+            case 40:
+                box8.d = false;
+                break;
+        }
+    }
+
+    function crash(el1, el2) {
+        var l1 = el1.x,
+            r1 = el1.x + el1.w,
+            t1 = el1.y,
+            b1 = el1.y + el1.h;
+
+        var l2 = el2.x,
+            r2 = el2.x + el2.w,
+            t2 = el2.y,
+            b2 = el2.y + el2.h;
+
+        if (l1 <= r2 && r1 >= l2 && b1 >= t2 && t1 <= b2) {
+            return true;
+        }
+        return false;
+    }
+</script>
+
+</html>

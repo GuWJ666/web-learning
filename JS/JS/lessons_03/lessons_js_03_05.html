@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>循环嵌套</title>
+    <style>
+        /* body {
+            font-size: 0;
+            text-align: center;
+        } */
+
+        div {
+            width: 50px;
+            height: 50px;
+            /* background: red; */
+            display: inline-block;
+            margin: 3px;
+        }
+        .red{
+            background: red;
+        }
+        .white{
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="box"></div> -->
+</body>
+<script>
+    // 循环嵌套
+    /*
+      1
+      1 2
+      1 2 3
+      1 2 3 4 
+      1 2 3 4 5
+    */
+    // for (var j =1;j<6;j++) {
+    //     for (var i = 1; i <= j; i++) {
+    //         document.write(i + '');
+    //     }
+    //     document.write('<br>');
+    // }
+    // 循环嵌套执行过程：外层循环执行一次，内层循环执行最大次数（执行到不符合条件跳出内层循环），然后外层循环继续执行。
+    // 外层循环用来控制行，内层循环用来控制列。
+
+    // // 打印99乘法表
+    // for (var j = 1; j < 10; j++) {
+    //     for (var i = 1; i <= j; i++) {
+    //         var c = i * j;
+    //         document.write(i + '*' + j + '=' + c + ' ');
+    //     }
+    //     document.write('<br>');
+    // }
+    // for (var j = 1; j <= 7; j++) {
+    //     for (var i = 1; i <= j; i++) {
+    //         document.write('<div></div>');
+    //     } 
+    //     document.write('<br>');
+    // }
+    // for(var i=0;i<7;i++){
+    //        for(var a =1;a<=i*2+1;a++){
+    //         document.write('<div></div>');
+    //        } document.write('<br>');
+    //    }
+    // for(var m=5;m>=0;m--){
+    //     for(var n=1;n<=m*2+1;n++){
+    //         document.write('<div></div>');
+    //     }document.write('<br>');
+    // }  
+
+    // 菱形
+    for(j=1;j<14;j+=2){
+        for(i=1;i<=j;i++){
+            document.write('<div></div>');
+        }
+        document.write('<br>');
+    }
+    for(j=1;j<=11;j+=2){
+        for(i=11;i>=j;i--){
+            document.write('<div></div>');
+        }
+        document.write('<br>');
+    }
+
+    // yangge
+    for(i=1;i<8;i++){
+        for(var j=1;j<=2*i-1;j++){
+            document.write('<div></div>');
+        }
+        document.write('<br>');
+    }
+    for(i=1;i<7;i++){
+        for(var j=1;j<=13-2*i;j++){
+            document.write('<div></div>');
+        }
+        document.write('<br>');
+    }
+
+    // for(var i=1;i<8;i++){
+        
+    //     if(j<=i+6-(2*i-1)){
+    //         document.write('<div class="white"></div>');
+    //     }else{
+    //         document.write('<div class="red"></div>');
+    //     }
+    //     document.write('<br>');
+    // }
+    // for(var j=1;)
+
+
+    for(var i=1;i<14;i++){//行
+        for(var j=1;true;j++){
+            
+            if(j>2*i-1 || j>27-2*i){
+                break;
+            }else{
+                document.write('<div class="red"></div>');
+            }
+        }
+        document.write('<br>');
+    }
+</script>
+
+</html>

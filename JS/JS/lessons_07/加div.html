@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,html{
+            font-size: 0;
+            height: 100%;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            display:inline-block;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+<script>
+    var body = document.getElementsByTagName('body')[0];
+    body.onclick = function(){
+        var div = document.createElement('div');
+        var r = Math.round(Math.random()*255),
+            g = Math.round(Math.random()*255),
+            b = Math.round(Math.random()*255);
+        document.body.appendChild(div);
+        div.className = 'box';
+        div.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+    }
+</script>
+</html>

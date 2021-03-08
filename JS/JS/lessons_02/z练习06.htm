@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="a">
+    <select name="" id="type">
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option>
+    </select>
+    <input type="text" id="b">
+    <input type="button" id="btn" value="计算">
+</body>
+<script>
+    // 不允许出现字符串拼接的结果，不允许出现NaN，弹窗显示计算结果
+    // 获取元素
+    var a = document.getElementById('a'),
+        type = document.getElementById('type'),
+        b = document.getElementById('b'),
+        btn = document.getElementById('btn');
+    btn.onclick = function () {
+        var x = a.value * 1,
+            y = b.value * 1,
+            z = type.value,
+            c;
+        if (z == '+') {
+            c = x + y;
+            alert(c);
+        } else if (z == '-') {
+            c = x - y;
+            alert(c);
+        } else if (z == '*') {
+            c = x * y;
+            alert(c);
+        } else if (z == '/') {
+            if (y == 0) {
+                alert('嘛呢？');
+            } else {
+                c = x / y;
+                alert(c);
+            }
+        }
+        // switch(z){
+        //     case '+':
+        //         alert(x+y);
+        //         break;
+        //     case '-':
+        //         alert(x-y);
+        //         break;
+        //     case '*':
+        //         alert(x * y);
+        //         break;
+        //     case '/':
+        //         if(y == 0){
+        //             alert('哈哈哈');
+        //         }else{
+        //             alert(x / y);
+        //         }
+        // }
+    }
+</script>
+
+</html>

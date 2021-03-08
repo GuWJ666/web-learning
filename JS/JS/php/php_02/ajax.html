@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>登录状态：未登录</h1>
+    <input type="text">
+    <input type="password">
+    <input type="button" value="提交">
+</body>
+<script>
+    var inp = document.querySelectorAll('input');
+    inp[2].onclick = function(){
+        var uname = inp[0].value,
+            pword = inp[1].value;
+        // 发送请求到服务器
+        // ajax:不是一门新的编程语言，只是一种前后台交换数据的技术，ajax也被称为前后台交换数据的艺术
+        // ajax的特点：异步请求,局部更新,
+        // ajax的核心：XMLHttpRequest对象
+        // ajax的使用流程：
+
+        // 1.创建请求对象XMLHttpRequest,存在兼容问题，IE5/6不支持，在IE5/6上需要使用ActiveXObject对象
+        var xhr;
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest();
+        }else{
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        // 2.准备请求
+        // open()方法：存在三个参数
+        // 参数一：string，表示请求类型GET/POST；
+        // 参数二：string，表示请求的url地址；
+        // 参数三：bool，表示是否发送异步请求
+
+        // ajax使用get请求提交数据，需要将数据拼接在url后面
+        // var url = 'http://localhost/php/php_02/ajax.php?uname='+uname+'&pword='+pword;
+        // xhr.open('get',url,true);
+        // 3.发送请求：
+        // xhr.send();
+
+        // ajax使用post请求提交数据，需要先建立请求头，将提交的数据放在send（）方法中发送；
+        xhr.open('post','http://localhost/php/php_02/ajax.php',true);
+        // 建立请求头
+        // Content-type用来设置发送数据的类型
+        // application/x-www-form-urlencoded：表示发送的是表单数据（'key=value&key=value）
+        xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        // 发送请求
+        var data  = 'uname='+uname+'&pword='+pword;
+        xhr.send(data);
+        // 4.请求监听：
+        xhr.onreadystatechange = function(){
+            // 一共要监听两个状态
+            // readyState:请求状态
+            // 一共有0-4五个阶段
+            // 0：表示请求对象已经创建，但是尚未准备请求
+            // 1：表示请求已经准备，但是尚未发送请求
+            // 2：表示请求已经发送，但是服务器尚未接受请求
+            // 3：表示服务器已经接受请求，但是尚未处理
+            // 4：服务器已经处理请求
+
+            // status:服务器返回状态
+            // 200：表示请求处理成功，并且返回数据
+            // 404：表示请求的页面不存在
+            // 500：表示服务器的未知错误
+            if(xhr.readyState == 4 && xhr.status == 200){
+                // 请求成功并且可以接受服务器返回的数据
+                // 服务器返回的数据存放在responseText
+                console.log(xhr.responseText);
+                if(xhr.responseText === '登录成功'){
+                    document.querySelector('h1').innerHTML = '登录状态：已登陆';
+                }
+                // console.log(xhr.responseText)
+            }
+        }
+    }
+</script>
+</html>

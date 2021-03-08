@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #cv {
+            box-shadow: 5px 5px 10px black;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.getElementById('cv');
+    var cf = cv.getContext('2d');
+    cf.beginPath();
+    // cf.fillRect(350, 200, 100, 100);
+    // var x = 0, y = 0;
+    // cv.onmousedown = function (e) {
+    //     console.log(e.pageX, e.pageY)
+    //     var e = e || window.event;
+    //     var n = e.clientX - this.offsetLeft - x;
+    //     var m = e.clientY - this.offsetTop - y;
+    //     if (n >= 350 && n <= 450 && m >= 200 && m <= 300) {
+    //         cv.onmousemove = function (e) {
+    //             cv.width = cv.width;
+    //             x = e.clientX - n - this.offsetLeft;
+    //             y = e.clientY - m - this.offsetTop;
+    //             cf.beginPath();
+    //             x <= -350 ? x = -350 : x;
+    //             x >= 350 ? x = 350 : x;
+    //             y <= -200 ? y = -200 : y;
+    //             y >= 200 ? y = 200 : y;
+    //             cf.fillRect(x + 350, y + 200, 100, 100);
+    //         }
+    //     }
+    // }
+    // cv.onmouseup = function () {
+    //     this.onmousemove = null;
+    // }
+    // cv.onmouseout = function () {
+    //     this.onmousemove = null;
+    // }
+
+    function Rect(x, y, w, h, c) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.c = c;
+    }
+
+    Rect.prototype.draw = function (style) {
+        cf.beginPath();
+        cf.rect(this.x, this.y, this.w, this.h, this.c)
+        if (style == 'fill') {
+            cf.fillStyle = this.c;
+        } else {
+            cf.strokeStyle = this.c;
+        }
+        cf[style]();
+    }
+
+    var rect = new Rect(200, 50, 100, 100, 'blue');
+    rect.draw('fill');
+
+    cv.onmousedown = function (e) {
+        var e = e || window.event;
+        // 获取鼠标相对与canvas的坐标
+        var dx = e.clientX - this.offsetLeft;
+        var dy = e.clientY - this.offsetTop;
+        if (dx >= rect.x && dx <= rect.x + rect.w && dy >= rect.y && dy <= rect.y + rect.h) {
+        console.log(dx,dy)
+            dx -= rect.x;
+            // 获取鼠标相对于rect的坐标
+            dy -= rect.y;
+            cv.onmousemove = function (e) {
+                var e = e || window.event;
+                var x = e.clientX - dx - this.offsetLeft;
+                var y = e.clientY - dy - this.offsetTop;
+                x <= 0 ? x = 0 : x;
+                y <= 0 ? y = 0 : y;
+                x >= cv.width - rect.w ? x = cv.width - rect.w : x;
+                y >= cv.height - rect.h ? y = cv.height - rect.h : y;
+                rect.x = x;
+                rect.y = y;
+                cv.width = cv.width;
+                rect.draw('fill')
+            }
+            cv.onmouseup = function () {
+                cv.onmousemove = null;
+            }
+        }
+    }
+</script>
+
+</html>

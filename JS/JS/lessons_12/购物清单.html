@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            border: 1px solid gray;
+            background: gray;
+            width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        img {
+            margin-top: 20px;
+        }
+
+        h3 {
+            color: #fff;
+        }
+
+        .show {
+            text-align: left;
+            text-indent: 2em;
+        }
+
+        .show>div {
+            height: 50px;
+            line-height: 50px;
+            background: crimson;
+            margin-bottom: 1px;
+            color: #fff;
+            display: none;
+            position: relative;
+        }
+        
+        .xie {
+            transform: skew(-30deg);
+        }
+        .text{
+            position: absolute;
+        }
+        .show>.apple {
+            background: coral;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <img src="img/2xkinglogo.png" alt="">
+        <h3>购买清单</h3>
+        <div class="show">
+            <div>
+                <div class="text xie">蔬菜</div>
+            </div>
+            <div>
+                <div class="text">松子</div>
+            </div>
+            <div>
+                <div class="text">蜂蜜</div>
+            </div>
+            <div class="apple">
+                <div class="text">苹果醋</div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script src="jq.js/jquery.easing.1.3.js"></script>
+<script>
+    $(function () {
+        // // $('.wrap').click(function(){
+        //     $('.show>div').eq(0).delay(0).fadeIn(1000);
+        //     $('.show>div').eq(1).delay(1000).fadeIn(1000);
+        //     $('.show>div').eq(2).delay(2000).fadeIn(1000);
+        //     $('.show>div').eq(3).delay(3000).fadeIn(1000);
+        //     $('.show>div').eq(4).delay(4000).fadeIn(1000);
+        // // })
+        // $('.show>div').on('click',function(){
+        //     $(this).fadeOut(1000);
+        // })
+        $('.show>div').each(function (x, y) {
+            $('.show>div').eq(x).delay(x * 1000).fadeIn(1000);
+            y.onclick = function () {
+                $(this).fadeOut(1000);
+                $(this).children().animate({
+                    left:'40px'
+                },500)
+            }
+        })
+    })
+</script>
+
+</html>

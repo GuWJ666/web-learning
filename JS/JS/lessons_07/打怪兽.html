@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 800px;
+            height: 500px;
+            line-height: 500px;
+            border: 3px solid #ccc;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        #box {
+            width: 20px;
+            height: 150px;
+            background: rosybrown;
+            /* float:right; */
+            position: absolute;
+            top: 175px;
+            left: 700px;
+        }
+
+        #blood {
+            width: 10px;
+            height: 150px;
+            position: absolute;
+            left: 750px;
+            top: 175px;
+            border: 1px solid #ccc;
+        }
+
+        .cell {
+            background: red;
+            width: 10px;
+            height: 15px;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 225px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="blood">
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+        </div>
+        <div id="box"></div>
+    </div>
+</body>
+<script>
+    var wrap = document.querySelector('#wrap');//父级盒子，用来添加标签
+    var box = document.querySelector('#box');//碰撞界限，用来获取偏移量
+    var blood = document.querySelector('#blood');//血条盒子，用来删除其中的div
+    var cell = document.getElementsByClassName('cell');
+    var n = 0;
+    var lock = true;
+    //用来移动小球的变量
+    wrap.onclick = function () {
+        var ball = document.createElement('div');
+        ball.className = 'ball';
+        ball.style.backgroundColor = 'rgb(' + cf() + ',' + cf() + ',' + cf() + ')';
+        wrap.appendChild(ball);
+        var m = 0;
+        var w = box.offsetLeft - ball.offsetWidth;
+        var d = wrap.clientWidth - ball.offsetWidth;console.log(d);
+        var timer = setInterval(function () {
+            m += 4;
+            if(lock){
+                if (m >= w) {
+                ball.remove();
+                clearInterval(timer);
+                cell[n].style.opacity = 0;
+                n++;
+            }
+            }
+            if (n >= 9) {
+                blood.remove();
+                box.remove();
+                w = wrap.clientWidth;
+                lock = false;
+                if(m >= d){
+                    m = d;
+                    console.log(d);
+                    ball.remove();
+                }
+            } 
+            ball.style.left = m + 'px';
+        }, 20)
+    }
+
+    function cf() {
+        return Math.floor(Math.random() * 256);
+    }
+</script>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <input type="button" value="按我">
+    <h1 id="h1"></h1>
+</body>
+<script>
+    var people = ['张凯兵', '张辉', '顾文江', '候博洋', '候玉忠', '李泽坤', '马茜', '王娇', '黄玉芮', '段园园',
+        '马锐', '李莹', '李涛', '吴红霞', '王莎莎', '周叶凡', '赵康', '周登华', '李杰', '余学武', '赵璘', '李骞',
+        '杜洁', '马鹏飞', '李锦涛', '汉宁辉'];
+    var groups = [];//创建一个空数组，用来装分组
+    var d = [];
+    var nums = Math.ceil(people.length / 4);//能分的组数向上取整
+    for (a = 0; a < nums; a++) {//一组4个，总共能分的组数以及循环数
+        var group = []; // 创建一个空数组，用来装组员
+        for (i = 0; i < 4; i++) {//最多有四个组员
+            var person = people[Math.floor(Math.random() *people.length)];//随机生成people的下标，people[x]将其赋值给person（单个组员）。
+            group.push(person);//将单个组员装到空数组中。
+            people.splice(people.indexOf(person), 1);//将装入的组员从大数组中删除
+            if (people.length == 0) {//防止条件越界输出undefined
+                break;
+            }
+        }
+        var b = group[Math.round(Math.random()*(group.length-1))];
+        groups.push(group);//将所有组放到大组中
+        d.push(b);
+    }
+    console.log(groups,d);
+    var inps = document.getElementsByTagName('input');//获取input元素组
+    var h1 = document.getElementById('h1');
+    inps[1].onclick = function () {//数组inps中下标为1的元素的点击事件
+        var b = inps[0].value;//获取inps数组中下标为0的元素的value值
+        for (a = 0; a < groups.length; a++) {//将一个组从大组中取出来
+             var e=d[a];
+             for (c = 0; c < groups[a].length; c++) {
+                if (groups[a].indexOf(b) != -1) {//如果b在小组中
+                     h1.innerHTML = '组员：'+ groups[a] +'<br>'+'组长：'+e ;//输出这一组
+                }
+            }
+        }
+    }
+</script>
+
+</html>

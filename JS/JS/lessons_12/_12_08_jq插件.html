@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script src="jq.js/jquery.timer.1.2.js"></script>
+<script src="jq.js/jquery.color-2.1.2.js"></script>
+<script src="jq.js/jquery.easing.1.3.js"></script>
+<script>
+    // jq插件的使用，jq的插件是基于jq开发的，也就是说，插件的导入必须要放在jquery.js之后，否则会报错
+    // jq主文件对于动画的支持并不完善，不支持颜色改变的动画，缓动效果也有限制，需要通过插件color。js和easing。js来对jq动画功能拓展
+    $(function () {
+        $('div').animate({
+            left:'400px',
+            // color.js插件实现颜色动画，要求背景色不能写复合属性
+            backgroundColor:'pink'
+        },1000,'easeOutBounce',function(){})
+
+
+        // timer.js是jq对原生定时器setInterval（）/setTimeout（）的包装
+        // everyTime ->setInterval
+        // oneTime -> setTimeout
+        // stopTime -> clearInterval
+        var count = 0;
+        $('div').everyTime( '1s','timer1', function () {
+            count++;
+            console.log('timer1');
+        })
+        $('div').everyTime( '1.5s','timer2', function () {
+            count++;
+            console.log('timer2');
+        }) 
+        // stopTime如果没有参数，那么就见当前元素上开启的所有定时器全部关闭，如果要关闭某个指定定时器，就将指定定时器名字作为参数
+        $('div').stopTime(); 
+    })
+
+
+</script>
+
+</html>

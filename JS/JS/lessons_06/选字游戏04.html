@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .clear::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .wrap {
+            width: 500px;
+            height: 612px;
+            border: 5px solid lightgray;
+            margin: 0 auto;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1:nth-child(1) {
+            float: left;
+        }
+
+        h1:nth-child(2) {
+            float: right;
+        }
+
+        h1:nth-child(3) {
+            /* width: 400px; */
+            height: 400px;
+            text-align: center;
+            line-height: 400px;
+            font-size: 140px;
+            margin-bottom: 10px;
+            margin: 0 auto;
+            padding-right:175px;
+            cursor: pointer;
+        }
+
+        #text {
+            height: 150px;
+            background: lightgray;
+        }
+
+        #text>span {
+            display: inline-block;
+            font-size: 40px;
+            height: 100%;
+            line-height: 150px;
+            margin: 0 20px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap clear">
+        <h1></h1>
+        <h1></h1>
+        <h1></h1>
+        <h3>根据👆字的颜色选出👇对应文字的描述</h3>
+        <div id="text">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+<script>
+    var h1s = document.getElementsByTagName('h1');
+    var sps = document.getElementsByTagName('span');
+    var arrText = ['黄', '红', '蓝', '绿', '黑'];
+    var arrColor = ['yellow', 'red', 'blue', 'green', 'black'];
+    var second = 20;
+    var score = 0;
+    var timer = null;
+    var lock = false;
+    var begin = true;
+    h1s[0].innerHTML = '倒计时：' + 20 + 's';
+    h1s[1].innerHTML = '得分：' + '0' + 0;
+    // h1s[2].innerHTML = arrText[randomNum(0, arrText.length - 1)];
+    // h1s[2].style.color = arrColor[randomNum(0, arrColor.length - 1)];
+    // 随机数函数，用来随机其他标签的文本及字体颜色
+    function randomNum(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    // 拼0函数
+    function concatZero(num) {
+        return num < 10 ? num = '0' + num : num;
+    }
+    // 倒计时函数
+    function recordTime() {
+        if (!timer) {
+            timer = setInterval(function () {
+                second--;
+                h1s[0].innerHTML = '倒计时：' + concatZero(second) + 's';
+                if (second == 0) {
+                    lock = true;
+                    clearInterval(timer);
+                    setTimeout(function () {
+                        alert('游戏结束，得分：' + concatZero(score));
+                        score = 0;
+                        h1s[1].innerHTML = '得分：' + concatZero(score);
+                        timer = null;
+                        begin = false;
+                    }, 100)
+                }
+            }, 1000)
+        }
+    }
+    // 小字的颜色及文本函数
+    function forMat() {
+        h1s[2].innerHTML = arrText[randomNum(0, 4)];
+        h1s[2].style.color = arrColor[randomNum(0, 4)];
+        for (i = 0; i < sps.length; i++) {
+            sps[i].innerHTML = arrText[randomNum(0, arrText.length - 1)];
+            arrText.splice(arrText.indexOf(sps[i].innerHTML), 1);
+            sps[i].style.color = arrColor[randomNum(0, arrColor.length - 1)];
+            arrColor.splice(arrColor.indexOf(sps[i].style.color), 1);
+        }
+        arrText = ['黄', '红', '蓝', '绿', '黑'];
+        arrColor = ['yellow', 'red', 'blue', 'green', 'black'];
+    }
+    forMat();
+    // 小字的点击事件
+    for (i = 0; i < sps.length; i++) {
+        if (begin) {
+            sps[i].onclick = function () {
+                if (lock) {
+                    return;
+                }
+                var color = h1s[2].style.color;
+                var font = this.innerHTML;
+                if (arrColor.indexOf(color) == arrText.indexOf(font)) {
+                    forMat();
+                    score++;
+                    recordTime();
+                } else {
+                    score--;
+                    if (score < 0) {
+                        score = 0;
+                        begin = false;
+                    }
+                }
+                h1s[1].innerHTML = '得分：' + concatZero(score);
+                forMat();
+            }
+        }
+    }
+    // 大字的点击事件
+    h1s[2].onclick = function () {
+        forMat();
+        score = 0;
+        h1s[1].innerHTML = '得分：' + concatZero(score);
+        second = 20;
+        h1s[0].innerHTML = '倒计时：' + concatZero(second) + 's';
+        begin = true;
+        clearInterval(timer);
+        timer = null;
+        lock = false;
+    }
+</script>
+
+</html>

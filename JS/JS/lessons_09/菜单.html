@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 200px;
+            height: 200px;
+            padding:10px 0;
+            border:1px solid #ccc;
+            display:none;
+            position:absolute;
+        }
+        a{
+            display:block;
+            text-decoration: none;
+            color:#333;
+            border-bottom:1px solid #ccc;
+            padding:20px 20px;
+            text-align:center;
+        }
+        a:nth-child(3){
+            border-bottom:none;
+        }
+        a:hover{
+            background: coral;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <a href="https://www.baidu.com">百度</a>
+        <a href="https://www.taobao.com">淘宝</a>
+        <a href="https://www.jd.com">京东</a>
+    </div>
+</body>
+<script>
+    // var body = document.documentElement;
+    var wrap = document.getElementById('wrap');
+    document.oncontextmenu = function(e){
+        var e = e || window.event;
+        var x = e.clientX,y =e. clientY;
+        if(e.preventDefault){
+            e.preventDefault();
+        }else{
+            e.returnValue = false;
+        }
+        wrap.style.display = 'block';
+        wrap.style.left = x +'px';
+        wrap.style.top = y +'px';
+    }
+    document.onclick = function(){
+        wrap.style.display = 'none';
+    }
+</script>
+</html>

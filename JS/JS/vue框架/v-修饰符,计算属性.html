@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <style>
+        #app div{
+            padding:150px;
+        }
+        #red{
+            background:red;
+        }
+        #cyan{
+            background:cyan;
+        }
+        #blue{
+            background:blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div id="red" @click.self="print">
+            <div id="cyan" @click.stop="print">
+                <div id="blue" @click.once="print"></div>
+            </div>
+        </div> -->
+        <h1>原数据：{{text}}</h1>
+        <!-- 不推荐将data中属性的运算过程体现在表达式v-text/v-html指令中，虽然不会报错，但是代码易读性差 -->
+        <h1>反转后：{{text.split('').reverse().join('')}}</h1>
+        <h1>反转后：{{[...text].reverse().join('')}}</h1>
+        <h1>反转后：{{revText()}}</h1>
+        <h1>{{rText}}</h1>
+
+        <input type="text" v-model.number="n1">
+        <input type="text" v-model.number="n2">
+        <h1>结算结果：{{res}}</h1>
+    </div>
+    
+</body>
+<script>
+    let app = new Vue({
+        el:'#app',
+        data:{
+            text:'hello 2020',
+            n1:'',
+            n2:''
+        },
+        methods:{
+            print(e){
+                alert(e.currentTarget.id);
+            },
+            revText(){
+                let str = '';
+                for(let i=this.text.length-1;i>=0;i--){
+                    str+=this.text[i];
+                }
+                return str;
+            }
+        },
+        computed:{//计算属性:写法上和methods中声明的方法一摸一样，但是她依然是vue实例的属性
+            // 而非方法，使用的时候不需要写（），注意在声明计算属性时，
+            // 1.计算属性的属性名不要与methods的属性名相同，也不要与methods中的方法名相同，
+            // 声明计算属性一定要写返回值
+            rText(){
+                return [...this.text].reverse().join('');
+            },
+            res(){
+                return this.n1 + this.n2;
+            }
+        }
+    })
+</script>
+</html>

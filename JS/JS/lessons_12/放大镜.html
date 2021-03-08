@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            position: relative;
+        }
+
+        .cell1 {
+            border: 1px solid lightgray;
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #cell {
+            border: 1px solid lightgray;
+            position: absolute;
+            left: 360px;
+            top: 0;
+        }
+
+        .cell1>img,
+        #cell>img {
+            display: block;
+        }
+
+        #cell {
+            /* display:none; */
+            border: 1px solid lightgray;
+            /* position: relative; */
+            overflow: hidden;
+        }
+
+        .cell1>img {
+            width: 350px;
+        }
+
+        #cell>img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 800px;
+        }
+
+        .cell2 {
+            width: 350px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .block {
+            width: 200px;
+            height: 200px;
+            background: yellow;
+            opacity: .4;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="cell1">
+            <div class="block"></div>
+            <img src="../lessons_09/img/m0.jpg" alt="" id="two">
+        </div>
+        <div id="cell">
+            <img src="../lessons_09/img/b0.jpg" alt="" id="one">
+        </div>
+        <div class="cell2">
+            <img src="../lessons_09/img/s0.jpg" alt="" class="three">
+            <img src="../lessons_09/img/s1.jpg" alt="" class="three">
+            <img src="../lessons_09/img/s2.jpg" alt="" class="three">
+        </div>
+    </div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script>
+    $(function () {
+        // 鼠标移入及移出事件
+        // $('.cell1').mouseover(function () {
+        //     $('.block').css('display', 'block');
+        //     $('#cell').css('display', 'inline-block');
+        // }).mouseleave(function () {
+        //     $('.block').css('display', 'none');
+        //     $('#cell').css('display', 'none');
+        // })
+
+        $('.cell1').hover(function(){
+            // 移入
+            $('.block').show();
+            $('#cell').show();
+        },function(){
+            // 移出
+            $('.block').hide();
+            $('#cell').hide();
+        })
+        // $('.cell2>img').mouseover(function(){
+        //     // 思路1：获取小图的src，更换中图及大图的src
+        //     var src = $(this).attr('src');
+        //     console.log(src)
+        //     var msrc = src.replace('s','m');
+        //     var bsrc = src.replace('s','b');
+        //     console.log(msrc,bsrc)
+        //     $('#two').attr('src',msrc);
+        //     $('#one').attr('src',bsrc);
+        // })
+        // 鼠标移动事件
+        $('.cell1').mousemove(function (e) {
+            var x = e.clientX - $('.cell1').offset().left - 1,
+                y = e.clientY - $('.cell1').offset().top - 1;
+            x -= $('.block').width() / 2, y -= $('.block').height() / 2;
+            var max = $('.cell1').width() - $('.block').width();
+            if (x <= 0) { x = 0 }
+            if (x >= max) { x = max }
+            if (y <= 0) { y = 0 }
+            if (y >= max) { y = max }
+            $('.block').css({
+                left: x + 'px',
+                top: y + 'px'
+            })
+            var w = $('.block').width() / $('.cell1').width() * $('#one').width();
+            $('#cell').css({
+                width: w + 'px',
+                height: w + 'px'
+            })
+
+            var n = 800 - w;
+            var scale = n / max;
+            $('#one').css({
+                left: -$('.block').position().left * scale + 'px',
+                top: -$('.block').position().top * scale + 'px'
+            })
+        })
+       
+        $('.cell2>img').on('mouseover',function(){
+            $('#one').attr('src','../lessons_09/img/b' + $(this).index()+'.jpg');
+            $('#two').attr('src','../lessons_09/img/m' + $(this).index()+'.jpg');
+        })
+        
+
+        // var arr = [323,3332,2,1,121,32]
+        // $.each(arr,function(index,value){
+        //     alert(index + ':' + value)
+        // })
+    })
+</script>
+
+</html>

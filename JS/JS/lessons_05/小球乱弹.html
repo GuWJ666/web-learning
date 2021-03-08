@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 1000px;
+            height: 500px;
+            position: relative;
+            /* border: 10px solid green; */
+            margin: 0 auto;
+        }
+
+        #ball {
+            width: 50px;
+            height: 50px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+            font-size: 25px;
+            border-radius: 50%;
+            box-shadow: 1px 2px 4px 3px black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="ball">
+            😄
+        </div>
+    </div>
+</body>
+<script>
+    // 获取wrap，用来获取他的宽
+    var wrap = document.getElementById('wrap');
+    // 获取ball，用来获取它的宽和偏移量
+    var ball = document.getElementById('ball');
+    // 声明水平速度变量
+    var v1 = 5;
+    //声明垂直速度变量
+    var v2 = 4;
+    // 设置点击事件的条件
+    var timer = null;
+    // 给wrap绑定点击事件，来让小球滚动
+    wrap.onclick = function () {
+        if (!timer) {//进入判断条件来控制点击之后无法点击
+            //给变量赋值计时器
+            timer = setInterval(move, 20);
+        }
+    }
+    // 碰撞函数
+    function move() {
+        var r = Math.floor(Math.random()*256),
+        g = Math.floor(Math.random()*256),
+        b = Math.floor(Math.random()*256);
+        // 声明水平移动的变量
+        var n = ball.offsetLeft + v1;
+        // 声明垂直方向移动的变量
+        var m = ball.offsetTop + v2;
+        // 小球水平移动
+        // ball.style.left = n + 'px';
+        // 小球垂直移动
+        // ball.style.top = m + 'px';
+        ball.style.transform = 'rotateZ('+n+'deg)';
+        // 判断水平方向向右是否超出指定区域
+        if (n >= wrap.clientWidth - ball.clientWidth) {
+            n = wrap.clientWidth - ball.clientWidth;
+            ball.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+            ball.style.width = g + 'px';
+            ball.style.height = g + 'px';
+            ball.style.lineHeight = g + 'px';
+            ball.innerHTML = r;
+            v1 = Math.round(Math.random()*25+5);
+            v1 *= -1;
+        }
+        // 判断水平方向向左是否超出指定区域
+        if (n <= 0) {
+            n = 0;
+            ball.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+            v1 = Math.round(Math.random()*25+5);
+            ball.style.width = b + 'px';
+            ball.style.height = b + 'px';
+            ball.style.lineHeight = b + 'px';
+            ball.innerHTML = r;
+        }
+        // 判断垂直向下是否超出指定区域
+        if (m >= wrap.clientHeight - ball.clientHeight) {
+            m = wrap.clientHeight - ball.clientHeight;
+            ball.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+            v2= Math.round(Math.random()*25+5);
+            ball.style.width = g + 'px';
+            ball.style.height = g + 'px';
+            ball.style.lineHeight = g + 'px';
+            ball.innerHTML = r;
+            v2 *= -1;
+        }
+        // 判断垂直向上是否超出指定区域
+        if (m < 0) {
+            m = 0;
+            v2 = Math.round(Math.random()*25+5);
+            ball.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+            ball.style.width = r + 'px';
+            ball.style.height = r + 'px';
+            ball.style.lineHeight = r + 'px';
+            ball.innerHTML = r;
+        }
+        ball.style.left = n + 'px';
+        ball.style.top = m + 'px';
+    }
+</script>
+
+</html>

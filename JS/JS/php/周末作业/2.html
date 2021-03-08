@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,html{
+            width: 100%;
+            margin:0;
+        }
+        ul,li{
+            width: 100%;
+            margin:0;
+            padding:0;
+            list-style: none;
+            text-align:center;
+            font-size:20px;
+            color:#fff;
+            position:relative;
+        }
+        span{
+            position:absolute;
+            left:0;
+            top:calc(50% - 26px);
+        }
+        img{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+</body>
+<script src="../../jq.js/jquery.js"></script>
+<script>
+    $(function(){
+        $.post('2.json',function(res){
+            $ul = $('<ul></ul>').appendTo('body');
+            for(var i=0;i<res.objects.length;i++){
+                $('<li><img src="'+res.objects[i].created_by.avatar+'"><span>'+res.objects[i].title+'</span></li>').appendTo($ul);
+            }
+        })
+    })
+</script>
+</html>

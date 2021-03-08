@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+
+    function Rect(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+    }
+    Rect.prototype.draw = function () {
+        cf.beginPath();
+        cf.fillRect(this.x, this.y, this.w, this.h);
+    }
+
+    function Snake(x, y, w, h) {
+        Rect.call(this, x, y, w, h);
+        this.dir = 39;//37表示左，38表示上，39表示右，40表示下
+        this.speed = 3;//速度
+        this.die = false;//如果碰撞 值变为true
+    }
+
+    // 继承
+    Snake.prototype = new Rect();
+    Snake.prototype.constructor = Snake;
+    Snake.prototype.move = function () {
+        switch (this.dir) {
+            case 37:
+                this.x -= this.speed;
+                break;
+            case 38:
+                this.y -= this.speed;
+                break;
+            case 39:
+                this.x += this.speed;
+                break;
+            case 40:
+                this.y += this.speed;
+                break;
+        }
+    }
+    Snake.prototype.crash = function (rect) {
+        // 获取snake的四周边界以及rect的四周边界
+        // 一定不碰撞的条件
+        if (this.x > rect.x + rect.w || this.y > rect.y + rect.h || this.x + this.w < rect.x || this.y + this.h < rect.y) {
+            return false;
+        }
+        return true;
+    }
+
+    function rn(x, y) {
+        return Math.floor(Math.random() * (y - x) + x);
+    }
+    // 逻辑代码
+    var snake = new Snake(10, 10, 30, 30);
+    snake.draw();
+    // 1.在画布中绘制几个障碍物
+    var rects = [];
+    for (var i = 0; i < 5; i++) {
+        var w = rn(50, 100);
+        var h = rn(50, 100);
+        var x = rn(100, cv.width - w);
+        var y = rn(0, cv.height - h);
+        var rect = new Rect(x, y, w, h);
+        rect.draw();
+        rects.push(rect);
+    }
+
+    // 键盘控制
+    document.onkeydown = function (e) {
+        var e = e || window.event;
+        var key = e.keyCode;
+        if (key > 36 && key < 41) {
+            snake.dir = key;
+        }
+    }
+
+    // 自己动
+    var timer = setInterval(function () {
+        cv.width = cv.width;
+        snake.move();
+        snake.draw();
+        // for (var i = 0; i < rects.length; i++) {
+        //     rects[i].draw();
+        //     if(snake.crash(rects[i])){  
+        //         snake.die = true;
+        //     }
+        // }
+        // if(snake.die){
+        //     clearInterval(timer);
+        // }
+        }, 30)
+
+
+
+
+</script>
+
+</html>

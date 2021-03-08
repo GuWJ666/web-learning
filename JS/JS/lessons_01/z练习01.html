@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="font-size:18px;">
+        <script type="text/javascript">
+            alert("It everyday, Bro!");
+            prompt("请输入您的密码！");
+        </script>
+    </div>
+    <!-- 
+        JavaScript概述：
+        1.概念：JavaScript是浏览器内置的脚本语言，执行依赖浏览器引擎，
+        现在浏览器普遍都到了V8引擎。
+        JS：ECMAScript（ES）+ DOM + BOM
+           ECMAScript:是JS语言的规范，当前学习的版本ES5，后面会学习ES6；
+           DOM:       Document Object Model 文档对象模型
+           BOM:       Browser  Object Model  浏览器对象模型
+        2.引入方式：
+         （1）行间，必须依赖标签的行间属性，大多是事件属性
+         （2）内部引入：
+              head标签内，一般写一些功能性的JS代码，不直接对文档中的标签进行操作的JS代码
+              body标签内，一般情况都会将script标签写在其它标签之后，确保标签先加载，再操作
+              body标签后，html标签内
+         （3）外部引入：通过创建.js文件编写js代码，使用script标签的src属性将外部js文件引入当前文档
+        3.输出语句：
+          （1）文档输出，会直接将指定的内容直接输出到html文档上。window，document都是浏览器引擎
+               提供的内置对象（包含了浏览器窗口和文档的相关信息及操作方法）
+               document对象调用自己的weite（），也支持标签的输出
+               如： document.write('hello world!');
+                    document.write('<h1>hello world!</h1>');
+                注意：文档输出在页面初次加载完毕后，再去进行文档输出，那么会将之前文档中的内容覆盖掉
+          （2）控制台输出，多用于代码调试
+                console.log('hello world');
+           (3) 提示窗输出，可以用于代码调试，更多用于对用户的信息提醒。
+                alert('hello world');
+                js中的提示窗优先级最高，当提示窗出现在窗口时，会将脚本暂时挂起
+        4.变量：
+          （1）概念：变量就是数据的容器，用来储存数据
+                    js中创建（声明）变量使用非关键字var
+          （2）命名规则：
+                变量名只能包含数字、字母、下划线_还有$
+                不能以数字开头
+                不能以系统关键字或保留字命名，例如class、name、new、var
+                明确区分大小写
+                驼峰命名法
+                见名知意 
+        5.数据类型：
+            （1）string：字符串类型，将文本（中英文）包裹在引号内，单双引号都可以
+                 var a = '他说：哈哈哈~嗝';
+                 console.log(a);
+                 字符串嵌套的时候单引号可以套双引号，双引号也可以包裹单引号，但同类型引号不能嵌套
+            （2）number：数字类型，用来表示数字，不区分整数还是小数，统统都属于number
+                var g = 9.8;
+                var pi = 3.214;
+                十进制与二进制相互转化：
+                十进制转化成二进制：不断除2找余数，将余数倒叙连接
+                二进制转化成十进制：从低位乘2的0次方递增累加
+            （3）boolean：布尔类型通常用于条件的判断，它的值只有两个true和false
+                var b = true;
+            （4）undefined：未定义类型，只有一个值undefined。当变量只做了声明，并没有赋值的时候，
+                js引擎会自动为此变量赋值为undefined
+                'undefined'和unedfined是两码事
+                var c;
+                console.log(c);
+            (5)object：对象类型（引用数据类型）
+               var d ={
+                   name:'dd';
+                   sex:'men'
+               }
+               object类型还包含以下子类型：array数组、null空
+               如何查看一个变量的数据类型？
+               typeof：得到全小写的类型字符串
+        6.js中的运算符
+           （1）赋值运算符：=，将符号右边的值赋予符号左边的变量。
+                var a = 10; 值是10，数据类型是number
+                console.log(a);
+                console.log(typeof a);
+                a = 'you';值是you，数据类型是string
+                console.log(a);
+                console.log(typeof a);
+                js是弱类型语言，声明变量时不需要为变量声明数据类型，变量的数据类型会在为变量赋值的
+                那一刻由浏览器引擎自动。
+                注意：绝对不允许对一个确定的值进行赋值操作！如2=3；
+                var b = a;
+                console.log(b);
+           (2)算数运算符：+加，-减，*乘，/除，%取余
+                var x = '10', y = '20';同时声明两个变量
+                加 + ：如果符号两边都是number，就是一个正常的加法运算；
+                      如果符号任意一边出现string，那么+的作用就变成了字符串的拼接，
+                      并且任何类型的值和string做加法运算，结果一定是string
+                      c = x + y;
+                      console.log(c);
+                减 - :只有单纯的减法算数功能
+                      NaN：类型是number（not a number），NaN不管和什么值进行算数
+                      运算，结果一定还是NaN；当将一个非数字字符串或其他值转化成number类型时，
+                      就会得到NaN。
+                     c = x - y;
+                     console.log(c);
+                乘 * ：只有单纯的乘法算数功能 ，会先检测符号左右的数据类型，入果非number，
+                       会自动转化成number后再进行加载
+                除 / ：同上，但是需要注意的是除数不能为0，否则会出现NaN
+                取余%：
+                      c = x % y;
+                      console.log(c);余数是10
+                复合运算符+=，-=，*=，/=，%=
+                      x += y;等价于x = x + y;
+                      console.log(x)  '1020'
+                      m;错误的；
+                      var m;
+                      console.log(m);
+                自增自减运算符：++，--
+                       var m = 20;
+                       m ++;
+                       m --;
+                       console.log(m);
+                       自增自减运算符可以出现在变量前，也可以出现在变量后
+                       符号在前，先运算后赋值；符号在后，先赋值后运算。
+                       var m = 20,n;
+                       m ++; m=21
+                       n = m++; n=21 m=22
+                       n ++;
+                       n = ++m; m=23 n=23
+                       console.log(n);
+        7.设置样式
+            在js中，可以直接使用元素的ID名称来操作这个元素，但不要这么做；
+            通过元素的ID属性值来获取body中的元素 document.getElementById()
+            var wrap = document.getElementById('wrap');
+            console.log(wrap);
+            所有样式存在连字符的，js中都去掉连字符，换成驼峰命名，例如：font-size->fontSize
+            它既可以设置元素的样式，也可以读取元素的样式，注意：只能读取元素已经存在的行间样式
+
+            捕获y用户操作：例如点击操作
+            wrap.onclick = function(){
+                document.wrap('我被点击了');
+                console.log("我被点击了");
+                wrap.style.backgroundColor = 'green';
+                wrap.style.opacity = '.5';
+            }
+     -->
+</body>
+
+</html>

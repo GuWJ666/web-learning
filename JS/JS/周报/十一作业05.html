@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 400px;
+            height: 400px;
+            border: 5px solid coral;
+            margin: 100px auto;
+            position: relative;
+            user-select: none;
+        }
+        #roll{
+            width: 700%;
+            height: 350px;
+            text-align:center;
+            line-height:350px;
+            font-size:100px;
+            position:absolute;
+            left:-400px;
+            top:0;
+        }
+        .photo{
+            width: 400px;
+            float:left;
+            color:khaki;
+        }
+        .button{
+            height: 50px;
+            position:absolute;
+            left:0;
+            bottom:0;
+            background: #eee;
+        }
+        .btn{
+            height: 50px;
+            width: 80px;
+            float:left;
+            text-align: center;
+            line-height:50px;
+            font-size:30px;
+            cursor:pointer;
+        }
+        #last{
+            position:absolute;
+            left:0;
+            top:150px;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height:50px;
+            font-size:25px;
+            border-radius:50%;
+            background: rgba(0,0,0,0.5);
+            color:#fff;
+            z-index: 10;
+            cursor:pointer;
+        }
+        #next{
+            position:absolute;
+            right:0;
+            top:150px;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height:50px;
+            font-size:25px;
+            border-radius:50%;
+            background: rgba(0,0,0,0.5);
+            color:#fff;
+            z-index: 10;
+            cursor:pointer;
+        }
+        #active{
+            background: skyblue;
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="roll">
+            <div class="photo" style="background:chartreuse">5</div>
+            <div class="photo" style="background:hotpink">1</div>
+            <div class="photo" style="background:teal">2</div>
+            <div class="photo" style="background:brown">3</div>
+            <div class="photo" style="background:navy">4</div>
+            <div class="photo" style="background:chartreuse">5</div>
+            <div class="photo" style="background:hotpink">1</div>
+        </div>
+        <div id="last">←</div>
+        <div id="next">→</div>
+        <div class="button">
+            <div class="btn" id="active">1</div>
+            <div class="btn">2</div>
+            <div class="btn">3</div>
+            <div class="btn">4</div>
+            <div class="btn">5</div>
+        </div>
+    </div>
+</body>
+<script src="tween.js"></script>
+<script>
+    var roll = document.getElementById('roll'),
+        last = document.getElementById('last'),
+        next = document.getElementById('next'),
+        btns = document.getElementsByClassName('btn');
+    var m = 0;
+    var imgTimer = null,
+        autoTimer = null,
+        firTimer = null,
+        lastTimer = null,lastLock = null;
+    for(var i = 0;i<btns.length;i++){
+        (function(i){
+            btns[i].onclick = function(){
+                btns[m].id = '';
+                btns[i].id = 'active';
+                m = i;
+                var t = 0,
+                    b = roll.offsetLeft,
+                    c = (i+1)*(-400) - b,
+                    d = 20;
+                clearInterval(imgTimer);
+                clearInterval(firTimer);
+                imgTimer = setInterval(function(){
+                    t++;
+                    roll.style.left = Tween.Linear(t,b,c,d) + 'px';
+                    if(t == d){
+                        clearInterval(imgTimer);
+                        autoPlay();
+                    }
+                },20)
+            }
+        })(i)
+    }
+    autoPlay();
+    function autoPlay(){
+        firTimer = setInterval(function(){
+            btns[m].id = '';
+            m++;
+            m = m>4?0:m;
+            btns[m].id = 'active';
+            var t = 0,
+                b = roll.offsetLeft,
+                c = -400,
+                d = 20;
+            clearInterval(autoTimer);
+            autoTimer = setInterval(function(){
+                t++;
+                roll.style.left = Tween.Linear(t,b,c,d) + 'px';
+                if(t == d){
+                    clearInterval(autoTimer);
+                    if(roll.offsetLeft == -2400){
+                        roll.style.left = -400 + 'px';
+                    }
+                }
+            },20)
+        },2000)
+    }
+    last.onclick = function(){
+        if(lastLock){
+            return;
+        }
+        lastLock = true;
+        btns[m].id = '';
+        m--;
+        m = m<0?4:m;
+        btns[m].id = 'active';
+        var t = 0,
+            b = roll.offsetLeft,
+            c = 400,
+            d = 10;
+        clearInterval(lastTimer);
+        clearInterval(firTimer);
+        lastTimer = setInterval(function(){
+            t++;
+            roll.style.left = Tween.Linear(t,b,c,d)+'px';
+            if(t == d){
+                clearInterval(lastTimer);
+                lastLock = false;
+                autoPlay();
+                if(roll.offsetLeft >= 0){
+                    roll.style.left = -2000+'px';
+                }
+            }
+        },20)
+    }
+    next.onclick = function(){
+        if(lastLock){
+            return;
+        }
+        lastLock = true;
+        btns[m].id = '';
+        m++;
+        m = m>4?0:m;
+        btns[m].id = 'active';
+        var t = 0,
+            b = roll.offsetLeft,
+            c = -400,
+            d = 10;
+        clearInterval(lastTimer);
+        clearInterval(firTimer);
+        lastTimer = setInterval(function(){
+            t++;
+            roll.style.left = Tween.Linear(t,b,c,d)+'px';
+            if(t == d){
+                clearInterval(lastTimer);
+                lastLock = false;
+                autoPlay();
+                if(roll.offsetLeft <= -2400){
+                    roll.style.left = -400+'px';
+                }
+            }
+        },20)
+    }
+</script>
+</html>

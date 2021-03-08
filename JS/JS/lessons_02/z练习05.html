@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="text">
+    <input type="button" value="评级" id="btn">
+</body>
+    <script>
+        // 60分一下不及格，60以上80以下及格，80以上90以下良好，90以上到100优秀，最低分0，最高分100
+        // 获取元素
+        var text = document.getElementById('text'),
+            btn = document.getElementById('btn');
+        // 绑定事件
+        btn.onclick = function(){
+            var a = text.value*1;
+            if(a==0){
+                alert('最低分！');
+            }else if(a==100){
+                alert('最高分！');
+            }else if(0<a && a<60){
+                alert('不及格！');
+            }else if(60<= a && a <80){
+                alert('及格');
+            }else if(80<= a && a <90){
+                alert('良好');
+            }else if(90<= a && a <100){
+                alert('优秀');
+            }else if(a<0 || a>100){
+                alert('玩我呢？');
+            }
+        }
+    </script>
+</html>

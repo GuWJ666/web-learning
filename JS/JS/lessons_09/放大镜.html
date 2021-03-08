@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            font-size: 0;
+        }
+
+        #wrap {
+            width: 350px;
+            position: relative;
+            float: left;
+        }
+
+        #small {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #box {
+            vertical-align: top;
+            /* width: 500px;
+            height: 500px; */
+            border: 1px solid lightgray;
+            overflow: hidden;
+            display: none;
+            float: left;
+            position: relative;
+        }
+
+        #block {
+            width: 200px;
+            height: 200px;
+            background: yellow;
+            opacity: .4;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+
+        #big {
+            width: 800px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <img src="img/x.jpg" alt="" id="small">
+        <div id="block"></div>
+    </div>
+    <div id="box">
+        <img src="img/d.jpg" alt="" id="big">
+    </div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap'),//小图片盒子
+        small = document.getElementById('small'),//小图片
+        block = document.getElementById('block'),//小盒子
+        box = document.getElementById('box'),//大图片盒子
+        big = document.getElementById('big');//大图片
+
+
+    console.log(wrap.offsetLeft)
+    // wrap的鼠标移入事件
+    small.onmouseover = function (e) {
+        var e = e || window.event;
+        block.style.display = 'block';
+        box.style.display = 'block';
+        var w = block.clientWidth / wrap.clientWidth * big.clientWidth;
+        box.style.height = w + 'px';
+        box.style.width = w + 'px';
+      
+        small.onmousemove = function (e) {
+            var e = e || window.event;
+            var m = e.clientX - wrap.offsetLeft, n = e.clientY - wrap.offsetTop;
+            var x = m - (block.clientWidth / 2);
+            var y = n - (block.clientHeight / 2);
+            if (x < 0) {
+                x = 0
+            }
+            if (y < 0) {
+                y = 0
+            }
+            if (x > wrap.clientWidth - (block.clientWidth)) {
+                x = wrap.clientWidth - (block.clientWidth);
+            }
+            if (y > wrap.clientWidth - (block.clientHeight)) {
+                y = wrap.clientWidth - (block.clientHeight);
+            }
+            block.style.left = x + 'px';
+            block.style.top = y + 'px';
+
+
+            // 右
+            var maxrw = big.offsetLeft - box.clientWidth;
+            var maxrh = big.offsetTop - box.clientHeight;
+            var maxlw = wrap.clientWidth - block.clientWidth;
+            var maxlh = wrap.clientHeight - block.clientHeight;
+            var scalew = maxrw / maxlw;
+            var scaleh = maxrh / maxlh;
+            big.style.left = (block.offsetLeft) * scalew+'px';
+            big.style.top = (block.offsetTop) * scaleh + 'px';
+        }
+    }
+    block.onmouseleave = function () {
+        small.onmousemove = null;
+        block.style.display = 'none';
+        box.style.display = 'none';
+    }
+</script>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- kanvas是由HTML代码配合宽度和高度属性而定义出的一块可绘制的区域，js可以对该区域进行访问，通过一套完整的绘图函数来动态绘制图形 -->
+    <canvas id="xx" width="500" height="350"></canvas>
+</body>
+<script>
+    // var ctx = document.getElementById('xx').getContext('2d');
+    // ctx.fillRect(10,10,100,50);
+    // ctx.strokeRect(10,10,100,50)
+    // ctx.clearRect(0,0,20,40)
+    var sun = new Image();
+    var moon = new Image();
+    var earth = new Image();
+    function into(){
+        sun.src = ''
+        moon.src = ''
+        earth.src = ''
+    }
+
+    function draw(){
+        var ctx = document.getElementById('xx').getContext('2d');
+        ctx.globalCompositeOperation = 'destination -over';
+        ctx.clearRect(0,0,300,300);
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
+        ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+        ctx.save();
+        ctx.translate(150,150);
+        var time = new Date();
+        ctx.rotate(((2*Math.PI)/60)*time.getSeconds()+((2*Math.PI)/60000)*time.getMilliseconds());
+        
+    }
+</script>
+</html>

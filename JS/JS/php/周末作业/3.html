@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul,li{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        ul{
+            border:1px solid #333;
+        }
+        img{
+            width: 100%;
+        }
+        h1{
+            font-size:25px;
+        }
+        h2{
+            font-size:18px;
+            color:gray;
+        }
+        span{
+            color:gray;
+        }
+    </style>
+</head>
+<body>
+</body>
+<script src="../../jq.js/jquery.js"></script>
+<script>
+    $(function(){
+        $.post('3.json',function(res){
+            for(var i=0;i<res.data.length;i++){
+                $('<ul><li><h1>'+res.data[i].title+'</h1></li><li><h2>'+res.data[i].author.user_name+'</h2></li><li><img src="'+res.data[i].img_url+'"><li><span>'+res.data[i].share_info.content+'</span></li></li></ul>').appendTo('body');
+            }
+        })
+    })
+</script>
+</html>

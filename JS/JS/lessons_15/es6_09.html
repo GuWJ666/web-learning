@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <header></header>
+</body>
+<script>
+    // Promise对象,是一种全新的异步操作方法，通过new来初始化Promise实例，Promise实例接受一个函数作为参数，参数函数存在两个参数，分别是两个函数（系统声明配置，不需要你去声明）。着两个函数代表了两种状态，一种表示‘完成’，一种表示‘失败’;
+    // Promise对象一旦被实例化，就立即开始工作，以异步操作的结果来确定自身的状态，状态一旦被确定，不可被更改 
+    // Promise的使用流程
+    // 1.实例化Promise对象
+    {
+        let promise = new Promise((resolv,reject)=>{
+            // 编写异步操作的代码
+            // 用定时器模拟正真的异步操作
+            setTimeout(()=>{
+                let n = Math.round(Math.random()*500);
+                n=200;
+                if(n == 200){
+                    // 异步操作成功，应该执行resolv函数
+                    resolv(`success:${n}`);
+                }else{
+                    // 异步操作失败，应该执行reject函数
+                    reject(`error:${n}`);
+                }
+            },3000)
+        })
+        // Promise通过then方法来对异步操作的结果指定处理的回调函数，then方法允许接受两个函数作为参数，第一个为成功的回调，第二个是失败的回调
+        promise.then((res)=>{
+            console.log(res);
+        },res=>{
+            console.log(res);
+        })
+    }
+
+    // 使用
+    //1.对图片加载进行封装
+    {
+        // let loadImg = (src,cb) => {
+        //     let img = new Image();
+        //     img.onload = function(){
+        //         cb(this);
+        //     }
+        //     img.src = src;
+        // }
+
+        let loadImg = src => {
+            return new Promise((resolv,reject)=>{
+                let img = new Image();
+                img.src = src;
+                img.onload = function(){
+                    resolv(this);
+                }
+            });
+        }
+        loadImg('./飞机大战JS/img/herofly.png').then((img)=>{
+            console.log(img.width,img.height);
+            document.body.appendChild(img);
+        })
+
+        
+    }
+
+    console.log('1');
+    setTimeout(function(){
+        console.log('2')
+    },0)
+    new Promise(resolv => {
+        console.log('3');
+        resolv();
+    }).then(function(){
+        console.log('4');
+    }).then(function(){
+        console.log('5');
+    })
+    console.log('6');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

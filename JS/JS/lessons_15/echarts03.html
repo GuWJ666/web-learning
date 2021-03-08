@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+    <div class="echart" style="width:800px;height:600px"></div>
+</body>
+<script>
+    var echart = echarts.init(document.querySelector('.echart'));
+    var option = {
+        title:{
+            text:'图'
+        },
+        tooltip:{},
+        legend:{
+            data:['头部']
+        },
+        xAxis:{
+            data:['1','2','3','4','5']
+        },
+        yAxis:{},
+        series:{
+            name:'头部',
+            type:'bar',
+            data:[20,30,40,50,60]
+        }
+    }
+    echart.setOption(option);
+</script>
+</html>

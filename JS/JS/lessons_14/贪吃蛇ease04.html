@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            text-align:center;
+        }
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+            background: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cv" width="800" height="600"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+
+    // 图类
+    function Map(s){
+        this.size = s;
+    }
+    Map.prototype.draw = function(){
+        // 竖线
+        for(var i=0;i<cv.width / this.size;i++){
+            cf.beginPath();
+            cf.moveTo(i * this.size,0);
+            cf.lineTo(i * this.size,cv.height);
+            cf.stroke();
+        }
+         // 横线
+         for(var i=0;i<cv.height / this.size;i++){
+            cf.beginPath();
+            cf.moveTo(0,i * this.size);
+            cf.lineTo(cv.width,i * this.size);
+            cf.stroke();
+        }
+    }
+    var map = new Map(30);
+    map.draw();
+
+</script>
+</html>

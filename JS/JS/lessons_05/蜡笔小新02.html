@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap{
+            width: 520px;
+            height: 280px;
+            position: relative;
+            margin:200px auto;
+            overflow: hidden;
+        }
+        #image{
+            width: calc(520px * 6);
+            position: absolute;
+            left:0;
+            top:0;
+            font-size:0;
+            transition:0.5s;
+        }
+        img{
+            width: 520px;
+        }
+        .button{
+            position: absolute;
+            left:calc(260px - 59px);
+            bottom:0;
+        }
+        span{
+            display: inline-block;
+            vertical-align: center;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height:20px;
+            color:#fff;
+            background: goldenrod;
+            border-radius:3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div id="image">
+            <img src="img03/11.jpg" alt="">
+            <img src="img03/12.jpg" alt="">
+            <img src="img03/13.jpg" alt="">
+            <img src="img03/14.jpg" alt="">
+            <img src="img03/15.jpg" alt="">
+            <img src="img03/11.jpg" alt="">
+        </div>
+        <div class="button">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+    </div>
+</body>
+<script>
+    var image = document.getElementById('image');
+    var img = document.getElementsByTagName('img')[0];
+    var p = image.offsetLeft;
+    var w = img.offsetWidth;
+    var max = w*5;
+    function katon(){
+        image.style.transition = 0.5 + 's';
+        p = image.offsetLeft;console.log(p);
+        var x = p - w;console.log(x);
+        if(x < -max){
+            x = 0;
+        }
+        if(x == -max){
+            setTimeout(function (){
+                image.style.transition = 'none';
+                image.style.left = 0;
+            },500)
+        }
+        image.style.left = x +'px';
+    }
+    setInterval(katon,2000);
+</script>
+</html>

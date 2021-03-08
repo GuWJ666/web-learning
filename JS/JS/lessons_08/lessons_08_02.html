@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>回到顶部</title>
+    <style>
+        @keyframes run {
+            from {
+                left: 0;
+            }
+
+            to {
+                left: 300px;
+            }
+        }
+
+        body {
+            height: 3000px;
+        }
+
+        #backTop {
+            position: fixed;
+            right: 10px;
+            bottom: 200px;
+            width: 100px;
+            height: 100px;
+            background: red;
+            color: #fff;
+            text-align: center;
+            line-height: 100px;
+            font-size: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            /* animation:run 1s forwards; */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>顶部</h1>
+    <div id="backTop">top</div>
+</body>
+<script src="tween.js"></script>
+<script>
+    var bt = document.querySelector('#backTop');
+    var show = false;
+    // 1.控制按钮隐藏显示
+    window.onscroll = function () {
+        var th = window.pageYOffset;
+        if (th > 500 && !show) {
+            console.log(th);
+            bt.style.display = 'block';
+            show = true;
+        } else if(th <= 500 && show) {
+            console.log(th);
+            bt.style.display = 'none';
+            show = false;
+        }
+    }
+
+    // 2.回到顶部
+    bt.onclick = function(){
+        var t=0,d=20,b=document.documentElement.scrollTop,c=-b;
+        var timer = setInterval(function(){
+            t++;
+            document.documentElement.scrollTop = Tween.Bounce.easeOut(t,b,c,d);
+            if( t == d){
+                clearInterval(timer);
+            }
+        },20)
+    }
+</script>
+
+</html>

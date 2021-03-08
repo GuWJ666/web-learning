@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+
+        #image {
+            width: calc(220px * 9);
+            font-size: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+        }
+
+        img {
+            width: 220px;
+        }
+
+        .btn {
+            width: 200px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        span {
+            display: inline-block;
+            border: 1px solid;
+            width: 40px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="image">
+            <img src="img02/1.jpg" alt="">
+            <img src="img02/2.jpg" alt="">
+            <img src="img02/3.jpg" alt="">
+            <img src="img02/4.jpg" alt="">
+            <img src="img02/5.jpg" alt="">
+            <img src="img02/6.jpg" alt="">
+            <img src="img02/7.jpg" alt="">
+            <img src="img02/8.jpg" alt="">
+            <img src="img02/1.jpg" alt="">
+        </div>
+    </div>
+    <div class="btn">
+        <span>左</span>
+        <span>右</span>
+        <span>开始</span>
+        <span>结束</span>
+    </div>
+</body>
+<script>
+    var image = document.getElementById('image');
+    var img = document.getElementsByTagName('img')[0];
+    var spans = document.getElementsByTagName('span');
+    var pw = image.offsetLeft;
+    var sw = img.offsetWidth;
+    var max = sw * 8;
+    var lock = false;
+    spans[2].onclick = function () {
+        katon = setInterval(function () {
+            if(spans[0].onclick == false){
+                clearInterval(katonLeft);
+                image.style.left = 0;
+            }
+            var pw = image.offsetLeft;
+            var x = pw - sw;
+            if (x < -max) {
+                x = 0;
+            }
+            setTimeout(function () {
+                if (x == -max) {
+                    image.style.left = 0;
+                }
+
+            }, 100)
+            image.style.left = x + 'px';
+        }, 500)
+        // if(lock){
+        spans[2].onclick = null;
+
+        // }
+        // lock = true;
+    }
+    spans[3].onclick = function () {
+        clearInterval(katon);
+        image.style.left = 0;
+    }
+    spans[0].onclick = function () {
+        var i = 8;
+        var pw = image.offsetLeft;
+        if(i<0){
+                i=8;
+            }
+        // katonLeft = setInterval(function () {
+            var x = pw - sw * i;console.log(x);
+            image.style.left = x + 'px';
+            i--;
+            
+        // }, 500)
+
+    }
+    spans[1].onclick = function () {
+        // clearInterval(katon);
+        image.style.left = 0;
+        // katonRight = setInterval(function () {
+            var pw = image.offsetLeft;
+            var x = pw - sw;
+            if (x < -max) {
+                x = 0;
+            }
+            setTimeout(function () {
+                if (x == -max) {
+                    image.style.left = 0;
+                }
+
+            }, 100)
+            image.style.left = x + 'px';
+        // }, 500)
+        spans[1].onclick = null;
+    }
+</script>
+
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 400px;
+            height: 300px;
+            position: relative;
+            border: 5px solid #000;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+
+        #banner {
+            width: 700%;
+            height: 260px;
+            position: absolute;
+            left: -400px;
+            top: 0;
+        }
+
+        #banner>div {
+            width: 400px;
+            height: 100%;
+            font-size: 150px;
+            text-align: center;
+            /* color:#fff; */
+            float: left;
+            line-height: 260px;
+        }
+
+        #btns {
+            width: 100%;
+            height: 40px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: #e5e5e5;
+        }
+
+        .btn {
+            width: 20%;
+            height: 100%;
+            line-height: 40px;
+            text-align: center;
+            font-size: 26px;
+            color: #fff;
+            float: left;
+            cursor: pointer;
+        }
+
+        #active {
+            background: #fff;
+            color: #000;
+        }
+        #nextBtn{
+            width: 50px;
+            height: 50px;
+            border-radius:50%;
+            line-height:50px;
+            text-align:center;
+            position:absolute;
+            background: rgba(0,0,0,.4);
+            color:#fff;
+            right:20px;
+            top:calc(50% - 25px);
+            cursor: pointer;
+        }
+        #lastBtn{
+            width: 50px;
+            height: 50px;
+            border-radius:50%;
+            line-height:50px;
+            text-align:center;
+            position:absolute;
+            background: rgba(0,0,0,.4);
+            color:#fff;
+            right:20px;
+            top:calc(50% - 25px);
+            cursor: pointer;
+        }
+    </style>
+    <script src="tween.js"></script>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="banner">
+                <div style="background:blue">5</div>
+            <div style="background:red">1</div>
+            <div style="background:orange">2</div>
+            <div style="background:yellow">3</div>
+            <div style="background:green">4</div>
+            <div style="background:blue">5</div>
+            <div style="background:red">1</div>
+        </div>
+        <div id="btns">
+            <div class="btn" id="active">1</div>
+            <div class="btn">2</div>
+            <div class="btn">3</div>
+            <div class="btn">4</div>
+            <div class="btn">5</div>
+        </div>
+        <div id="nextBtn">👉</div>
+        <div id="laxtBtn">👈</div>
+    </div>
+</body>
+<script>
+    // 1.获取元素及定义需要的变量
+    var banner = document.getElementById('banner'),
+        nextBtn = document.getElementById('nextBtn'),
+        btns = document.getElementsByClassName('btn'),
+        w = -400,
+        index = 1,//记录图片的下标
+        timer1 = null,//控制播放间隔的定时器
+        timer2 = null,//控制自动切图的定时器
+        timer3 = null;//控制点击切图的定时器
+    // 2.声明功能函数
+    // 切换按扭选中样式的函数
+    function activeFn(n) {
+        // 样式置空
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].id = '';
+        }
+        // 选中样式
+        btns[n].id = 'active';
+    }
+    // 轮播函数
+    function bannerFn() {
+        clearInterval(timer1);
+        timer1 = setInterval(function () {
+            next();
+        }, 2000)
+    }
+    // 下一页
+    function next() {
+        index++;
+        var n = index > 4 ? 0 : index;
+        activeFn(n);
+        clearInterval(timer2);
+        timer2 = setInterval(function () {
+            var l = banner.offsetLeft - 10;
+            if (l <= index * w) {
+                clearInterval(timer2);
+                bannerFn();
+            }
+            if (l == 6 * w) {
+                l = -400;
+                index = 1;
+            }
+            banner.style.left = l + 'px';
+        }, 20)
+    }
+    bannerFn();
+    // 点击切图的函数
+    function changeFn(newIndex) {
+        clearInterval(timer1);
+        clearInterval(timer2);
+        clearInterval(timer3);
+        // 更新当前图片下标
+        index = newIndex;
+        var t = 0,
+            b = banner.offsetLeft,
+            c = (newIndex+1) * w - b,
+            d = 25;
+        timer3 = setInterval(function () {
+            t++;
+            if (t >= d) {
+                clearInterval(timer3);
+                bannerFn();//重新开启自动切图
+            }
+            banner.style.left = Tween.Linear(t, b, c, d) + 'px';
+        }, 20)
+    }
+    // 绑定事件
+    for (var i = 0; i < btns.length; i++) {
+        (function (i) {
+            btns[i].onclick = function () {
+                activeFn(i);
+                changeFn(i);
+            }
+        })(i)
+        // function activeFn(n) {
+        //     // 样式置空
+        //     for (vari = 0; i < btns.length; i++) {
+        //         btns[i].id = '';
+        //     }
+        //     // 选中样式
+        //     btns[n].id = 'active';
+        // }
+    }
+    nextBtn.onclick = function(){
+        clearInterval(timer1);
+        clearInterval(timer2);
+        next();
+    }
+</script>
+
+</html>

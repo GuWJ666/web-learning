@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="text1">
+    <input type="text" id="text2">
+    <input type="text" id="text3">
+    <input type="button" value="按我" id="button">
+    <script>
+        // 获取元素
+        var text1 = document.getElementById('text1'),
+            text2 = document.getElementById('text2'),
+            text3 = document.getElementById('text3'),
+            button = document.getElementById('button');
+        // 绑定事件
+        button.onclick = function(){
+            var a = text1.value*1,
+                b = text2.value*1,
+                c = text3.value*1;
+            console.log(typeof a,b,c)
+            if(a>b && a>c){
+                alert(a);
+            }else if(b>a && b>c){
+                alert(b);
+            }else{
+                alert(c);
+            }
+            // 思路一：枚举
+            // if (a>b && a>c){alert('a')}
+            // else if(b>a && b>c){alert('b')}
+            // else{alert('c')}
+
+            // 思路二：两两比较
+            if(a>b){
+                // 说明b一定不是最大
+                if(a>c){
+                    alert(a);
+                }else{
+                    alert(c);
+                }
+            }else{
+                // 说明a一定不是最大
+                if(b>c){
+                    alert(b);
+                }else{
+                    alert(c);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

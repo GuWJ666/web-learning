@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <script src="../js_15/jquery.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        li {
+            list-style: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <tb :ths="ths" :tbs="tbs" @content="valfn" @type="selfn">
+    </div>
+</body>
+<script>
+    Vue.component('tb', {
+        props: ['ths', 'tbs'],
+        template: `<div>
+                    <input type="text" v-model="cont" @input="valfn">
+                    <div>
+                        <span v-for="x in ths">
+                            <input type="radio" :value="x" v-model="type" @change="selfn">{{x}}
+                        </span>
+                    </div>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th v-for="x in ths">{{x}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="x in tbs">
+                                <td v-for="y in x">{{y}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        `,
+        data(){
+            return {
+                type:'id',
+                cont:''
+            }
+        },
+        methods:{
+            // 当输入框的值发生变化时触发，将值传递给父组件
+            valfn(){
+                this.$emit('content',this.cont);
+            },
+            // 当单选框的值发生变化时触发，将值传递给父组件
+            selfn(e){
+                this.$emit('type',this.type);
+            }
+        }
+    })
+    let app = new Vue({
+        el: '#app',
+        data: {
+            c:'',
+            t:'id',
+            list: [
+                { id: '001', name: '张宝成', sex: '男', age: '23', major: '程序猿' },
+                { id: '002', name: '张学友', sex: '男', age: '40', major: '歌手' },
+                { id: '003', name: '张国荣', sex: '男', age: '45', major: '歌手' },
+                { id: '004', name: '张家辉', sex: '男', age: '44', major: '演员' },
+                { id: '005', name: '张靓颖', sex: '女', age: '38', major: '歌手' },
+                { id: '006', name: '张卫健', sex: '男', age: '42', major: '演员' },
+            ]
+        },
+        computed: {
+            // 表头数据
+            ths() {
+                let set = new Set();
+                for (let x of this.list) {
+                    for (let y in x) {
+                        set.add(y);
+                    }
+                }
+                return [...set];
+            },
+            // 表格数据
+            tbs() {
+                let res = [];
+                for (let x of this.list) {
+                    if (x[this.t].includes(this.c)) {
+                        res.push(x);
+                    }
+                }
+                return res;
+            }
+        },
+        methods:{
+            // 接收子组件传过来的值
+            valfn(res){
+                this.c = res;
+            },
+            selfn(res){
+                this.t = res;
+            }
+        }
+    })
+</script>
+
+</html>

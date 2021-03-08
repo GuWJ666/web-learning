@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div[data = xx]{
+            background: red;
+        }
+        div[data = gg]{
+            background: green;
+        }
+        div[class^=t]{
+            background:yellowgreen;
+        }
+        div[class$=Bar]{
+            background:pink;
+        }
+        div[class|=ss]{
+            background:purple;
+        }
+        a:link{
+            color:red;
+        }
+        a:visited{
+            color:purple;
+        }
+        a:hover{
+            color:violet;
+        }
+        a:active{
+            color:navy;
+        }
+        p,h1,h2,span{
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+        }
+        p:empty{
+            background:olive;
+        }
+        .box>:not(span){
+            background:palegoldenrod;
+        }
+        .cell>h1:nth-child(2){
+            background:powderblue;
+        }
+        .cell>h1:nth-of-type(2){
+            background:hotpink;
+        }
+    </style>
+</head>
+<body>
+    <div data="xx">嘿嘿</div>
+    <div data="gg">呵呵</div>
+    <div class="tanv">nav</div>
+    <div class="tlogo">logo</div>
+    <div class="tiBar">ti</div>
+    <div class="xiBar">xi</div>
+    <div class="ss-ti">-ti</div>
+    <div class="ss-xi">-xi</div>
+    <div style="background:rgb(149, 158, 63);width:100px;height:100px;"></div>
+    <div style="background:rgb(25, 56, 56);width: 100px;height:100px;"></div>
+    <a href="http://www.baidu.com">百度</a>
+    <p></p>
+    <p> </p>
+    <div class="box">
+        <span>wewrewrwe</span>
+        <p></p>
+        <h1></h1>
+        <h2></h2>
+    </div>
+    <!-- nth-child -->
+    <div class="cell">
+        <p></p>
+        <h1></h1>
+        <h1></h1>
+    </div>
+</body>
+</html>

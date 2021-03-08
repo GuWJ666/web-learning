@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+            transition: 2s;
+            transform: rotate(45deg);
+        }
+
+        .box:hover {
+            transform: rotate(45deg) translateX(100px);
+        }
+        table{
+            border-collapse: collapse;
+        }
+        td{
+            border:1px solid;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="box"></div> -->
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+<script>
+    var g = 0,//好瓜数
+        b = 0,//坏瓜数
+        sum = 0,//好瓜加坏瓜数
+        x = 0;//坏瓜天数
+    for (i = 1; sum < 1001; i++) {
+        g += i;
+        if (i > 2) {
+            x++;
+            b += x;
+        } sum = g + b;
+        if (sum > 1000) {
+            break;
+        }
+    } console.log(i - 1, b - x); document.write('坏瓜' + (b - x) + '天数' + (i - 1) + '<br>');
+</script>
+
+</html>

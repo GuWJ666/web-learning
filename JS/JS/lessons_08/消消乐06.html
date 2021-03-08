@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 500px;
+            height: 500px;
+            background:lightgray;
+            margin: 0 auto;
+            display:flex;
+            justify-content: space-around;
+            align-content:space-around;
+            flex-flow:wrap row;
+        }
+        .items{
+            width: 100%;
+            display:flex;
+            justify-content: space-around;
+        }
+        .item{
+            border-radius:5px;
+            margin: 3px;
+        }
+        .pink{
+            background:lightsalmon;
+        }
+        .sky{
+            background: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+    </div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap');
+    
+    var level = 1;
+    // 创建块 行列
+    creat();
+    function creat(){
+        var h = Math.floor(wrap.clientHeight / level)-2;
+        for(var i=0;i<level;i++){
+            var items = document.createElement('div');
+            items.className = 'items';
+            items.style.height = h +'px';
+            wrap.appendChild(items);
+            for(var j=0;j<level;j++){
+                var item = document.createElement('div');
+                item.className = 'item pink';
+                item.style.width = h +'px';
+                item.style.width = h +'px';
+                item.index = j;
+                items.appendChild(item);
+                item.onclick = function(){
+                    color(this);
+                    this.previousElementSibling?color(this.previousElementSibling):111;
+                    this.nextElementSibling?color(this.nextElementSibling):111;
+                    var pre = this.parentNode.previousElementSibling;
+                    pre?color(pre.children[this.index]):111;
+                    var nex = this.parentNode.nextElementSibling;
+                    nex?color(nex.children[this.index]):111;
+                    up();
+                }
+            }
+        }
+    }
+    
+
+    function color(x){
+        if(x.className.indexOf('pink') > -1){
+            x.className = x.className.replace('pink','sky');
+        }else{
+            x.className  = x.className.replace('sky','pink');
+        }
+    }
+
+    function up(){
+        var el = document.querySelectorAll('.item');
+        var sk = document.querySelectorAll('.sky');
+        if(sk.length == el.length){
+            wrap.innerHTML = '';
+            level++;
+            creat();
+        }
+    }
+</script>
+</html>

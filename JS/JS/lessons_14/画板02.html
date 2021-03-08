@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* body{
+            margin-left:100px;
+        } */
+        #cv {
+            box-shadow: 5px 5px 10px black;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        .select {
+            background: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" value="画笔" class="select">
+    <input type="button" value="橡皮">
+    <input type="button" value="清空">
+    <input type="number" value="1">
+    <input type="color">
+    <input type="button" value="空心矩形">
+    <input type="button" value="实心矩形">
+    <br>
+    <canvas id="cv" width="800" height="500"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+    var inps = document.querySelectorAll('input');
+
+    var pen = {
+        type: 1,//规定，0就是橡皮，1就是画笔;
+        width: 1,//笔的粗细
+        color: '#000000',//笔的颜色
+    }
+
+    // 绑定事件
+    inps[0].onclick = function () {
+        // 选择画笔
+        this.className = 'select';
+        this.nextElementSibling.className = '';
+        this.nextElementSibling.nextElementSibling.nextElementSibling.className = '';
+        pen.type = 1;
+    }
+    
+    inps[1].onclick = function () {
+        // 选择橡皮
+        this.className = 'select';
+        this.previousElementSibling.className = '';
+        this.nextElementSibling.nextElementSibling.className = '';
+        pen.type = 0;
+    }
+    inps[2].onclick = function () {
+        cv.width = cv.width;
+    }
+    inps[3].onclick = function () {
+        // 选择矩形
+        this.className = 'select';
+        this.previousElementSibling.previousElementSibling.className = '';
+        this.previousElementSibling.previousElementSibling.previousElementSibling.className = '';
+        pen.type = 0;
+    }
+    inps[4].onchange = function () {
+        // 读取笔宽
+        if (Number(this.value) < 1) {
+            this.value = 1;
+        }
+        pen.width = Number(this.value)
+    }
+    inps[5].onchange = function () {
+        // 读取笔色
+        pen.color = this.value;
+    }
+
+    cv.onmousedown = function (e) {
+        var e = e || window.event;
+        var x = e.clientX - this.offsetLeft;
+        var y = e.clientY - this.offsetTop;
+        cf.beginPath();
+        cf.moveTo(x, y);
+        this.onmousemove = function (e) {
+            var e = e || window.event;
+            var x = e.clientX - this.offsetLeft;
+            var y = e.clientY - this.offsetTop;
+            cf.lineTo(x, y);
+            cf.lineWidth = pen.width;
+            var color = pen.type ? pen.color : '#ffffff';
+            cf.strokeStyle = color;
+            cf.stroke();
+        }
+        this.onmouseup = function () {
+            this.onmousemove = null;
+        }
+    }
+</script>
+
+</html>

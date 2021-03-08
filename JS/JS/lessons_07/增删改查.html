@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            width: 600px;
+            background: gray;
+            padding: 10px 0;
+            text-align: center;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
+
+        span {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            background: #fff;
+            line-height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .content {
+            background: lightgray;
+            width: 600px;
+            height: 200px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 200px;
+            font-size: 100px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="wrap">
+            <span>添加</span>
+            <span>删除</span>
+            <span>大于0</span>
+            <span>小于0</span>
+            <span>刷新</span>
+        </div>
+    </div>
+
+</body>
+<script>
+    var box = document.getElementsByClassName('box')[0];
+    var arr = [];
+    var arr1 = [];
+    var arr2 = [];
+    function numFn() {
+        return Math.floor(Math.random() * 201 - 100);
+    }
+    var sps = document.getElementsByTagName('span');
+    sps[0].onclick = function () {
+        var n = document.createElement('div');
+        n.className = 'content';
+        n.innerHTML = numFn();
+        if(numFn() == 0){
+            numFn()
+        }
+        if(n.innerHTML>0){
+            arr1.push(n);
+            console.log(arr1);
+        }else{
+            arr2.push(n);
+            console.log(arr2);
+        }
+        arr.push(n);
+        document.body.firstElementChild.appendChild(n);
+    }
+    sps[1].onclick = function () {
+        if(box.children.length>1){
+            box.lastElementChild.remove();
+        }
+    }
+    sps[2].onclick = function(){
+
+        for(var i=0;i<arr.length;i++){
+            box.removeChild(arr[i]);
+           
+        }
+        for(var i=0;i<arr1.length;i++){
+            box.appendChild(arr1[i]);
+        }
+    } 
+    sps[3].onclick = function(){
+        for(var i=0;i<arr.length;i++){
+            box.removeChild(arr[i]);
+           
+        }
+        for(var i=0;i<arr2.length;i++){
+            box.appendChild(arr2[i]);
+        }
+    }
+    sps[4].onclick = function(){
+        for(var i=0;i<arr.length;i++){
+            box.appendChild(arr[i]);
+        }
+    }
+</script>
+
+</html>

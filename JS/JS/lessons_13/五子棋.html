@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wrap {
+            width: 585px;
+            margin: 10px auto;
+            padding: 30px;
+            background: rgb(179, 131, 43);
+        }
+
+        .clear::after {
+            display: block;
+            clear: both;
+            content: "";
+        }
+
+        ul {
+            width: 585px;
+            border: 1px solid #333;
+            border-bottom: none;
+            border-right: none;
+            position: relative;
+        }
+
+        .cell {
+            border: 1px solid #333;
+            border-left: none;
+            border-top: none;
+            float: left;
+            position: relative;
+        }
+
+        .ball {
+            border-radius: 50%;
+            position: absolute;
+            background: #333;
+            z-index: 10;
+        }
+
+        .white {
+            background: rgb(218, 214, 214);
+            border-radius: 50%;
+            position: absolute;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="chessboard clear">
+        </ul>
+    </div>
+</body>
+<script src="../lessons_12/jq.js/jquery.js"></script>
+<script>
+    $(function () {
+
+        // 创建棋盘
+        for (var i = 0; i < 225; i++) {
+            var line = new Board();
+            line.show();
+        }
+        var i = 1;
+        function Board() {
+            this.w = 38;
+            this.h = 38;
+            this.show = function () {
+                $('<li></li>').css({
+                    width: this.w + 'px',
+                    height: this.h + 'px'
+                }).addClass('cell').appendTo('.chessboard').on('click', function (e) {
+                    var ball = new Chess(this, x, y);
+                    ball.show();
+                    if (i % 2 == 0) {
+                        $(this).find('.ball').css('background', 'rgb(218, 214, 214)');
+                        console.log($(this).find('.ball'))
+                    }
+                    i++;
+                    var x = e.pageX, y = e.pageY;
+                    var l = $(this).offset().left + $(this).width() / 2, t = $(this).offset().top + $(this).height() / 2;
+                    console.log(l, t)
+                    console.log(x, y)
+                    if (x >= l && y >= t) {
+                        $(this).find('.ball').css({
+                            left: '19px',
+                            top: '19px'
+                        })
+                    }
+                    if (x < l && y < t) {
+                        $(this).find('.ball').css({
+                            left: '-19px',
+                            top: '-19px'
+                        })
+                    }
+                    if (x >= l && y < t) {
+                        $(this).find('.ball').css({
+                            left: '19px',
+                            top: '-19px'
+                        })
+                    }
+                    if (x < l && y >= t) {
+                        $(this).find('.ball').css({
+                            left: '-19px',
+                            top: '19px'
+                        })
+                    }
+                    $(this).off('click');
+                });
+            }
+        }
+
+
+        // 创建棋子
+        function Chess(p, x, y) {
+            this.w = 38;
+            this.h = 38;
+            this.show = function () {
+                $('<div></div>').css({
+                    width: this.w + 'px',
+                    height: this.h + 'px',
+                    // left:x + 'px',
+                    // top:y + 'px'
+                }).addClass('ball').appendTo(p);
+            }
+        }
+    })
+
+
+</script>
+
+</html>

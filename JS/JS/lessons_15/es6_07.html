@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 对象的拓展
+    // 1.对象属性和方法的简写
+    // {   
+    //     let uname = '小王';
+    //     let age = 20;
+    //     let obj = {
+    //         uname,
+    //         age,
+    //         say(){
+    //             console.log(`${this.uname},今年${this.age}岁`);
+    //         }
+    //     }
+    //     obj.say();
+    // }
+    // // 2.属性名表达式
+    // {
+    //     let key = new Object();
+    //     let obj = {
+    //         [key]:'夏普王'
+    //     }
+    //     console.log(obj[key]);
+    // }
+    // 3.对象属性的描述枚举
+    // {
+    //     let obj = {name:'小王'};
+    //     console.log(Object.getOwnPropertyDescriptor(obj,'name'));
+    // }
+    // 4.super关键字
+    {
+        // 只能在对象的方法中使用，在对象的方法外就会报错，指向调用方法的对象的原型
+        Object.prototype.type = 'Object';
+        let obj = {
+            fn(){
+                console.log(this.type);
+                console.log(super.type);//原型上的属性
+            }
+        }
+        obj.fn();
+    }
+    // 5.对象的拓展运算符
+    {
+        let o = {x:20,y:100};
+        let p = {...o};
+        console.log(p);
+
+        function A(){}
+        A.prototype = {
+            a:'a',
+            b:'b',
+            c:'c'
+        }
+
+        function B(){}
+        // for(let x in A.prototype){
+        //     B.prototype[x] = A.prototype[x];
+        // }
+        B.prototype = {...A.prototype};
+        let b= new B();
+        console.log(b.a);
+    }
+
+    // Object.assign():对象的合并
+    {
+        let a = {a:'a'};
+        let b = {b:'b'};
+        let c = {c:'c'};
+        let d = Object.assign(a,b,c);
+        console.log(d);
+    }
+
+    //class语法：es6中声明类的方式，本质上韩式构造函数，只不过对写法上进行了包装，使其更接近面向对象
+    {
+        class Student{
+            // 构造方法
+            // 只要通过new 来创建的时候就会调用这个方法
+            constructor(name,age,sex){
+                this.name = name;
+                this.age = age;
+                this.sex = sex;
+            }
+
+            // 添加方法
+            work(){
+                console.log(`我是${this.name},我爱学习`);
+            }
+        }
+
+        function People(name,age,sex){
+            this.name = name;
+            this.age= age;
+            this.sex = sex;
+        }
+        let s1 = new Student('张三',20,'男');
+        // console.log(s1.constructor.prototype === Student.prototype);
+        s1.work();
+        let p1 = new People;
+        console.log(p1);
+
+        // 与构造函数的区别，语法上更加严谨，class声明的类功能就是创建对象，必须配合new来使用，但是构造函数写法不使用new依然可以调用，不会报错
+
+        // 继承：extends实现继承
+        class MiddleStudent extends Student{
+            constructor(name,age,sex,time){
+                // 需要先调用父类的构造方法
+                super(name,age,sex);//调用父类的构造方法,
+                this.time = '青春期';
+            }
+
+            favorite(){
+                console.log('我是一个初中生，我这个年纪最喜欢认亲人');
+            }
+
+        }
+
+        let ms = new MiddleStudent('小张',13,'男');
+        console.log(ms.name);ms.favorite()
+
+    }
+</script>
+</html>

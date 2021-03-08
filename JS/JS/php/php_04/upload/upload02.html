@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原生ajax上传文件</title>
+</head>
+<body>
+    <input type="file">
+    <input type="button" value="上传">
+</body>
+<script>
+    var inp = document.querySelectorAll('input');
+    inp[0].onchange = function(){
+        // 读取所选图片数据，并创建img标签显示预览
+        var file = this.files[0];
+        // h5新增对象FileReader
+        var fr = new FileReader();
+        // 从file对象中读取数据
+        fr.readAsDataURL(file);
+        // read回调
+        fr.onload = function(){
+            // 数据读取完成，通过FileReader对象的result属性查看读取结果
+            // console.log(this.result);
+            var img = new Image();
+            img.src = this.result;
+            document.body.appendChild(img);
+        }
+    }
+    inp[1].onclick = function(){
+        // 获取用户选择要上传的图片数据(file类型表单的files属性来获取)
+        var file = inp[0].files[0];//下标0代表的是file对象
+
+        // 开始ajax
+        var xhr = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');
+        xhr.open('post','./upload.php',true);
+        // 通常情况下，发送post请求时需要建立请求头，上传文件时不建立请求头，让其自己判断发送文件的类型
+
+        // 处理数据，将数据进行同一格式包装FormData;
+        // FormData新增对象,后台可识别的一个数据对象
+        var data = new FormData();
+        // 通过append方法来向FormData对象添加内容
+        data.append('file',file);
+        xhr.send(data);
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200){
+                console.log(xhr.responseText);
+            }
+        }
+    }
+
+</script>
+</html>

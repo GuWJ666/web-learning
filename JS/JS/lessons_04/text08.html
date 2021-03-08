@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var a = [];//创建第一个数组，用来装10个随机数
+    var b = [];//创建第二个数组，用来装没有重复的第一个数组
+    for(var i=0;i<10;i++){//10次循环
+        var c = Math.round(Math.random()*20+10);//生成一个随机数
+        a.push(c);//将生成的随机数放到第一个空数组中
+        if(b.indexOf(a[i]) == -1){//如果第一个数组中的数在第二个数组中没有
+            b.push(a[i]);//就将它放到第二个数组中。
+        }
+    }
+    console.log(a,b);
+</script>
+</html>

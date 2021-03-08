@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            user-select: none;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        #wrap {
+            width: 480px;
+            height: 580px;
+            border: 10px solid lightgray;
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+
+        #wrap>span:nth-child(1) {
+            float: left;
+            font-size: 25px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        #wrap>span:nth-child(2) {
+            float: right;
+            font-size: 25px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        h1 {
+            height: 350px;
+            margin-top: 50px;
+            text-align: center;
+            line-height: 350px;
+            font-size: 150px;
+            cursor: pointer;
+        }
+
+        p {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .box {
+            height: 120px;
+            display: flex;
+            justify-content: space-around;
+            background: lightgray;
+        }
+
+        .box>span {
+            font-size: 30px;
+            line-height: 120px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <span>倒计时：<span id="time">60</span>s</span>
+        <span>得分：<span id="score">00</span></span>
+        <h1 id="button">黄</h1>
+        <p>根据👆字体颜色选出👇对应描述</p>
+        <div class="box">
+            <span class="btn">红</span>
+            <span class="btn">黄</span>
+            <span class="btn">蓝</span>
+            <span class="btn">绿</span>
+            <span class="btn">黑</span>
+        </div>
+    </div>
+</body>
+<script>
+    var timeEl = document.getElementById('time'),
+        scoreEl = document.getElementById('score'),
+        bun = document.getElementById('button'),
+        btns = document.querySelectorAll('.btn');
+
+    var arrText = ['红', '黄', '蓝', '绿', '黑'];
+    var arrColor = ['red', 'yellow', 'blue', 'green', 'black'];
+
+
+    var score = 0;
+    var time = 10;
+
+    var timer1 = null,
+        lock = false;
+
+    random();
+
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function () {
+            if (lock) {
+                return;
+            }
+            if (arrText.indexOf(this.innerHTML) == arrColor.indexOf(bun.style.color)) {
+                score++;
+                scoreEl.innerHTML = zero(score);
+                timer();
+                random();
+            } else {
+                random();
+                score--;
+                score = score < 0 ? 0 : score;
+                scoreEl.innerHTML = zero(score);
+            }
+        }
+    }
+
+    bun.onclick = function () { 
+        clearInterval(timer1);
+        score = 0;
+        time = 10;
+        scoreEl.innerHTML = zero(score);
+        timeEl.innerHTML = zero(time);
+        lock = false;
+        timer1 = null;
+        random();
+    }
+
+    function timer() {
+        if (!timer1) {
+            timer1 = setInterval(function () {
+                time--;
+                timeEl.innerHTML = zero(time);
+                if (time == 0) {
+                    clearInterval(timer1);
+                    lock = true;
+                    setTimeout(function () {
+                        alert('游戏结束，得分：' + score)
+                    }, 100)
+                }
+            }, 1000)
+        }
+    }
+
+    function random() {
+        bun.innerHTML = arrText[rn(0, 4)];
+        bun.style.color = arrColor[rn(0, 4)];
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].innerHTML = arrText[rn(0, arrText.length - 1)];
+            btns[i].style.color = arrColor[rn(0, arrColor.length - 1)];
+            arrText.splice(arrText.indexOf(btns[i].innerHTML), 1);
+            arrColor.splice(arrColor.indexOf(btns[i].style.color), 1);
+        }
+        arrText = ['红', '黄', '蓝', '绿', '黑'];
+        arrColor = ['red', 'yellow', 'blue', 'green', 'black'];
+    }
+
+
+    function rn(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+    }
+
+    function zero(x) {
+        return x = x < 10 ? '0' + x : x;
+    }
+</script>
+
+</html>

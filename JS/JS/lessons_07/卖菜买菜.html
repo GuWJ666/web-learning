@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        li {
+            width: 700px;
+            border: 3px solid #ccc;
+            margin: 0 auto;
+            display: flex;
+            flex-flow: nowrap row;
+            padding: 20px 10px;
+        }
+
+        span {
+            padding: 50px;
+        }
+
+        li:nth-child(1)>span {
+            padding: 0;
+            cursor: pointer;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .twins {
+            width: 20px;
+            height: 20px;
+            background: lightblue;
+            text-align: center;
+            line-height: 20px;
+            display: inline-block;
+            margin-top: 50px;
+            cursor: pointer;
+        }
+
+        #delete {
+            margin: 0 5px;
+        }
+        .num{
+            padding-right:10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul>
+            <li>
+                <input type="checkbox" name="select">
+                <span class="btn">全选</span>
+                <span id="delete">删除选中商品</span>
+                <span id="nav"></span>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img1.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">20</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img2.png" alt="">
+                <span>绿色生态好白菜</span>
+                <span class="price">17</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img3.png" alt="">
+                <span>天然无公害花菜</span>
+                <span class="price">24</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img4.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">14</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img5.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">16</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img6.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">11</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img7.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">25</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img8.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">13</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img9.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">18</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+            <li>
+                <input type="checkbox" name="select">
+                <img src="img/img10.png" alt="">
+                <span>绿色认证好猪肉</span>
+                <span class="price">21</span>
+                <span class="num"></span>
+                <div>
+                    <div class="twins btn1">+</div>
+                    <div class="twins btn2">-</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    var btn = document.getElementsByClassName('btn')[0];//获取按钮
+    var ins = document.getElementsByTagName('input');//获取复选框
+    var nav = document.getElementById('nav');//获取概述标签，用来改变变量
+    var price = document.getElementsByClassName('price');//获取价格标签
+    var num = document.getElementsByClassName('num');//获取个数标签
+    var btn1 = document.getElementsByClassName('btn1');//获取加号按钮
+    var btn2 = document.getElementsByClassName('btn2');//获取减号按钮
+    var dele = document.getElementById('delete');//删除按钮
+    var ls =document.getElementsByTagName('li');//li标签集合
+    // ins[0].onclick = function () {
+    //     ins.checked = false;
+    //     selectAll();
+    //     ins[0].checked = true;
+    // }
+    btn.onclick = function () {
+        selectAll();
+    }
+    // 遍历价格
+    for (var i = 0; i < price.length; i++) {
+        var p = Number(price[i].innerHTML);
+    }
+    // 全选函数
+    function selectAll() {
+        for (var i = 0; i < ins.length; i++) {
+            if (ins[i].checked == true) {
+                ins[i].checked = false;
+                n = 0;
+                m = 0;
+                nav.innerHTML = '已选中商品' + ' ' + n + ' ' + '件，总价格为：（不含运费）' + m;
+            } else {
+                ins[i].checked = true;
+                n = i;
+                m += p;
+                nav.innerHTML = '已选中商品' + n + '件，总价格为：（不含运费）' + m;
+            }
+        }
+    }
+    // 概述标签
+    var n = 0;//商品件数
+    var m = 0;//商品总价
+    var number = 1;//单个商品个数
+    nav.innerHTML = '已选中商品' + ' ' + n + ' ' + '件，总价格为：（不含运费）' + m;
+    // 添加单个商品个数文本
+    for (var i = 0; i < num.length; i++) {
+        num[i].innerHTML = '0' + 1;
+    }
+    // 加号
+    for (var i = 0; i < num.length; i++) {
+        (function (i) {
+            btn1[i].onclick = function () {
+                number++;
+                number = number < 10 ? '0' + number : number;
+                num[i].innerHTML = number;
+                n = number;
+                m = Number(price[i].innerHTML)*n;
+                nav.innerHTML = '已选中商品' + ' ' + n + ' ' + '件，总价格为：（不含运费）' + m;
+                if (btn1[i].onclick == false) {
+                    number = 1;
+                }
+            }
+        })(i)
+    }
+
+    // 单选
+    ins[1].onclick = function () {
+        if (ins[1].checked == true) {
+            var q = Number(num[0].innerHTML);
+            var p = Number(price[0].innerHTML) * q;
+            nav.innerHTML = '已选中商品' + ' ' + q + ' ' + '件，总价格为：（不含运费）' + p;
+        } else {
+            var p = 0;
+            var q = 0;
+            nav.innerHTML = '已选中商品' + ' ' + q + ' ' + '件，总价格为：（不含运费）' + p;
+        }
+    }
+
+    // 删除
+    for (var i = 0; i < ins.length; i++) {
+        (function (i) {
+            if (ins[i].chicked) {
+                dele.onclick = function () {
+                    ls[i].remove();
+                    console.log(111)
+                }
+            }
+        })(i)
+    }
+
+</script>
+
+</html>

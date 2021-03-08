@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap{
+            width: 500px;
+            height: 600px;
+            border:10px solid lightgray;
+            margin:0 auto;
+            text-align: center;
+            padding-top:10px;
+        }
+        h1{
+            margin:0;
+        }
+        h1:nth-child(1){
+            float:left;
+            margin-left:5px;
+        }
+        h1:nth-child(2){
+            float:right;
+            margin-right:5px;
+        }
+        h1:nth-child(3){
+            height: 300px;
+            font-size:150px;
+            text-align: center;
+            line-height:300px;
+            margin-top:50px;
+            cursor: pointer;
+        }
+        .box{
+            height: 200px;
+            background: lightgray;
+            line-height:200px;
+        }
+        span{
+            margin:0 20px;
+            font-size:40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1></h1>
+        <h1></h1>
+        <h1></h1>
+        <h3>根据👆字体颜色选出👇对应字的描述</h3>
+        <div class="box">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+<script>
+    var h1s = document.getElementsByTagName('h1'),
+        sps = document.getElementsByTagName('span');
+    var arrText = ['黄','红','蓝','绿','黑'],
+        arrColor = ['yellow','red','blue','green','black'];
+    var t = 10,
+        s = 0;
+    var timer = null,
+        lock = true,
+        begin = true;
+    h1s[0].innerHTML = '倒计时：' + concat(t) + 's';
+    h1s[1].innerHTML = '得分：' + concat(s);
+    // 随机数函数
+    function random(min,max){
+        return Math.floor(Math.random()*(max-min+1)+min);
+    }
+    // 拼0函数
+    function concat(num){
+        return num=num<10?'0'+num:num;
+    }
+    // 倒计时函数
+    function record(){
+        if(!timer){
+          timer =  setInterval(function(){
+                t--;
+                h1s[0].innerHTML = '倒计时：' + concat(t) + 's';
+                if(t == 0){
+                    lock = false;
+                    begin = false;
+                    clearInterval(timer);
+                    setTimeout(function(){
+                        alert('游戏结束，得分：' + concat(s));
+                        t=10;
+                        h1s[0].innerHTML = '倒计时：' + concat(t) + 's';
+                        s=0;
+                        h1s[1].innerHTML = '得分：' + concat(s);
+                    },10)
+                }
+            },1000)
+        }
+    }
+    // 样式
+    function style(){
+        h1s[2].innerHTML = arrText[random(0,4)];
+        h1s[2].style.color = arrColor[random(0,4)];
+        for(var i=0;i<sps.length;i++){
+            sps[i].innerHTML = arrText[random(0,arrText.length-1)];
+            arrText.splice(arrText.indexOf(sps[i].innerHTML),1);
+            sps[i].style.color = arrColor[random(0,arrColor.length-1)];
+            arrColor.splice(arrColor.indexOf(sps[i].style.color),1);
+        }
+        arrText = ['黄','红','蓝','绿','黑'],
+        arrColor = ['yellow','red','blue','green','black'];
+    }
+    // 点击
+    style();
+    for(var i=0;i<sps.length;i++){
+        // if(lock){
+            sps[i].onclick = function(){
+                if(!begin){
+                    return;
+                }
+                if(arrColor.indexOf( h1s[2].style.color) == arrText.indexOf(this.innerHTML)){
+                    s++;
+                    style();
+                    record();
+                }else{
+                    s--;
+                    style();
+                    if(s < 0){
+                        s=0;
+                    }
+                }
+                h1s[1].innerHTML = '得分：' + concat(s);
+            }
+        // }
+    }
+    h1s[2].onclick = function(){
+        clearInterval(timer);
+        s=0;
+        t=10;
+        h1s[0].innerHTML = '倒计时：' + concat(t) + 's';
+        h1s[1].innerHTML = '得分：' + concat(s);
+        style();
+        timer = null;
+        lock = true;
+        begin = true;
+    }
+</script>
+</html>

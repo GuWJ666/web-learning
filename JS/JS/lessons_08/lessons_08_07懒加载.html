@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img{
+            width: 800px;
+            height: 600px;
+            position:absolute;
+            left:0;
+        }
+        img:nth-child(1){
+            top:1000px;
+        }
+        img:nth-child(2){
+            top:2000px;
+        }
+        img:nth-child(3){
+            top:3000px;
+        }
+        img:nth-child(4){
+            top:4000px;
+        }
+        img:nth-child(5){
+            top:5000px;
+        }
+    </style>
+</head>
+<body>
+    <img msrc="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888405&di=6f062a7a9cdfbac441004d4dac475493&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201512%2F01%2F20151201130652_ULhVt.jpeg" alt="">
+    <img msrc="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888402&di=da384226096769121772607b8607156f&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201703%2F23%2F20170323172631_GduR4.jpeg" alt="">
+    <img msrc="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888401&di=8a3603f6b6ba27dfb9eb4d139e2489ed&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201709%2F14%2F20170914120533_2CAMH.jpeg" alt="">
+    <img msrc="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133888371&di=46cd01929f8f80a24e5c5d68a2aeb75f&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201307%2F04%2F20130704174743_t2Nij.jpeg" alt="">
+    <img msrc="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571133989413&di=a54f038d73cad0b8c7d4748c1ed4c67f&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201606%2F28%2F20160628200108_JaQYu.jpeg" alt="">
+</body>
+<script>
+    // 图片懒加载又叫图片延迟加载或按需加载，也是一种用户体验的优化手段，提升页面首次加载速度，减少不必要的资源消耗
+
+    // 当图片即将在页面上显示的时候，再去进行资源的加载
+    var imgs = document.querySelectorAll('img');
+    window.onscroll = function(){
+        var ch = document.documentElement.clientHeight;
+        var sh = document.documentElement.scrollTop;
+        // 视窗高度 + 页面滚动偏移 = 元素位置
+        for(var i=0;i<imgs.length;i++){
+            var th = imgs[i].offsetTop;
+            if(ch + sh >= th){
+                imgs[i].src = imgs[i].getAttribute('msrc');
+            }
+        }
+    }
+</script>
+</html>

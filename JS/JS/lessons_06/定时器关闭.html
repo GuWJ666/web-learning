@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    setInterval(function () {
+        console.log('hello');
+    }, 1000)
+    setInterval(function () {
+        console.log('world');
+    }, 1000)
+    // console.log(timer);
+    // console.log(timer2);
+    // clearInterval(1);
+    // clearInterval(2);
+
+    // 暴力关闭定时器
+    // 1.
+    // var timer3 = setInterval(function () {
+    //     for (var i = 1; i <= timer3; i++) {
+    //         clearInterval(i);
+    //     }
+    // },10)
+    // 2.
+    var timers = [];
+    timers.push(setInterval(function(){
+    },1000))
+    for(var i=0;i<timers.length;i++){
+        clearInterval(timers[i]);
+    }
+</script>
+
+</html>

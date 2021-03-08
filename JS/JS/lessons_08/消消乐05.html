@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 500px;
+            height: 500px;
+            background: gray;
+            display: flex;
+            justify-content: space-around;
+            flex-flow:wrap row;
+            margin: 0 auto;
+        }
+        .items{
+            display: flex;
+            justify-content: space-around;
+            flex-flow:wrap row;
+            width: 100%;
+        }
+        .item{
+            margin:2px;
+            border-radius:5px;
+        }
+        .pink{
+            background:pink;
+        }
+        .brown{
+            background:brown;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap"></div>
+</body>
+<script>
+    var wrap = document.getElementById('wrap');
+    var level = 1;//关卡
+    creat();
+
+    function creat(){
+        var h = Math.floor(wrap.clientHeight/level)-4;
+        for(var i=0;i<level;i++){//行
+        // var items = document.createElement('div');
+        // items.className = 'items';
+        // items.style.height = h + 'px';
+        // wrap.appendChild(items);
+            for(var j=0;j<level;j++){//列
+                var item = document.createElement('div');
+                item.className = 'item pink';
+                item.style.width = h + 'px';
+                item.style.height = h + 'px';
+                item.x = i;
+                item.y = j;
+                wrap.appendChild(item);
+                item.onclick = function(){
+                    cbg(this);
+                    var sx = this.x,sy = this.y;
+                    for(var i=0;i<level*level;i++){
+                        var other = wrap.children[i];
+                        var ox = other.x,oy = other.y;
+                        if(sx == ox && (sy-1 == oy||sy+1 == oy)){
+                            cbg(other);
+                        }
+                        if(sy == oy && (sx -1 == ox || sx+1 == ox)){
+                            cbg(other);
+                        }
+                    }
+                    up();
+                }
+            }
+        }
+    }
+
+    function cbg(el){
+        if(el.className.indexOf('pink') > -1){
+            el.className = el.className.replace('pink','brown');
+        }else{
+            el.className = el.className.replace('brown','pink');
+        }
+    }
+
+    function up(){
+        var its = document.querySelectorAll('.item');
+        var browns =document.querySelectorAll('.brown');
+        if(its.length == browns.length){
+            setTimeout(function(){
+                wrap.innerHTML = '';
+                level++;
+                creat();
+            },100)
+        }
+    }
+</script>
+</html>

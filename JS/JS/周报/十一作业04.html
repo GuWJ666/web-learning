@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 400px;
+            height: 400px;
+            border:5px solid #000;
+            margin:100px auto;
+            position:relative;
+            overflow: hidden;
+        }
+        #image{
+            height: 350px;
+            width: 700%;
+            position:absolute;
+            left:-400px;
+            top:0;
+        }
+        .photo{
+            width: 400px;
+            height: 350px;
+            float:left;
+            text-align:center;
+            line-height: 350px;
+            font-size:100px;
+        }
+        .button{
+            width: 100%;
+            height: 50px;
+            background: gray;
+            position:absolute;
+            left:0;
+            bottom:0;
+        }
+        .btn{
+            width: 80px;
+            height: 100%;
+            float:left;
+            text-align:center;
+            line-height:50px;
+            font-size:30px;
+            cursor:pointer;
+        }
+        #active{
+            background: #f7f6f6;
+            color:blue;
+        }
+        #lastPage{
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,.5);
+            border-radius:50%;
+            text-align: center;
+            line-height:50px;
+            position:absolute;
+            left:0;
+            top:150px;
+            z-index: 10;
+            color:#fff; 
+            cursor:pointer;      
+        }
+        #nextPage{
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,.5);
+            border-radius:50%;
+            text-align: center;
+            line-height:50px;
+            position:absolute;
+            right:0;
+            top:150px;
+            z-index: 10;
+            color:#fff;  
+            cursor:pointer;  
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="image">
+                <div class="photo" style="background: crimson">5</div>
+            <div class="photo" style="background: hotpink">1</div>
+            <div class="photo" style="background: darkgoldenrod">2</div>
+            <div class="photo" style="background: antiquewhite">3</div>
+            <div class="photo" style="background: cyan">4</div>
+            <div class="photo" style="background: crimson">5</div>
+            <div class="photo" style="background: hotpink">1</div>
+        </div>
+        <div id="lastPage">←</div>
+        <div id="nextPage">→</div>
+        <div class="button">
+            <div class="btn" id="active">1</div>
+            <div class="btn">2</div>
+            <div class="btn">3</div>
+            <div class="btn">4</div>
+            <div class="btn">5</div>
+        </div>
+    </div>
+</body>
+<script src="tween.js"></script>
+<script>
+    // 1.获取元素
+    var img = document.getElementById('image'),//移动的父级盒子
+        phs = document.getElementsByClassName('photo'),//图片集合
+        btns = document.getElementsByClassName('btn'),//按钮集合
+        last = document.getElementById('lastPage'),//上一页按钮
+        next = document.getElementById('nextPage');//下一页按钮
+    var timer = null,//点击事件定时器的开关
+        photoTimer = null,//自动轮播中图片轮播定时器的开关
+        autoTimer = null,//自动轮播图的定时器开关
+        nextTimer = null,//下一页的定时器开关
+        nextLock = false,//下一页的点击开关
+        lastTimer = null,//上一页的定时器开关
+        lastLock = false;//上一页的点击开关
+    var m = 0;//记录按钮的下标，用来清除点击过后的样式
+    autoPlay();
+    // 2.给按钮绑定点击事件
+    for(var i=0;i<btns.length;i++){
+        (function(i){//闭包函数，用来存储i（形参）
+            btns[i].onclick = function(){//用存储的i来进行点击事件
+            // 按钮的点击样式
+                btns[m].id = '';//先将按钮样式清空
+                btns[i].id = 'active';//给点击的按钮添加id名赋予样式
+                m = i;//给下标m赋值为i，此时i为点击过后的下标
+            // 按钮点击时图片移动
+                // 使用tween.js
+                var t = 0,//开始步数
+                    b = img.offsetLeft,//开始位置
+                    c = (i+1) * (-400) - b,//改变量，结束位置-开始位置
+                    d = 10;//总步数
+                clearInterval(timer);//下一次点击先关上次的定时器
+                clearInterval(autoTimer);//下一次点击关闭自动轮播的定时器
+                timer = setInterval(function(){
+                    t++;//步数累加
+                    img.style.left = Tween.Linear(t,b,c,d) + 'px';
+                    if( t == d){
+                        clearInterval(timer);//走到总的步数后，就把定时器关掉
+                        autoPlay();//点击完成动画后，重新开启自动轮播
+                    }
+                },20)
+            }
+        })(i)//实参
+    }
+    // 3.自动轮播函数
+    function autoPlay(){
+        autoTimer = setInterval(function(){
+        // 按钮样式轮播
+            btns[m].id = '';//清空上一个按钮的样式
+            m++;//下一个按钮的下标
+            m = m > 4 ? 0 : m;//下标是否大于4，大于4就重新赋值为0，小于4为它本身
+            btns[m].id = 'active';//下一个按钮的样式
+        // 图片轮播
+           var t = 0,
+               b = img.offsetLeft,//开始位置
+               c = -400,//改变量，走一次为一个图片的宽度
+               d = 10;
+            clearInterval(photoTimer);
+            photoTimer = setInterval(function(){
+                t++;
+                img.style.left = Tween.Linear(t,b,c,d) + 'px';
+                if(t == d){
+                    clearInterval(photoTimer);
+                    if(img.offsetLeft == -2400 || img.offsetLeft < -2400){
+                        img.style.left = -400+'px';
+                    }
+                }
+            },20)
+        },3000)
+    }
+    // 下一页
+    next.onclick = function(){
+        if(nextLock){//当lock为true时进入判断
+            return;//结束点击函数
+        }
+        nextLock = true;
+        // 按钮样式改变
+        btns[m].id = '';
+        m++;
+        m = m>4?0:m;
+        btns[m].id = 'active';
+        // 图片移动
+        var t = 0,
+            b = img.offsetLeft,
+            c = -400,
+            d = 10;
+        clearInterval(nextTimer);
+        clearInterval(autoTimer);
+        nextTimer = setInterval(function(){
+            t++;
+            img.style.left = Tween.Linear(t,b,c,d) + 'px';
+            if(t == d){
+                nextLock = false;
+                clearInterval(nextTimer);
+                autoPlay();
+                if(img.offsetLeft == -2400){
+                    img.style.left = -400+'px';
+                }
+            }
+        },20)
+    }
+    // 上一页
+    last.onclick = function(){
+        if(lastLock){
+            return;
+        }
+        lastLock = true;
+        btns[m].id = '';
+        m--;
+        m = m<0?4:m;
+        btns[m].id = 'active';
+
+        var t = 0,
+            b = img.offsetLeft,
+            c = 400,
+            d = 10;
+        clearInterval(lastTimer);
+        clearInterval(autoTimer);
+        lastTimer = setInterval(function(){
+            t++;
+            img.style.left = Tween.Linear(t,b,c,d)+'px';
+            if(t == d){
+                lastLock = false;
+                clearInterval(lastTimer);
+                autoPlay();
+                if(img.offsetLeft == 0){
+                    img.style.left = -2000+'px';
+                }
+            }
+        },20)
+    }
+</script>
+</html>

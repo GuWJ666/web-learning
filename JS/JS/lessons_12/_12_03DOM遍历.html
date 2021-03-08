@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jq.js/jquery.min.js"></script>
+</head>
+
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li class="t">3</li>
+        <li>
+            <ul>
+                <li>11</li>
+                <li>22</li>
+                <li class="t">33</li>
+            </ul>
+        </li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+    </ul>
+    <div class="t">5</div>
+    <ul>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+    </ul>
+</body>
+<script>
+    $(function () {
+        // DOM遍历：根据DOM之间的关系来获取DOM
+        // 父关系
+        // js:parentNode/parentElement
+        // jq:
+        // parent()返回当前元素的直接父元素
+        // $('ul>li').parent().css('background', 'red')
+        // parents()返回当前元素的所有父元素
+        // console.log($('li').parents())
+        // parentsUntil()返回当前元素的父元素，直到指定的父元素位置
+        // console.log($('li').parentsUntil($('body')))
+
+        // 子关系
+        // js:childNodes,children
+        // jq:
+        // children()
+        // find();从所有后代元素中找符合条件的元素
+        // $('ul').find('.t').css('background','red');
+        // console.log($('ul').children())
+
+        // 同胞关系
+        // js：previousSibling --> previousElementSibling  / nextSibling --> nextElementSibling
+        // jq:
+        // next()后一个相邻的兄弟元素
+        // $('li:eq(4)').next().css('background','red');
+        // prev()前一个相邻的兄弟元素
+        // $('li:eq(4)').prev().css('background','red');
+        // $('li:eq(4)').css('background','yellow').next().css('background','red').prev().prev().css('background','red');
+
+        // nextAll():当前元素后面的所有兄弟元素
+        // $('ul>li:first').nextAll().css('background','red');
+        // nextUntil():当前元素后面的兄弟元素直到指定的元素为止
+        $('ul>li:first').nextUntil($('ul>li:last')).css('background','red');
+        // prevAll(),prevUntil()与next的用法相同
+
+        // 创建元素
+        // var div = $('<div></div>')
+        // var div = $('<div class="box"></div>').css({
+        //     width:'200px',
+        //     height:'200px',
+        //     background:'red'
+        // });
+        
+
+        // 添加
+        // append()
+        // $('body').append(div);
+
+        // appendTo()
+        // div.appendTo($('body'));
+
+        // prepend()
+        // $('body').prepend(div);
+
+        // prependTo()
+        // div.prependTo($('body'));
+
+        // before()在找到的元素前添加指定元素
+        var div = $('<div></div>').css({
+            width:'100px',
+            height:'100px',
+            background:'green'
+        })
+        $('li:eq(0)').before(div);
+
+        // after()在找到的元素后添加指定元素
+        // $('li:eq(5)').after(div);
+
+        
+        // 删除
+        // remove();
+        // empty()：将指定元素内容置空
+        // $('ul').empty()
+    })
+</script>
+
+</html>

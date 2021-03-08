@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap{
+            width: 400px;
+            height: 400px;
+            border:10px solid khaki;
+            margin:100px auto;
+            position: relative;
+            user-select: none;
+            overflow: hidden;
+        }
+        #box{
+            width: 700%;
+            height: 350px;
+            position: absolute;
+            left:-400px;
+            top:0;
+        }
+        .photo{
+            width: 400px;
+            height: 100%;
+            text-align:center;
+            line-height:350px;
+            font-size:100px;
+            float:left;
+            cursor: pointer;
+        }
+        #last{
+            width: 50px;
+            height: 50px;
+            border-radius:50%;
+            background: rgba(0,0,0,.4);
+            position:absolute;
+            left:0;
+            top:150px;
+            text-align:center;
+            line-height:50px;
+            color:#fff;
+            font-size:25px;
+            cursor: pointer;
+        }
+        #next{
+            width: 50px;
+            height: 50px;
+            border-radius:50%;
+            background: rgba(0,0,0,.4);
+            position:absolute;
+            right:0;
+            top:150px;
+            text-align:center;
+            line-height:50px;
+            color:#fff;
+            font-size:25px;
+            cursor: pointer;
+        }
+        .button{
+            height: 50px;
+            position:absolute;
+            left:0;
+            bottom:0;
+            background: #ccc;
+        }
+        .btn{
+            width: 80px;
+            height: 100%;
+            text-align:center;
+            line-height:50px;
+            float:left;
+            font-size:25px;
+            font-weight:bold;
+            cursor: pointer;
+        }
+        #active{
+            background: aliceblue;
+            color:lightsalmon;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div id="box">
+            <div class="photo" style="background: fuchsia">哞</div>
+            <div class="photo" style="background: aqua">唵</div>
+            <div class="photo" style="background:tomato ">嘛</div>
+            <div class="photo" style="background:orange ">呢</div>
+            <div class="photo" style="background: plum">叭</div>
+            <div class="photo" style="background: fuchsia">哞</div>
+            <div class="photo" style="background: aqua">唵</div>
+        </div>
+        <div id="last">←</div>
+        <div id="next">→</div>
+        <div class="button">
+            <div class="btn" id="active">1</div>
+            <div class="btn">2</div>
+            <div class="btn">3</div>
+            <div class="btn">4</div>
+            <div class="btn">5</div>
+        </div>
+    </div>
+</body>
+<script src="tween.js"></script>
+<script>
+    var box = document.getElementById('box'),
+        last = document.getElementById('last'),
+        next = document.getElementById('next'),
+        btns = document.getElementsByClassName('btn');
+    var m = 0;
+    var lastTimer = null,lastLock = false;
+    var timer = null;
+    var timer1 = null;
+    last.onclick = function(){
+        if(lastLock){
+            return;
+        }
+        lastLock = true;
+        btns[m].id = '';
+        m--;
+        m = m<0?4:m;
+        btns[m].id = 'active';
+        var t=0,
+            b = box.offsetLeft,
+            c = 400,
+            d = 20;
+        clearInterval(lastTimer);
+        clearInterval(autoTimer);
+        lastTimer = setInterval(function(){
+            t++;
+            box.style.left = Tween.Linear(t,b,c,d)+'px';
+            if(t ==d){
+                lastLock = false;
+                clearInterval(lastTimer);
+                autoFn();
+                if(box.offsetLeft >= 0){
+                    box.style.left = -2000+'px';
+                    clearInterval(lastTimer);
+                }
+            }
+        },30)
+    }
+    next.onclick = function(){
+        if(lastLock){
+            return;
+        }
+        lastLock = true;
+        btns[m].id = '';
+        m++;
+        m = m>4?0:m;
+        btns[m].id = 'active';
+        var t=0,
+            b = box.offsetLeft,
+            c = -400,
+            d = 20;
+        clearInterval(lastTimer);
+        clearInterval(autoTimer);
+        lastTimer = setInterval(function(){
+            t++;
+            box.style.left = Tween.Linear(t,b,c,d)+'px';
+            if(t ==d){
+                autoFn();
+                lastLock = false;
+                clearInterval(lastTimer);
+                if(box.offsetLeft <= -2400){
+                    box.style.left = -400+'px';
+                    clearInterval(lastTimer);
+                }
+            }
+        },30)
+    }
+    for(var i=0;i<btns.length;i++){
+        (function(i){
+            btns[i].onclick = function(){
+                btns[m].id = '';
+                btns[i].id = 'active';
+                m = i;
+                var t = 0,
+                    b = box.offsetLeft,
+                    c = (i+1)*(-400) -b,
+                    d = 20;
+                clearInterval(timer);
+                clearInterval(autoTimer);
+                timer = setInterval(function(){
+                    t++;
+                    box.style.left = Tween.Linear(t,b,c,d)+'px';
+                    if(t == d){
+                        clearInterval(timer);
+                        autoFn();
+                    }
+                },30)
+            }
+        })(i)
+    }
+    function autoFn(){
+        autoTimer = setInterval(function(){
+            btns[m].id = '';
+            m++;
+            m = m>4?0:m;
+            btns[m].id = 'active';
+            var t = 0,
+                b = box.offsetLeft,
+                c = -400;
+                d = 20;
+            clearInterval(timer1);
+            timer1 = setInterval(function(){
+                t++;
+                box.style.left = Tween.Linear(t,b,c,d)+'px';
+                if(t == d){
+                    clearInterval(timer1);
+                    if(box.offsetLeft <= -2400){
+                        box.style.left = -400+'px';
+                        clearInterval(timer1);
+                    }
+                }
+            },30)
+        },3000)
+    }
+    autoFn();
+</script>
+</html>

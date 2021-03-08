@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .image {
+            position: absolute;
+            width: 200px;
+            bottom: 0;
+        }
+
+        .gold {
+            width: 100px;
+            position: absolute;
+            top: -100px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="img/pen.png" alt="" class="image">
+    <h1>0</h1>
+</body>
+<script>
+    var image = document.querySelector('.image');//碗
+    var h1 = document.getElementsByTagName('h1')[0];
+    var w = document.documentElement.clientWidth - image.clientWidth;//最大宽度
+    var h = document.documentElement.clientHeight;//最大高度
+
+    var i = 0;
+
+
+    var left = rn(0, w);
+    image.style.left = left + 'px';
+    // 反复横跳
+    document.onkeydown = function (e) {
+        var e = e || window.event;
+        var l = image.offsetLeft;
+        if (e.keyCode == 37) {
+            if (l >= 0) {
+                l -= 10;
+                image.style.left = l + 'px';
+            }
+        }
+        if (e.keyCode == 39) {
+            if (l < w) {
+                l += 10;
+                image.style.left = l + 'px';
+            }
+        }
+    }
+    document.onkeyup = function (e) {
+        var e = e || window.event;
+
+    }
+
+    function rn(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+    }
+    creat();
+    var d = document.documentElement.clientHeight;
+    var f = image.clientHeight;
+    var left, t;
+    console.log(d, f, (d - f))
+    function creat() {
+        var timer = setInterval(function () {
+            var img = new Image();
+            img.className = 'gold';
+            img.style.left = rn(0, w) + 'px';
+            img.src = 'img/jin.png';
+            document.body.appendChild(img);
+            var top = img.offsetTop;//金币的top
+            left = img.offsetLeft;//金币的left  
+
+            var timer1 = setInterval(function () {
+                t = image.offsetLeft;//碗的left
+                top++;
+                img.style.top = top + 'px';
+                if (top >= 500) {
+                    console.log(t)
+                    if (img.offsetLeft < image.offsetLeft + 200 && img.offsetLeft >= image.offsetLeft) {
+                        img.remove();
+                        i+=1;
+                        h1.innerHTML = i;
+                    }
+                }
+                if (top >= h - img.clientHeight) {
+                    clearInterval(timer1);
+                    img.remove();
+                }
+            }, rn(1,20))
+
+        }, rn(1000,2000))
+        if (left < t + 120 && left >= t) {
+            h1.innerHTML = i++;
+        }
+
+    }
+</script>
+
+</html>

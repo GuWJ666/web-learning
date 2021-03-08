@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            text-align:center;
+        }
+        #cv {
+            box-shadow: 5px 5px 10px gray;
+            background: cornflowerblue;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cv" width="800" height="600"></canvas>
+</body>
+<script>
+    var cv = document.querySelector('#cv');
+    var cf = cv.getContext('2d');
+    // 图类
+
+    function Map(size) {
+        this.size = size;
+    }
+    Map.prototype.draw = function () {
+        for (var i = 0; i < cv.width / this.size; i++) {
+            cf.beginPath();
+            cf.moveTo(i * this.size, 0);
+            cf.lineTo(i * this.size, cv.height);
+            cf.stroke();
+        }
+        for (var i = 0; i < cv.height / this.size; i++) {
+            cf.beginPath();
+            cf.moveTo(0, i * this.size);
+            cf.lineTo(cv.width, i * this.size);
+            cf.stroke();
+        }
+    }
+    var map = new Map(20);
+    // map.draw();
+
+    // 蛇类
+    function Snake(x, y) {
+        this.x = x;//x坐标
+        this.y = y;//y坐标
+        this.size = map.size;//宽和高
+        this.bodys = [];//🐍身体
+        this.bodyl = 2;//🐍身长
+        this.hc = 'green';
+        this.bc = 'gray';
+    }
+    Snake.prototype.dir = 39;//方向
+    Snake.prototype.lock = false;//键盘按键的时间锁
+    Snake.prototype.drawHead = function () {
+        cf.beginPath();
+        cf.fillStyle = this.hc;
+        cf.fillRect(this.x, this.y, this.size, this.size);
+    }
+
+    Snake.prototype.drawBody = function () {
+        for (var i = 0; i < this.bodys.length; i++) {
+            var s = this.bodys[i];
+            cf.beginPath();
+            cf.fillStyle = this.bc;
+            cf.fillRect(s.x, s.y, this.size, this.size);
+        }
+    }
+    Snake.prototype.move = function () {
+        this.bodys.push(new Snake(this.x, this.y));
+        if (this.bodys.length > this.bodyl) {
+            this.bodys.shift();
+        }
+        switch (this.dir) {
+            case 37:
+                this.x -= this.size;
+                this.x < 0 ? this.x = cv.width - map.size : this.x;
+                break;
+            case 38:
+                this.y -= this.size;
+                this.y < 0 ? this.y = cv.height - map.size : this.y;
+                break;
+            case 39:
+                this.x += this.size;
+                this.x > cv.width - map.size ? this.x = 0 : this.x;
+                break;
+            case 40:
+                this.y += this.size;
+                this.y > cv.height - map.size ? this.y = 0 : this.y;
+                break;
+        }
+        this.constructor.prototype.lock = false;
+    }
+    // 蛇吃东西的方法
+    Snake.prototype.eat = function () {
+        for (var i = 0; i < food.menu.length; i++) {
+            if (food.menu[i].x == this.x && food.menu[i].y == this.y) {
+                this.bodyl++;
+                this.bc = food.menu[i].c;
+                // this.hc = color();
+                food.menu.shift();
+                break;
+            }
+        }
+    }
+
+    // 蛇自杀的方法
+    Snake.prototype.die = function(){
+        for(var i=0;i<snake.bodys.length;i++){
+            if(snake.x == snake.bodys[i].x && snake.y == snake.bodys[i].y){
+                clearInterval(timer);
+            }
+        }
+    }
+    // 食物类
+    function Food(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = map.size;
+        this.c = color();
+        this.menu = [];
+    }
+    Food.prototype.draw = function () {
+        this.menu.push(new Food(this.x, this.y));
+        cf.beginPath();
+        cf.fillStyle = this.c;
+        cf.fillRect(this.x, this.y, this.size, this.size);
+    }
+
+    // 键盘控制
+    document.onkeydown = function (e) {
+        var kc = e.keyCode;
+        if (kc > 36 && kc < 41 && !Snake.prototype.lock) {
+            var dir = Snake.prototype.dir;
+            if (dir == 37 && kc != 39) {
+                Snake.prototype.dir = kc;
+            }
+            if (dir == 38 && kc != 40) {
+                Snake.prototype.dir = kc;
+            }
+            if (dir == 39 && kc != 37) {
+                Snake.prototype.dir = kc;
+            }
+            if (dir == 40 && kc != 38) {
+                Snake.prototype.dir = kc;
+            }
+            Snake.prototype.lock = true;
+        }
+    }
+    var snake = new Snake(0, 0);
+    snake.drawHead();
+    snake.drawBody();
+    var food = new Food(rn()[0], rn()[1]);
+    // food.draw();
+    var timer;
+    game(150);
+    function game(t) {
+        timer = setInterval(function () {
+            cv.width = cv.width;
+            // map.draw();
+            snake.move();
+            snake.drawHead();
+            snake.drawBody();
+            snake.eat();
+            snake.die();
+            for (var i = 0; i < food.menu.length; i++) {
+                food.menu[i].draw();
+            }
+            if (food.menu.length == 0) {
+                food = new Food(rn()[0], rn()[1]);
+                food.draw();
+            }
+        }, t)
+    }
+
+    function rn() {
+        var x = Math.abs(Math.round(Math.random() * (cv.width / map.size - 1))) * map.size;
+        var y = Math.abs(Math.round(Math.random() * (cv.height / map.size - 1))) * map.size;
+        if (snake.x == x && snake.y == y) {
+            return rn();
+        }
+        for (var i = 0; i < snake.bodys.length; i++) {
+            if (snake.bodys.length != 0) {
+                if (x == snake.bodys[i].x && y == snake.bodys[i].y) {
+                    return rn();
+                }
+            }
+        }
+
+        return [x, y]
+    }
+
+    function color() {
+        return 'rgb(' + Math.floor(Math.random() * (0, 255)) + ',' + Math.floor(Math.random() * (0, 255)) + ',' + Math.floor(Math.random() * (0, 255)) + ')';
+    }
+</script>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 400px;
+            margin:100px auto;
+            position: relative;
+        }
+        .box input{
+            width: 370px;
+            height: 30px;
+            outline:none;
+            border:none;
+            border-bottom:1px solid #ccc;
+        }
+        img{
+            position:absolute;
+            top:40px;
+            right: 0;
+            width: 24px;
+        }
+        .onload{
+            border-radius:15px;
+            background: chocolate;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+      
+        <!-- <label for="">
+            <img src="img/睁眼.png" alt="" id="eye">
+        </label> -->
+        <input type="password" placeholder="密码" id="pwd">
+        <img src="img/闭眼.png" alt="" id="eye">
+    </div>
+</body>
+<script>
+    var eye = document.getElementById('eye');
+    var pwd = document.getElementById('pwd');
+    eye.onclick = function(){
+       if(this.getAttribute('src') == 'img/闭眼.png'){
+           this.src = 'img/睁眼.png';
+           pwd.type = 'text';
+       }else{
+        this.src = 'img/闭眼.png';
+        pwd.type = 'password';
+       }
+    }
+</script>
+</html>

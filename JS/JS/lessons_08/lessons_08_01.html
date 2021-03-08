@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>滚动偏移</title>
+    <style>
+        body{
+            height: 3000px;
+            position:relative;
+        }
+        #wrap{
+            width: 500px;
+            height: 500px;
+            background-color:red;
+            /* position:absolute; */
+            /* top:1000px; */
+            /* top:0; */
+            /* left:0; */
+            overflow-y: scroll;
+        }
+        #box{
+            width: 100%;
+            height: 500%;
+            background-color: yellow;
+        }
+        #cell{
+            width: 300px;
+            height: 300px;
+            background: blue;
+            display:none;
+        }
+    </style>
+    <script>
+        // 加载事件
+        window.onload = function(){
+            // 当页面资源加载完毕会自动触发（DOM结构以及DOM所使用的多媒体资源）
+        }
+        window.onresize = function(){
+            // 重置尺寸，当浏览器窗口大小发生改变时，自动触发
+            console.log('浏览器窗口改变');
+        }
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="box"></div>
+    </div>
+    <div id="cell"></div>
+</body>
+<script type="text/javascript">
+    // 1、滚动偏移:scrollTop/scrollLeft||pageYOffset/pageXOffset读写属性
+    // 1.页面的滚动偏移
+    // (1)document.body.scrollTop
+    // chrome、FF、opera、IE不支持，safari支持，虽然在其他浏览器中无法正确读取页面的滚动偏移，但是不会得到异常数据，得到number数据0
+    console.log(document.body.scrollTop);
+    //（2） document.documentElement.scrollTop;
+    // chrome,FF,Opera支持，Safari，IE不支持
+    console.log(document.documentElement.scrollTop);
+
+    // (3)window.pageYOffset/window.pageXOffset
+    // chrome,opera,safari支持 ; FF、IE8及以下undefined，以上为0
+    console.log(window.pageYOffset);
+
+    // 针对于各个浏览器页面滚动偏移量读取的兼容，写法:
+    var t = document.body.scrollTop || window.pageYOffset || document.documentElement.scrollTop;
+    // window.pageYOffset一定不能出现在兼容写法的最后面，原因是因为它在低版本IE浏览器上会得到undefined，如果让undefined参与运算，会得到NaN。
+
+    document.documentElement.scrollTop = 500;
+    // onscroll事件
+    wrap.onscroll = function(){
+        // 当窗口内容发生滚动偏移时自动触发
+        console.log('页面滚动');
+        console.log(wrap.scrollTop);
+    }
+</script>
+</html>

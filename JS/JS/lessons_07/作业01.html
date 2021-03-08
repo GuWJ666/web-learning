@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 小球css */
+        /* #wrap{
+            width: 500px;
+            height: 400px;
+            border:5px solid #ccc;
+            position:relative;
+        }
+        .ball{
+            width: 30px;
+            height: 30px;
+            border-radius:50%;
+            position:absolute;
+            left:0;
+            top:0;
+        } */
+
+        /* 留言板css */
+        /* #wrap{
+            width: 500px;
+            margin:50px auto;
+            border:5px solid #ccc;
+            padding:50px;
+        }
+        #text{
+            width:100%;
+            height: 200px;
+            resize:none;
+            font-size:20px;
+        }
+        #btn{
+            width: 50px;
+            height: 20px;
+            font-size:18px;
+            line-height:20px;
+            text-align:center;
+            color:#fff;
+            background-color: orange;
+            padding:10px;
+            cursor: pointer;
+            margin-bottom:50px;
+            opacity: .7;
+        }
+        .text{
+            background: lightgray;
+            position: relative;
+            padding:30px 0;
+            margin:10px 0;
+        }
+        .close{
+            width: 20px;
+            height: 20px;
+            line-height:20px;
+            text-align: center;
+            background: red;
+            color:#fff;
+            border-radius:50%;
+            position:absolute;
+            right:5px;
+            top:5px;
+            cursor: pointer;
+        } */
+
+        /* 增删改查css */
+        #wrap {
+            width: 500px;
+            margin: 50px auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background: #666666;
+            padding: 10px 0;
+        }
+
+        nav>div {
+            width: 80px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 24px;
+            background: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .num {
+            width: 98%;
+            margin: 20px auto;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            font-size: 60px;
+            background: #666666;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 小球html -->
+    <!-- <div id="wrap">
+    </div> -->
+
+
+    <!-- 留言板html -->
+    <!-- <div id="wrap">
+        <textarea name="" id="text"></textarea>
+        <div id="btn">发布</div>
+        <div class="text">
+            <span class="close">×</span>
+            <div class="content">fsfsdfdsfsfsfsfdsfsfsfsfsfsfsfsfs</div>
+        </div>
+    </div> -->
+
+    <!-- 增删改查html -->
+    <div id="wrap">
+        <nav>
+            <div>添加</div>
+            <div>删除</div>
+            <div>大于0</div>
+            <div>小于0</div>
+            <div>全部</div>
+        </nav>
+    </div>
+</body>
+<script>
+    // 小球js
+    // var wrap = document.querySelector('#wrap');
+    // var maxW = wrap.clientWidth - 30,
+    //     maxH = wrap.clientHeight - 30;
+    // wrap.onclick = function(){
+    //     var ball = document.createElement('div');
+    //     ball.className = 'ball';
+    //     ball.style.backgroundColor = 'rgb('+rn()+','+rn()+','+rn()+')';
+    //     wrap.appendChild(ball);
+    //     var sx = rs(1,10),sy = rs(1,10);
+    //     setInterval(function(){
+    //         var l = ball.offsetLeft + sx,
+    //             t = ball.offsetTop + sy;
+    //         if(l >= maxW){
+    //             l = maxW;
+    //             sx*=-1;
+    //         }
+    //         if(l <= 0){
+    //             l = 0;
+    //             sx*=-1;
+    //         }
+    //         if(t >= maxH){
+    //             t = maxH;
+    //             sy*=-1;
+    //         }
+    //         if(t < 0){
+    //             t = 0;
+    //             sy*=-1;
+    //         }
+    //         ball.style.left = l + 'px';
+    //         ball.style.top = t + 'px';
+    //     },20)
+    // }
+    // function rn(){
+    //     return parseInt(Math.random()*200);
+    // }
+    // function rs(x,y){
+    //     return parseInt(Math.random()*(y-x+1)+x);
+    // }
+
+
+    // 留言板js
+    // 1.获取元素
+    // var wrap = document.body.firstElementChild;
+    // var text = wrap.firstElementChild;
+    // var btn = text.nextElementSibling;
+    // text.focus();
+    // btn.onclick = function(){
+    //     if(!text.value){
+    //         return;
+    //     }
+    //     var value = text.value;
+    //     text.value = '';
+    //     var t = document.createElement('div'),
+    //         cl = document.createElement('div'),
+    //         ct = document.createElement('div');
+    //     t.className = 'text';
+    //     cl.className = 'close';
+    //     ct.className = 'content';
+    //     ct.innerHTML = value;
+    //     cl.innerHTML = '×';
+    //     cl.onclick = function(){
+
+    //         this.parentNode.remove()
+    //     }
+    //     t.appendChild(cl);
+    //     t.appendChild(ct);
+    //     wrap.appendChild(t);
+    // }
+
+    // setInterval(function(){
+    //     if(text.value != ''){
+    //         btn.style.opacity = 1;
+    //     }else{
+    //         btn.style.opacity = 0.7;
+    //     }
+    // },100)
+
+    // 增删改查js
+
+    var wrap = document.querySelector('#wrap');
+    var btns = document.querySelectorAll('nav>div');
+    var type = '';//表示过滤状态； ''表示未选择或全部.'1'表示>0.'0'表示<0.
+    // 1.添加
+    btns[0].onclick = function () {
+        // 判断是随机正100还是-100
+        var n = rn(0, 1) > 0 ? rn(1, 100) : rn(-100, -1);
+        // 创建元素并添加
+        var num = document.createElement('div');
+        num.className = 'num';
+        num.innerHTML = n;
+
+        switch (type) {
+            case '1':
+                if (n < 0) {
+                    num.style.display = 'none';
+                }
+                break;
+            case '0':
+                if (n > 0) {
+                    num.style.display = 'none';
+                }
+                break;
+        }
+        // 添加到文档
+        wrap.appendChild(num);
+    }
+    // 2.删除
+    btns[1].onclick = function () {
+        var ns = document.getElementsByClassName('num');
+        // 安全判断
+        if (ns.length == 0) {
+            return;
+        }
+
+        for (var i = 0; i < ns.length; i++) {
+            var s = window.getComputedStyle(ns[i]);
+            if (s.display == 'block') {
+                ns[i].remove();
+                break;
+            }
+        }
+    }
+    function rn(x, y) {
+        return parseInt(Math.random() * (y - x + 1) + x);
+    }
+    // 3.大于0
+    btns[2].onclick = function () {
+        type = '1';
+        // 思路1,遍历所有num元素，使内容大于0的正常显示，小于0的隐藏
+        var ns = document.querySelectorAll('.num');
+        for (var i = 0; i < ns.length; i++) {
+            if (ns[i].innerHTML < 0) {
+                ns[i].style.display = 'none';
+            } else {
+                ns[i].style.display = 'block';
+            }
+        }
+    }
+    // 4.小于0
+    btns[3].onclick = function () {
+        type = '0';
+        // 思路1,遍历所有num元素，使内容大于0的正常显示，小于0的隐藏
+        var ns = document.querySelectorAll('.num');
+        for (var i = 0; i < ns.length; i++) {
+            if (ns[i].innerHTML > 0) {
+                ns[i].style.display = 'none';
+            } else {
+                ns[i].style.display = 'block';
+            }
+        }
+    }
+    // 5.全部
+    btns[4].onclick = function () {
+        type = '';
+        // 思路1,遍历所有num元素，使内容大于0的正常显示，小于0的隐藏
+        var ns = document.querySelectorAll('.num');
+        for (var i = 0; i < ns.length; i++) {
+            ns[i].style.display = 'block';
+        }
+    }
+</script>
+
+</html>

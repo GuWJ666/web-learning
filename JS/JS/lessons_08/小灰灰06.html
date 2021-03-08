@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            user-select: none;
+        }
+
+        #wrap {
+            width: 320px;
+            height: 480px;
+            background: url(images/game_bg.jpg);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        #score {
+            font-size: 25px;
+            color: #fff;
+            position: absolute;
+            left: 60px;
+            top: 7px;
+        }
+
+        p {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 10;
+            text-align: center;
+            line-height: 400px;
+            background: rgba(0, 0, 0, .5);
+            font-size: 50px;
+            color: red;
+            text-shadow: 0 3px 1px orangered;
+            cursor: pointer;
+        }
+
+        #progress {
+            position: absolute;
+            left: 63px;
+            top: 66px;
+            height: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <span id="score">0</span>
+        <p>开始游戏</p>
+        <img src="images/progress.png" alt="" id="progress">
+    </div>
+</body>
+<script src="tween.js"></script>
+<script>
+    var wrap = document.getElementById('wrap'),
+        scoreEl = document.getElementById('score'),
+        p = document.getElementsByTagName('p')[0],
+        progress = document.getElementById('progress');
+
+    var positions = [['117px', '96px'], ['161px', '19px'], ['143px', '191px'], ['193px', '102px'], ['222px', '17px'], ['213px', '200px'], ['295px', '30px'], ['276px', '119px'], ['297px', '209px']];//狼位置
+    var wolfs = [];
+
+    var score = 0;
+
+    var creatTimer = null;
+
+    p.onclick = function () {
+        this.remove();
+        var t = 0, b = 180, c = -180, d = 4000;
+        var timer = setInterval(function () {
+            t++;
+            progress.style.width = Tween.Linear(t, b, c, d) + 'px';
+            if (t == d) {
+                clearInterval(timer);
+                clearInterval(creatTimer);
+                setTimeout(function () {
+                    alert('游戏结束');
+                }, 100)
+            }
+        }, 20)
+        creat();
+    }
+
+    // 创建狼
+    function creat() {
+        creatTimer = setInterval(function () {
+            var wolf = new Image();
+            wolf.style.position = 'absolute';
+            wolf.index = no();
+            wolf.draggable = false;
+            wolf.style.top = positions[wolf.index][0];
+            wolf.style.left = positions[wolf.index][1];
+            wolf.type = type();
+            var i = 0;
+            wolf.src = 'images/' + wolf.type + i + '.png';
+            // wolf.lock = false;
+            wrap.appendChild(wolf);
+            wolf.up = setInterval(function () {
+                i++;
+                wolf.src = 'images/' + wolf.type + i + '.png';
+                if (i >= 5) {
+                    clearInterval(wolf.up);
+                    wolf.down = setInterval(function () {
+                        i--;
+                        wolf.src = 'images/' + wolf.type + i + '.png';
+                        if (i <= 0) {
+                            setTimeout(function () {
+                                clearInterval(wolf.down);
+                                wolf.remove();
+                                wolfs.splice(wolfs.indexOf(wolf.index), 1);
+                            })
+                        }
+                    }, 100)
+                }
+            }, 100)
+            var lock = false;
+            wolf.onclick = function () {
+                if (lock) {
+                    return;
+                }
+                lock = true;
+                clearInterval(wolf.up);
+                clearInterval(wolf.down);
+                i = 6;
+                wolf.src = 'images/' + wolf.type + i + '.png';
+                wolf.over = setInterval(function () {
+                    i++;
+                    wolf.src = 'images/' + wolf.type + i + '.png';
+                    if (i >= 9) {
+                        setTimeout(function () {
+                            clearInterval(wolf.over);
+                            wolf.remove();
+                            wolfs.splice(wolfs.indexOf(wolf.index), 1);
+                        })
+                    }
+                }, 100)
+                if (wolf.type == 'h') {
+                    score += 10;
+                } else {
+                    score -= 10;
+                    score = score < 0 ? 0 : score;
+                }
+                scoreEl.innerHTML = score;
+            }
+        }, 1000)
+    }
+
+
+    function no() {
+        var n = rn(0, 8);
+        if (wolfs.indexOf(n) > -1) {
+            return no();
+        } else {
+            wolfs.push(n);
+            return n;
+        }
+    }
+
+    function rn(x, y) {
+        return Math.floor(Math.random() * (y - x + 1) + x);
+    }
+
+
+    function type() {
+        if (rn(1, 100) > 20) {
+            return 'h';
+        } else {
+            return 'x';
+        }
+    }
+</script>
+
+</html>

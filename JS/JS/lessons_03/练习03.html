@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var a, b;
+    for (var i = 1; i < 101; i++) {
+        a = i % 10;//个位数
+        b = (i - a) / 10;//十位数
+        if (a != 7 && b != 7 && i % 7 != 0) {
+            // console.log(i);
+        } else {
+            continue;
+        }
+    }
+    var str = "asddfssssaasswef";
+    var obj = {};
+    //遍历字符串，将出现的字符存入到数组中
+    // for (var i = 0; i < str.length; i++) {
+    //     if (!obj[str.charAt(i)]) {
+    //         obj[str.charAt(i)] = 1;
+    //     } else {
+    //         obj[str.charAt(i)]++;
+    //     }
+    // }
+    // console.log(obj);
+    // var max = 0;
+    // var charmax;
+    // //遍历数组，找出出现最多的字母出现的次数
+    // for (var key in obj) {
+    //     if (obj[key] > max) {
+    //         max = obj[key];
+    //         charmax = key;
+    //     }
+    // }
+    // console.log("出现最多的字符是" + charmax + ",出现了" + max + "次");
+
+    for (var i = 0; i < str.length; i++) {
+        if (!obj[str.charAt(i)]) {
+            obj[str.charAt(i)] = 1;
+        }else{
+            obj[str.charAt(i)]++;
+        }
+    }
+    var t;
+    var maxNum = 0;
+    console.log(obj);
+    for(var key in obj){
+        if(maxNum < obj[key]){
+            maxNum = obj[key];
+            t = key;
+        }
+    }
+    console.log(t+':'+maxNum)
+</script>
+
+</html>

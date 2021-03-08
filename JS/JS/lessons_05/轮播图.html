@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <style>
+        #wrap{
+            width: 800px;
+            height: 500px;
+            position:relative;
+            overflow: hidden;
+            border:10px solid;
+            margin:100px auto;
+        }
+        #image{
+            width: 500%;
+            height: 100%;
+            position:absolute;
+            left:0;
+            top:0;
+            font-size:0;
+            /* margin-left:100px; */
+            /* animation:walk 10s linear infinite; */
+            /* transition:0.5s; */
+        }
+        img{
+            width: 800px;
+            height:100%;
+        }
+        @keyframes walk {
+            form{
+                left:0;
+            }to{
+                left:-400%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="image">
+            <img src="img01/1.jpg" alt="">
+            <img src="img01/2.jpg" alt="">
+            <img src="img01/3.jpg" alt="">
+            <img src="img01/4.jpg" alt="">
+            <img src="img01/1.jpg" alt="">
+        </div>
+    </div>
+</body>
+<script>
+    var image = document.getElementById('image');
+    var wrap = document.getElementById('wrap');
+    var img = document.getElementsByTagName('img')[0];
+    // 获取元素宽和高
+    //元素的 offsetsetWidth & offsetHeight 可以获取元素的宽和高，获取的是盒模型的宽和高。（border +padding+ content）
+    // 元素的clientWidth & clientHeight 可以获取元素的宽和高，(padding + content)
+var w = image.offsetWidth,
+        h = image.offsetHeight;
+    var x = image.clientWidth;
+        y = image.clientHeight;
+    var i = img.clientWidth;
+    // 元素的 offsetLeft & offsetTop 可以获取元素的偏移量(获取的是当前元素的左边缘与父级区域的左边缘间的间隔，负数表示向左/
+    // 上移动了，如果是正数表示元素向右/下移动)
+    // 注意：上面3对属性是只读属性，只可以获取值，不可以赋值
+    var n = image.offsetLeft,
+        m = image.offsetTop;
+        console.log(n,m);
+    console.log(x);
+    var l = 0; max = 800*4;
+    setInterval(function(){
+        l+=5;
+        if(l>max){
+            l = 0;
+        }
+        image.style.left = -l+'px';
+    },20)
+
+    // var max = i*4;
+    // setInterval(function(){
+    //     image.style.transition = '0.5s';
+    //     var j = image.offsetLeft-i;
+    //     if(j<-max){
+    //         j = 0;
+    //     }
+    //     image.style.left = j + 'px';
+    //     setTimeout(function(){
+    //         if(image.offsetLeft == -max){
+    //             image.style.left = 0;
+    //             image.style.transition = 'none';
+    //         }
+    //     },1000)
+    // },2000) 
+</script>
+</html>

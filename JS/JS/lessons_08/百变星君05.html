@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       #wrap{
+           width: 400px;
+           height: 600px;
+           background:#ddd;
+           position:relative;
+           margin:0 auto;
+       }
+       #wrap>div:nth-child(1){
+           position:absolute;
+           left:10px;
+           top:10px;
+       }
+       #wrap>div:nth-child(2){
+           position:absolute;
+           right:10px;
+           top:10px;
+       }
+       p{
+           position:absolute;
+           left:150px;
+           top:80px;
+           text-align:center;
+           line-height:30px;
+           width: 50px;
+           height:30px;
+           border-radius:5px;
+           background:orange;   
+           cursor:pointer;
+       }
+       #image{
+           position:absolute;
+           bottom:30px;
+           left:0;
+           width: 100%;
+           height: 400px;
+           display:flex;
+           justify-content: space-around;
+           flex-flow:wrap row;
+       }
+       img{
+           width: 100%;
+           height: 100%;
+       }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div>剩余时间：<span id="time">60</span>s</div>
+        <div>得分：<span id="score">00</span></div>
+        <p>开始</p>
+        <div id="image">
+            <img src="img/1.png" alt="">
+        </div>
+    </div>
+</body>
+<script>
+var timeEl = document.getElementById('time'),
+    scoreEl = document.getElementById('score'),
+    p = document.getElementsByTagName('p')[0],
+    image = document.getElementById('image');
+
+var level = 1;
+
+var timer = null;
+
+var imgSrc = ['img/1.png','img/2.png'];
+
+var score = 0;
+
+var lock = false;
+
+    p.onclick = function(){
+        if(p.innerHTML == '开始'){
+            p.innerHTML='重来';
+            var t = 10;
+            timer = setInterval(function(){
+                t--;
+                timeEl.innerHTML = zero(t);
+                if(t == 0){
+                    clearInterval(timer);
+                    lock = true;
+                    setTimeout(function(){
+                        alert('游戏结束');
+                    },100)
+                }
+            },1000)
+            creat();
+        }else{
+            p.innerHTML = '开始';
+            t=10;
+            timeEl.innerHTML = zero(t);
+            score = 0;
+            scoreEl.innerHTML = zero(score);
+            clearInterval(timer);
+            image.innerHTML = '<img src="img/1.png"/>';
+            level = 1;
+            lock = false;
+        }
+    }
+
+    function creat(){
+        level < 10?level++:level;
+        image.innerHTML = '';
+        var n = level * level;
+        var index = rn(0,n-1);
+        var bg = 'rgb('+rn(0,255)+','+rn(0,255)+','+rn(0,255)+')';
+        for(var i=0;i<n;i++){
+            var src = index == i?imgSrc[1]:imgSrc[0];
+            var img = new Image();
+            var w = Math.floor(image.clientWidth / level)-4;
+            img.style.width = w +'px';
+            img.style.height = w +'px';
+            img.style.backgroundColor = bg;
+            img.src = src;
+            image.appendChild(img);
+            img.onclick = function(){
+                if(this.getAttribute('src') == 'img/2.png'){
+                    score++;
+                    scoreEl.innerHTML = zero(score);
+                    creat();
+                }else{
+                    score--;
+                    score = score<0?0:score;
+                    scoreEl.innerHTML = zero(score);
+                    level--;
+                    creat();
+                }
+            }
+        }
+        // image.children[index].onclick = function(){
+        //     if(lock){
+        //         return;
+        //     }
+        //     score++;
+        //     scoreEl.innerHTML = zero(score);
+        //     creat();  
+        // }
+    }
+
+    function rn(x,y){
+        return Math.floor(Math.random()*(y-x+1)+x);
+    }
+
+    function zero(num){
+        return num<10?num = '0'+num:num;
+    }
+</script>
+</html>

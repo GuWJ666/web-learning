@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <table border="2">
+
+    </table> -->
+    <div id="list"></div>
+</body>
+<script src="../lessons_12/jq.js/jquery.js"></script>
+<script>
+    //字符串的拓展
+    // 1.遍历器：for...of...循环（可以遍历String，Array，Set，Map，但是不能遍历Object）
+    {
+        // let str = 'this is ECMAScript6';
+        // for(let x of str){
+        //     // 循环变量x表示被遍历值的value，不是index
+        //     console.log(x);
+        // }
+
+        // let obj = {id:'001','num':30,type:'live'};
+        // for(let x of obj){
+        //     console.log(x);
+        // }
+        // 报错：Uncaught TypeError: obj is not iterable
+    }
+    //2.模板字符串（``）
+    // 这是es6新增加的表示字符串的标识符，称为模板字符串，除了能正常表示字符串以外，还提供了额外的功能
+    {
+        // 功能1：支持字符串中换行缩进；保留字符串原有格式
+
+        // let str = "hello 
+        // world";
+        // 报错：Uncaught SyntaxError: Invalid or unexpected token  语法错误
+
+        // let str = `
+        // what's the weather today?
+        // today is rainy day.
+        // `;
+        // console.log(str);
+        // document.write(str);
+
+        // 功能2：支持字符串内解析变量(需要将变量使用${}进行包装)
+        // let [r,g,b] = [rn(),rn(),rn()];
+        // let color = `rgb(${r},${g},${b})`;
+        // document.body.style.background = color;
+        //     $(`
+        //     <table>
+        //     <thead>
+        //         <tr>
+        //             <th></th>
+        //         </tr>
+        //     </thead>
+        //     <tbody>
+        //         <tr>
+        //             <td></td>
+        //         </tr>
+        //     </tbody>
+        // </table>
+        //     `)
+
+        // // 功能3：支持字符串内函数调用
+        // // let color = `rgb(${rn()},${rn()},${rn()})`;
+        // // document.body.style.background = color;
+
+        // // 功能4：支持表达式的运算
+        // let sumstr = `3 * 4 = ${3*4}`;
+        // console.log(sumstr);
+
+        // for(let i=1;i<10;i++){
+        //     let tr = $('<tr></tr>').appendTo('table');
+        //     for(let j=1;j<=i;j++){
+        //         $(`<td>${j}*${i}=${i*j}</td>`).appendTo(tr);
+        //     }
+        // }
+
+        // let data = ['老不读三国', '少不看水浒', '男不看西游', '女不看红楼'];
+        // let template = `
+        //         <ul>
+        //         <% for(let i=0; i < data.length; i++) { %>
+        //             <li><%= data.supplies[i] %></li>
+        //         <% } %>
+        //         </ul>
+        //     `;
+        // document.querySelector('#list').innerHTML = template;
+    }
+
+    // es6对string.prototype的拓展
+    // includes(), startsWith(), endsWith()
+    let str = 'abcvfew545346';
+    // 查询指定字符串是否包含指定字符,如果包含，返回true，否则，返回false
+    // console.log(str.includes('bcv'));
+    // 查询指定字符串是否以指定字符开头
+    // console.log(str.startsWith('a'));
+    // 查询指定字符串是否以指定字符结尾
+    // console.log(str.endsWith('a'));
+
+    String.prototype.myincludes = function (char) {
+        if (this.indexOf(char) >= 0) {
+            return true;
+        }
+        return false;
+    }
+    String.prototype.mystartWith = function (char) {
+        if (this.indexOf(char) == 0) {
+            return true;
+        }
+        return false;
+    }
+    String.prototype.myendWith = function (char) {
+        if (this.indexOf(char) == this.length - char.length) {
+            return true;
+        }
+        return false;
+    }
+
+    String.prototype.myindexOf = function (char) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] === char[0]) {
+                var index = i;
+                if (char == this.substr(index, char.length)) {
+                    return index;
+                }
+            }
+        }
+        return -1;
+    }
+
+    // 新增方法:repeat(),返回一个重复后的新字符串
+    // console.log(str.repeat(3));
+
+    // 新增方法：padStart(),radEnd();补足字符串长度的方法
+    // let a = 'abc';
+    // let res = a.padStart(7,'xyz');
+    // console.log(res);
+
+    // 新增方法：trimStart(),trimEnd()用来删除指定字符串的空格
+    let s = '   abc    ';
+    console.log(s.trimStart());//删除头部空格
+    console.log(s.trimEnd());//删除尾部空格
+    console.log(s.trimStart().trimEnd());//删除首尾空格
+    {
+        // 使用对象的解构赋值从Math中提取方法
+        let{max,min,round,random,abs,pow,sqrt,floor,ceil} = Math;
+        console.log(random(-3,0));
+    }
+
+
+
+
+
+
+    function rn() {
+        return Math.round(Math.random() * 255);
+    }
+</script>
+
+</html>

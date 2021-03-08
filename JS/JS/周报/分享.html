@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* div{ */
+        /* vertical/horizontal */
+        /* resize:both;
+            overflow: auto;
+            column-count: 5;
+            column-gap:10px;
+            border:1px solid red;
+            column-rule:3px solid red; */
+        /* } */
+        /* button,a,input{
+            cursor:not-allowed;
+        } */
+        a {
+            display: block;
+            height: 500px;
+            background: url(img/timg.jpg) center no-repeat;
+        }
+
+        div {
+            width: 1000px;
+            height: 1000px;
+            background: url(img/timg.jpg) no-repeat;
+            /* 英文换行 */
+            word-wrap:break-word;
+            background-position: 100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div>就按大妈德拉克斯打赏，吗十大大苏打萨达萨达萨达撒倒萨倒萨倒萨倒萨打算阿斯顿萨达萨达萨达撒萨达萨达萨达萨达萨达萨达萨达是大撒大撒大撒大撒</div>
+    <button></button>
+    <a href="http://www.baidu.com">百度</a>
+    <input type="button">
+    <textarea name="" id="" disabled ></textarea> -->
+    <p>背景图</p>
+    <p></p>
+    <a href=""></a>
+    <span></span>
+    <div>hafhdldddddddddddddddddddddddddddddddddddddddddddddddddffffffffffdd发生发射点发射点犯得上犯得上犯得上方法犯得上发生发射点犯得上发射点</div>
+</body>
+<script>
+    // var a = document.getElementsByTagName('a')[0];
+    // a.onclick = function(e){
+    //     e.preventDefault();//阻止默认事件
+    // }
+    var arr = [1,313,4,242,536,7,73,432,23];
+    for (i = 0; i < arr.length-1; i++) {
+        for (j = 0; j < arr.length-1-i; j++) {
+            if (arr[j] < arr[j + 1]) {
+                var t = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = t;
+            }
+        }
+
+    } console.log(arr)
+</script>
+
+</html>

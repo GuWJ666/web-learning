@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    String.prototype.delblank = function () {
+        var reg = /^\s+|\s+$/g;
+        return this.replace(reg, '');
+    }
+
+    String.prototype.toup = function () {
+        // var arr = this.split(/\s+/);
+        // for(var i=0;i<arr.length;i++){
+        //     arr[i] = arr[i].replace(arr[i][0],arr[i][0].toUpperCase());
+        // }
+        // return arr.join(' ');
+
+        var reg1 = /[a-z][a-z]+/gi;
+        var res = this.match(reg1);
+        for (var i = 0; i < res.length; i++) {
+            res[i] = res[i].replace(res[i][0], res[i][0].toUpperCase());
+        }
+        return res.join(' ');
+    }
+    var str1 = '   122433244     ';
+    var str = '    4353453b     ';
+    console.log(str1.delblank() + 'hahah')
+    console.log(str.delblank());
+
+    var str2 = 'hello         world ohhhhhhhhhh';
+    console.log(str2)
+    console.log(str2.toup())
+
+
+    Array.prototype.order = function () {
+        for (var i = 0; i < this.length - 1; i++) {
+            for (var j = 0; j < this.length - 1 - i; j++) {
+                if (this[j] > this[j + 1]) {
+                    var t = this[j];
+                    this[j] = this[j + 1];
+                    this[j + 1] = t;
+                }
+            }
+        }
+        return this;
+    }
+    var arr1 = [1, 55, 7, 7, 42, 13, 66, 7, 45]
+    console.log(arr1.order())
+
+
+
+    function fraction(element, denominator) {
+        this.element = element;
+        this.denominator = denominator;
+    }
+    function f(str){
+        return new fraction(str.slice('/')[0],str.slice('/')[2]);
+    }
+    // 显示
+    fraction.prototype.show = function () {
+        console.log(this.element + '/' + this.denominator);
+    }
+
+    // 乘
+    fraction.prototype.times = function (num) {
+        // var num3 = new fraction(this.element* num.element,this.denominator* num.denominator);
+        // num3.yuefen();
+        // // num3.show();
+        // return num3;
+
+        // 1.先来获取调用方法的分数对象的分子和分母
+        var z1 = this.element, m1 = this.denominator;
+        // 2.获取作为参数参与乘法运算的分数对象的分子和分母
+        var z2 = num.element, m2 = num.denominator;
+        // 3.乘法运算
+        var z = z1 * z2, m = m1 * m2;
+        // 4.返回运算结果
+        return new fraction(z, m);
+    }
+
+    // 除
+    fraction.prototype.divisor = function (num) {
+        // 1.先来获取调用方法的分数对象的分子和分母
+        var z1 = this.element, m1 = this.denominator;
+        // 2.获取作为参数参与乘法运算的分数对象的分子和分母
+        var z2 = num.element, m2 = num.denominator;
+        // 3.乘法运算
+        var z = z1 * m2, m = m1 * z2;
+        // 4.返回运算结果
+        return new fraction(z, m);
+    }
+
+    // 加
+    fraction.prototype.add = function (num) {
+        // 1.先来获取调用方法的分数对象的分子和分母
+        var z1 = this.element, m1 = this.denominator;
+        // 2.获取作为参数参与乘法运算的分数对象的分子和分母
+        var z2 = num.element, m2 = num.denominator;
+        // 3.寻找两个分数分母的最小公倍数
+        var max = Math.max(m1, m2);
+        for (var i = max; i < m1 * m2; i++) {
+            if (i % m1 == 0 && i % m2 == 0) {
+                break;
+            }
+        }
+        z1 *= i / m1;
+        z2 *= i / m2;
+        // 4.加法运算
+        var z = z1 + z2, m = i;
+        // 5.返回运算结果
+        return new fraction(z, m);
+    }
+
+    // 减
+    fraction.prototype.reduce = function (num) {
+        // 1.先来获取调用方法的分数对象的分子和分母
+        var z1 = this.element, m1 = this.denominator;
+        // 2.获取作为参数参与乘法运算的分数对象的分子和分母
+        var z2 = num.element, m2 = num.denominator;
+        // 3.寻找两个分数分母的最小公倍数
+        var max = Math.max(m1, m2);
+        for (var i = max; i < m1 * m2; i++) {
+            if (i % m1 == 0 && i % m2 == 0) {
+                break;
+            }
+        }
+        z1 *= i / m1;
+        z2 *= i / m2;
+        // 4.减法运算
+        var z = z1 - z2, m = i;
+        // 5.返回运算结果
+        return new fraction(z, m);
+    }
+
+    // 约分
+    fraction.prototype.yuefen = function () {
+        // 1.先找到分子和分母中较小的数
+        var min = Math.min(this.element, this.denominator);
+        // 2.遍历寻找公约数
+        for (var i = min; i > 1; i--) {
+            if (this.element % i == 0 && this.denominator % i == 0) {
+                break;
+            }
+        }
+        this.element /= i;
+        this.denominator /= i;
+        return this;
+    }
+
+    var num1 = new fraction(2, 3);
+    var num2 = new fraction(1, 2);
+    num1.times(num2).add(num2).divisor(num2).reduce(num2).yuefen().show();
+
+    // 写一个分数类，属性：分子，分母；方法：约分，加、减、乘、除
+    f('4/3').times(f('1/2')).yuefen().show();
+    
+</script>
+
+</html>

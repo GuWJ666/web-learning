@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background:coral;
+            position: absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+<script src="jq.js/jquery.js"></script>
+<script>
+    var div = document.querySelector('div');
+    // div.ontouchstart = function(e){
+    //     var touch = e.touches[0];
+    //     var x = touch.clientX - div.offsetLeft;
+    //     var y = touch.clientY - div.offsetTop;
+    //     document.body.ontouchmove = function(e){
+    //         var touch = e.touches[0];
+    //         var n = touch.clientX - x;
+    //         var m = touch.clientY - y;
+    //         n<=0?n=0:n;
+    //         m<=0?m=0:m;
+    //         n>=document.documentElement.clientWidth - div.offsetWidth?n = document.documentElement.clientWidth - div.offsetWidth:n;
+    //         m>=document.documentElement.clientHeight - div.offsetHeight?m = document.documentElement.clientHeight - div.offsetHeight:m;
+    //         div.style.left = n +'px';
+    //         div.style.top = m + 'px';
+    //     }
+    //     document.body.ontouchend = function(){
+    //         document.body.ontouchmove = null;
+    //     }
+    // }
+
+    $(function(){
+        $('div').on('touchstart',function(e){
+            var touch = e.originalEvent.touches[0];
+            var x = touch.clientX - $('div').offset().left;
+            var y = touch.clientY - $('div').offset().top;
+            $('div').on('touchmove',function(e){
+                var touch = e.originalEvent.touches[0];
+                var n = touch.clientX - x;
+                var m = touch.clientY - y;
+                var maxw = $(document).width() - $(this).width();
+                var maxh = $(document).height() - $(this).height();
+                n<=0?n=0:n;
+                m<=0?m=0:m;
+                n>=maxw?n=maxw:n;
+                m>=maxh?m=maxh:m;
+                console.log(maxw)
+                $('div').css({
+                    left:n + 'px',
+                    top:m +'px'
+                })
+            })
+        })
+    })
+</script>
+</html>

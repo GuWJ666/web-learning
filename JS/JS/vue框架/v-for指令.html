@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+            v-for:指令：vue提供了遍历数据的指令，用于循环渲染DOM
+            v-for指令的写法和for...in..循环一样，功能上又和for...of..一样\
+
+            (x,y) in menu -> x表示元素值，y表示元素对应下标
+         -->
+        <ul>
+            <li v-for="(x,y) in menu">{{y}}->{{x}}</li>
+        </ul>
+        <!-- 
+            v-for同样可以遍历对象
+            x in obj -> x是value
+            x，y in obj -》x是value，y是key
+         -->
+        <ol>
+            <li v-for="x,y in info">{{y}}->{{x}}</li>
+        </ol>
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            menu: ['肉夹馍', '凉皮', '酸辣粉', '砂锅', '油泼面'],
+            info:{
+                name:'肉夹馍',
+                type:'小吃',
+                price:'￥8'
+            }
+        }
+    })
+</script>
+
+</html>

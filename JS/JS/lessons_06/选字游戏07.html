@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap {
+            width: 500px;
+            height: 600px;
+            border: 5px solid lightgray;
+            margin: 0 auto;
+            padding-top: 5px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .wrap>h1:nth-of-type(1) {
+            float: left;
+            margin-left: 5px;
+        }
+
+        .wrap>h1:nth-of-type(2) {
+            float: right;
+            ;
+            margin-right: 5px;
+        }
+
+        .wrap>h1:nth-of-type(3) {
+            height: 350px;
+            line-height: 350px;
+            text-align: center;
+            font-size: 150px;
+        }
+
+        .box {
+            height: 188px;
+            background: lightgray;
+            line-height: 188px;
+        }
+
+        .box>span {
+            font-size: 35px;
+            margin: 0 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <h1></h1>
+        <h1></h1>
+        <h1></h1>
+        <h3>根据👆字体颜色选出👇对应字的描述</h3>
+        <div class="box">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+<script>
+    var h1s = document.getElementsByTagName('h1'),
+        sps = document.getElementsByTagName('span');
+    var arrText = ['黄', '绿', '红', '蓝', '黑'],
+        arrColor = ['yellow', 'green', 'red', 'blue', 'black'];
+    var t = 10,
+        s = 0;
+    var timer = null,
+        lock = true;
+    // 随机数函数
+    function random(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    // 拼0函数
+    function concatZero(num) {
+        return num = num < 10 ? '0' + num : num;
+    }
+    // 倒计时
+    function recordTime() {
+        if (!timer) {
+            timer = setInterval(function () {
+                t--;
+                h1s[0].innerHTML = '倒计时：' + concatZero(timer) + 's';
+                if (t == 0) {
+                    clearInterval(timer);
+                    setTimeout(function () {
+                        alert('游戏结束，得分：' + concatZero(s));
+                        t = 10;
+                        h1s[0].innerHTML = '倒计时：' + t + 's';
+                    }, 10)
+                }
+            }, 1000)
+        }
+    }
+    // 样式
+    function style(){
+        h1s[2].innerHTML = arrText[random(0,4)];
+        h1s[2].style.color = arrColor[random(0,4)];
+        for(var i=0;i<sps.length;i++){
+            sps[i].innerHTML = arrText[random(0,arrText.length-1)];
+            arrText.splice(arrText.indexOf(sps[i].innerHTML),1);
+            sps[i].style.color = arrColor[random(0,arrColor.length-1)];
+            arrColor.splice(arrColor.indexOf(sps[i].style.color),1);
+        }
+        arrText = ['黄', '绿', '红', '蓝', '黑'],
+        arrColor = ['yellow', 'green', 'red', 'blue', 'black'];
+    }
+    // 点击
+    // for (var i = 0; i < sps.length; i++) {
+    //     if (lock) {
+    //         sps[i].onclick = function () {
+    //             if()
+    //         }
+    //     }
+    // }
+</script>
+
+</html>

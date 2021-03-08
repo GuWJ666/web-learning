@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap{
+            width: 800px;
+            height: 400px;
+            border:5px solid lightgray;
+            position:relative;
+        }
+        #wall{
+            width: 50px;
+            height: 100px;
+            position: absolute;
+            right:150px;
+            top:calc(50% - 50px);
+            background: red;
+        }
+        #bs{
+            width: 20px;
+            height: 100px;
+            position: absolute;
+            right:70px;
+            top:calc(50% - 50px);
+            background: red;
+            transform: rotate(100deg);
+            border:1px solid #ccc;
+        }
+        .ball{
+            width: 30px;
+            height: 30px;
+            background: blanchedalmond;
+            position:absolute;
+            border-radius:50%;
+            left:0;
+            top:calc(50% - 15px);
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="wall"></div>
+        <div id="bs"></div>
+    </div>
+</body>
+<script>
+wrap.onclick  = function(){
+    var ball = document.createElement('div');
+    ball.className = 'ball';
+}
+</script>
+</html>

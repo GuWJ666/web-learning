@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="text1">
+    <input type="text" id="text2">
+    <input type="text" id="text3">
+    <input type="button" id="but" value="按我">
+    <script>
+        var text1 = document.getElementById('text1'),
+            text2 = document.getElementById('text2'),
+            text3 = document.getElementById('text3'),
+            but = document.getElementById('but');
+        but.onclick = function () {
+            var a = text1.value * 1;
+                b = text2.value * 1;
+                c = text3.value * 1;
+            if(a > b && a < c || a>c && a<b){
+                alert(a);
+            }else if(b>c&&b<a||b>a&&b<c){
+                alert(b);
+            }else if(c>a&&c<b || c>b&&c<a){
+                alert(c);
+            }else if(a==b||a==c||b==c||a==b && b==c){
+                alert('滚');
+            }
+            // if(a>b&&a>c){
+            //     if(b>c){
+            //         alert(b);
+            //     }else{
+            //         alert(c);
+            //     }
+            // }
+        }
+    </script>
+</body>
+
+</html>
