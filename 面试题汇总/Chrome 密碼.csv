@@ -1,0 +1,12 @@
+name,url,username,password
+192.168.21.226,http://192.168.21.226:8088/,13109522564,Aa1111
+192.168.21.226,http://192.168.21.226:8088/,JS20200008,Aa1111
+192.168.21.226,http://192.168.21.226:8088/,JS20200085,Aa1111
+login2.dingtalk.com,https://login2.dingtalk.com/login/index_web.htm,15229061091,8008208820QQ
+github.com,https://github.com/login,gwj1420629409@sina.com,8008208820qQ
+lanhuapp.com,https://lanhuapp.com/web/,1420629409@qq.com,8008208820QQ
+localhost,http://localhost:8088/,13109522564,Aa1111
+localhost,http://localhost:8088/,JS20200008,Aa1111
+localhost,http://localhost:8088/,JS20200084,Aa1111
+localhost,http://localhost:8088/,JS20200085,Aa1111
+localhost,http://localhost:8088/loginMain,JS20200086,Aa1111
