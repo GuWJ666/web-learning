@@ -1,0 +1,180 @@
+<!--
+ * @Author: guwenjiang
+ * @Date: 2021-03-08 16:58:16
+ * @LastEditors: guwenjiang
+ * @LastEditTime: 2021-03-12 14:29:20
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        一、Vue
+        1.vue中data为什么是函数而不是对象？
+            vue的data属性是vue原型上的属性，对象是引用类型，当一个组件多次被引用，他们的data都指向同一个内存地址，改变值会相互影响；如果是函数，data属性中的this指向当前实例本身
+        2.发布订阅模式和观察者模式
+            观察者模式：观察者需要直接订阅目标事件，在目标发出内容改变的事件后，直接接受事件并作出响应
+            发布订阅模式：发布者和订阅者多了一个发布通道，一方面从发布者接受事件，另一方面向订阅者发布事件，订阅者需要从发布通道订阅事件
+        4.什么是函数式编程？
+            var triple = function(x) {
+                return x * 3
+            }
+            var woffle = triple
+            triple(30)
+        3.vue双向绑定原理
+            是通过数据劫持和发布订阅者模式实现
+            Object.defineProperty(obj, '', {
+
+            })
+        4.v-html会导致哪些问题
+            v-html更新的是元素的innerHTML,不会作为Vue模板编译
+            scope对v-html内部元素不会生效
+        5.v-on事件绑定原理
+        6.自定义指令的生命周期  
+            bind：只调用一次，当指令第一次绑定在元素上时，可以进行初始化
+            inserted：被绑定元素插入父节点时使用（父节点存在即可调用，不必存在document中）
+            update：被绑定元素所在的模板更新时调用，而不论绑定值是否变化
+            componentUpdate：被绑定元素所在模板完成一次更新周期时调用
+            unbind：只调用一次，与元素解绑时调用
+            参数：
+                el：指令绑定的元素，可以直接操作DOM
+                binding：对象，包含name：属性名；value：指令的绑定值；oldValue：指令绑定的前一个值（仅在update和componentUpdated中使用）；express：绑定值的字符串形式；arg：传给指令的参数；modifiers：包含修饰符的对象
+                vnode：Vue编译生成的虚拟节点
+                oldVnode：上一个虚拟节点（仅在update和componentUpdated中使用）
+        7.虚拟DOM
+        二、请求
+        1.界面多个接口同时调用
+            Promise.all可以将多个Promise实例包装成一个新的Promise实例。同时，成功和失败的返回值是不同的，成功的时候返回一个结果数组，而失败的时候则返回最先被reject失败状态的值，参数是一个包含多个Promise实例的数组，返回值和数组中Promise实例顺序一致。
+            Promise.race中里面那个实例获得结果快，就返回那个结果，不管结果是成功还是失败
+        2.http和https的区别
+            http：  明文传输
+                    没有证书
+                    安全性低
+            https： 密文传输
+                    有证书
+                    安全性高
+        3.seo
+        三、js
+        1.原型和原型链
+            原型：所有引用类型都有一个__proto__（隐式原型），指向构造函数的实例对象的prototype（原型），值是一个对象
+                所有函数都有一个prototype属性，属性值是一个对象
+            原型链：当访问一个对象的属性时，会现在当前对象的本身属性上找，如果没有找到，则会去他的__proto__隐式原型上找（也就是当前对象构造函数的prototype），如果还没有找到，就会在构造函数的prototype的__proto__上找，这样一层一层往上找就会形成一个链式结构，就是原型链
+        2.防抖和节流
+            防抖：在某个事件期限内，事件处理函数只执行一次
+            export const debounce = function (func, wait = 150) {
+                let timer = 0;
+                let self = this;
+                return function (...args) {
+                    if (timer) {
+                        // 如果在指定时间间隔内又再次触发，则继续延时
+                        clearTimeout(timer);
+                    }
+                    // 重点：使用$nextTick函数
+                    self.$nextTick(() => {
+                        timer = setTimeout(() => {
+                            func.apply(self, args);
+                        }, wait);
+                    });
+                };
+            };
+            节流：让函数有节制的执行，就是在一段时间内，只执行一次
+            function throttle(func, delay) {
+                let run = true
+                return function () {
+                    if (!run) {
+                        return  // 如果开关关闭了，那就直接不执行下边的代码
+                    }
+                    run = false // 持续触发的话，run一直是false，就会停在上边的判断那里
+                    setTimeout(() => {
+                        func.apply(this, arguments)
+                        run = true // 定时器到时间之后，会把开关打开，我们的函数就会被执行
+                    }, delay)
+                }
+            }
+        3.0.1+0.2？
+            会先将浮点数由十进制转换为二进制（*2），只保留前52位，相加后转为浮点数
+            0.30000000000000004
+    </pre>
+</body>
+<script>
+    // var triple = function(x) {
+    //     return x * 3
+    // }
+    // var woffle = triple
+    // woffle(30)
+    // console.log(woffle(30), "woffle")
+    // var animals = [
+    //     {species: 'dog'},
+    //     {species: 'cat'},
+    // ]
+    // var isDog = function(animal) {
+    //     return animal.species === 'dog'
+    // }
+    // var dogs = animals.filter(isDog)
+    // console.log(dogs, "dogs")
+
+    // var lang = '     JavaScript    ';
+    // const trim = text => text.trim();
+    // const wrap = text => `<div>${text}</div>`;
+    // const lowe = text => text.toLowerCase();
+    // const pipe = function (...funs) {
+    //     return function (text) {
+    //         return funs.reduce((result, fn) => {
+    //             debugger
+    //             return fn(result)  
+    //         }
+    //         , text)
+    //     }
+    // }
+    // const transform = pipe(
+    //     trim,
+    //     wrap,
+    //     lowe
+    // )
+    // console.log(transform(lang))
+    // function truncate(arr) {
+    //     let newArr = arr.slice(arr.length-1);
+    //     return newArr;
+    // }
+    // console.log(truncate([1,2,3,4,5]), "transform")
+    // function square(arr) {
+        // let arr2 = []
+        // for(let v of arr) {
+        //     arr2.push(v ** 2)
+        // }
+        // return arr2
+        // console.log(arr2, "arr2")
+    //     return arr.map(item => {
+    //         return item ** 2
+    //     })
+    // }
+    // let arr = [1,2,3,4]
+    // console.log(square(arr), "square")
+    // console.log(arr, "arr")
+    // function findAllOccurrences(arr, target) {
+    //     // let arr2 = []
+    //     // for(let i = 0; i< arr.length; i++) {
+    //     //     if(arr[i] === target) {
+    //     //         arr2.push(i)
+    //     //     }
+    //     // }
+    //     // return arr2
+    // }
+    // let arr = ['a','b','c','d','e','f','a','b','c']
+    // let result = findAllOccurrences(arr, 'a')
+    // console.log(result, "result")
+    function parse2Int(num) {
+        let reg = /\d/g
+        let result = num.match(reg);
+        console.log(result, "result")
+        
+    }
+    let num = '12px'
+    parse2Int(num);
+</script>
+</html>
