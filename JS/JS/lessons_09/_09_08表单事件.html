@@ -1,26 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        input{
-            outline:none;
+        input {
+            outline: none;
         }
-        .focus{
-            background:darkseagreen;
+
+        h1 {
+            width: 100%;
+            height: 2000px;
+        }
+
+        .focus {
+            background: darkseagreen;
         }
     </style>
 </head>
+
 <body>
     <h1></h1>
     用户名：<input type="text">
+    <select name="" id="select">
+        <option value="1">value1</option>
+        <option value="2">value2</option>
+        <option value="3">value3</option>
+        <option value="4">value4</option>
+    </select>
+
+    <button onclick="openW()"> 打开</button>
+
+    <iframe src="./1.html" frameborder="0" id="ff" width="300"></iframe>
 </body>
 <script>
+    var arg = new Object();
+    arg.win = window;
+    arg.closeW = closeW
+    function openW() {
+        window.controlbox = false
+        k = window.showModalDialog('./1.html', arg, "dialogWidth=200px;dialogHeight=100px")
+        // alert(k)
+    }
+    function closeW() {
+        Window.returnValue = "haha"; //定义返回值
+        window.close();
+        alert(state)
+    }
+
+
     var inp = document.querySelector('input');
     var msg = document.querySelector('h1');
+    var select = document.getElementById('select')
+    // inp.focus()
+    select.focus()
+    var obj = document.getElementById('ff');
+
+    var x = window.frames['ff'];
+    alert(x.width)
+    alert(x.height)
+    debugger
+    // alert(state)
+
+
+
+
+
     //表单事件：大多用于表单验证
     // onfocus:当表单元素获得焦点时触发
     // inps[0].onfocus = function(){
@@ -43,9 +91,9 @@
     // }
 
     // oninput:当表单元素的value值发生变化时触发
-    inp.oninput = function(){
+    inp.oninput = function () {
         var n = this.value;
-        console.log( n);
+        console.log(n);
     }
 
 
@@ -63,9 +111,10 @@
     //     for(var i=0;i<val.length;i++){
     //         var char = val[i];
     //         if(numArr.indexOf(char) == -1){
-                
+
     //         }
     //     }
     // }
 </script>
+
 </html>

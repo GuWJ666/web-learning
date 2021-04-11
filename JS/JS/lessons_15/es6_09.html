@@ -23,7 +23,7 @@
             // 用定时器模拟正真的异步操作
             setTimeout(()=>{
                 let n = Math.round(Math.random()*500);
-                n=200;
+                // n=200;
                 if(n == 200){
                     // 异步操作成功，应该执行resolv函数
                     resolv(`success:${n}`);
@@ -52,36 +52,36 @@
         //     img.src = src;
         // }
 
-        let loadImg = src => {
-            return new Promise((resolv,reject)=>{
-                let img = new Image();
-                img.src = src;
-                img.onload = function(){
-                    resolv(this);
-                }
-            });
-        }
-        loadImg('./飞机大战JS/img/herofly.png').then((img)=>{
-            console.log(img.width,img.height);
-            document.body.appendChild(img);
-        })
+        // let loadImg = src => {
+        //     return new Promise((resolv,reject)=>{
+        //         let img = new Image();
+        //         img.src = src;
+        //         img.onload = function(){
+        //             resolv(this);
+        //         }
+        //     });
+        // }
+        // loadImg('./飞机大战JS/img/herofly.png').then((img)=>{
+        //     console.log(img.width,img.height);
+        //     document.body.appendChild(img);
+        // })
 
         
     }
 
-    console.log('1');
-    setTimeout(function(){
-        console.log('2')
-    },0)
-    new Promise(resolv => {
-        console.log('3');
-        resolv();
-    }).then(function(){
-        console.log('4');
-    }).then(function(){
-        console.log('5');
-    })
-    console.log('6');
+    // console.log('1');
+    // setTimeout(function(){
+    //     console.log('2')
+    // },0)
+    // new Promise(resolv => {
+    //     console.log('3');
+    //     resolv();
+    // }).then(function(){
+    //     console.log('4');
+    // }).then(function(){
+    //     console.log('5');
+    // })
+    // console.log('6');
 
 
 

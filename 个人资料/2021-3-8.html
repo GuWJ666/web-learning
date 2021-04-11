@@ -47,6 +47,33 @@
                 vnode：Vue编译生成的虚拟节点
                 oldVnode：上一个虚拟节点（仅在update和componentUpdated中使用）
         7.虚拟DOM
+        8.渐进式框架
+        9.请求调用在vue中的那个生命周期？
+            created（用户体验最佳）和mounted（操作dom）
+        10.监听token过期，获取token
+        11.data为啥是函数，不是对象
+        12.请求拦截器和响应拦截器
+        axios.interceptors.request.use(function(config) {
+            let token = localStorage.getItem('token')
+            if(token) {
+                token = `token=${token}`
+                config.headers.common['token'] = token
+            }
+            return config
+        }, function(error) {
+            return Promise.reject(error)
+        })
+        axios.interceptors.response.use(function(response) {
+            if(reponse.data.code === 000) {
+                localStorage.removeItem('token')
+            }else if(response.data.token) {
+                localStorage.setTtem('token',response.data.token)
+                return response
+            }
+        },, function(error) {
+            return Promise.reject(error)
+        })
+        
         二、请求
         1.界面多个接口同时调用
             Promise.all可以将多个Promise实例包装成一个新的Promise实例。同时，成功和失败的返回值是不同的，成功的时候返回一个结果数组，而失败的时候则返回最先被reject失败状态的值，参数是一个包含多个Promise实例的数组，返回值和数组中Promise实例顺序一致。
@@ -59,6 +86,8 @@
                     有证书
                     安全性高
         3.seo
+        4.输入url，浏览器步骤？
+
         三、js
         1.原型和原型链
             原型：所有引用类型都有一个__proto__（隐式原型），指向构造函数的实例对象的prototype（原型），值是一个对象
@@ -99,6 +128,44 @@
         3.0.1+0.2？
             会先将浮点数由十进制转换为二进制（*2），只保留前52位，相加后转为浮点数
             0.30000000000000004
+        4.树形结构
+            const map = {};
+            const val = [];
+            data.forEach((item) => {
+                map[item.id] = item;
+            });
+            data.forEach((item) => {
+                const parent = map[item.fatherId];
+                if (parent) {
+                    (parent.children || (parent.children = [])).push(item);
+                } else {
+                    val.push(item);
+                }
+            });
+        5.数组扁平化
+            ① function flatten(arr){
+                while (arr.some(item => Array.isArray(item))){
+                    arr = [].concat(...arr); // 如果你明白展开运算符的作用，是不是很简单？
+                }
+                return arr;
+            }
+            ② var arr= [1,2,3,4,[5,6,[7,8]],true]
+            arr.flat(Infinity)
+            ③ function flatten(arr) {
+                return arr.reduce((result, item) => {
+                    return result.concat(Array.isArray(item) ? flatten(item) : item)
+                }, [])
+            }
+        6.const a = 1;
+        setTimeout(() => {
+            console.log(this.a, "")
+        })
+        7.var b = ?
+        if(b==1&&b==2&&b==3) {
+            console.log('成功')
+        }
+        四、css
+        1.动画实现下拉组件
     </pre>
 </body>
 <script>
@@ -168,13 +235,10 @@
     // let arr = ['a','b','c','d','e','f','a','b','c']
     // let result = findAllOccurrences(arr, 'a')
     // console.log(result, "result")
-    function parse2Int(num) {
-        let reg = /\d/g
-        let result = num.match(reg);
-        console.log(result, "result")
-        
-    }
-    let num = '12px'
-    parse2Int(num);
+    const a = 1;
+    setTimeout(() => {
+        console.log(this.a, "")
+        console.log(this, "this")
+    })
 </script>
 </html>
